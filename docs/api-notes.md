@@ -20,6 +20,12 @@ Status key: **open** (needs the team), **confirmed** (checked live), **assumed**
 | 5 | Error bodies | assumed | Brief lists 200, 400, 401, 402, 403, 404, 500 and no 429. Error messages in synthetic fixtures are placeholders. The recorder captures a real 401 with a deliberately invalid key (free endpoint). |
 | 6 | Products field descriptions | known | The docs copy Competitors' response field descriptions into Products; ignore them (brief). |
 
+## Protocol
+
+| # | Topic | Status | Note |
+| --- | --- | --- | --- |
+| 9 | MCP 2026-07-28 | open | The brief targets MCP spec 2026-07-28; the latest official SDK (1.32.1) supports up to 2025-11-25 (see decisions D10). Not an API difference; recorded here so it is raised with the team. |
+
 ## Billing
 
 | # | Topic | Status | Note |

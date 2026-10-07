@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
+import globals from "globals";
 
 // Names that may hold an API key or OAuth token. Any of them appearing inside
 // a logging call is a lint error (brief: "a lint rule blocks logging variables
@@ -13,7 +14,7 @@ export default tseslint.config(
   ...tseslint.configs.strict,
   {
     languageOptions: {
-      globals: { process: "readonly", console: "readonly", URL: "readonly", fetch: "readonly", AbortSignal: "readonly" },
+      globals: { ...globals.node },
     },
     rules: {
       "@typescript-eslint/no-explicit-any": "error",

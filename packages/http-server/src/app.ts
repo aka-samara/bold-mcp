@@ -1,0 +1,143 @@
+import { randomUUID } from "node:crypto";
+import express, { type NextFunction, type Request, type Response } from "express";
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
+import type { AuthInfo } from "@modelcontextprotocol/sdk/server/auth/types.js";
+import { createBoldServer, type CallerContext, type CoreDeps, type Extra } from "@bold-mcp/core";
+import type { HttpConfig } from "./config.js";
+import { sendUnauthorized } from "./auth/challenge.js";
+import { hasKeyInUrl, readCredential, settingsFromHeaders } from "./auth/credentials.js";
+import { KeyValidator, MemoryKeyValidityCache, type KeyValidityCache } from "./auth/key-validator.js";
+import { SessionStore } from "./mcp/sessions.js";
+
+export interface AppOptions {
+  config: HttpConfig;
+  deps: CoreDeps;
+  keyCache?: KeyValidityCache;
+}
+
+type AuthedRequest = Request & { auth?: AuthInfo; caller?: CallerContext };
+
+const SESSION_HEADER = "mcp-session-id";
+
+function jsonRpcError(res: Response, status: number, code: number, message: string): void {
+  res.status(status).json({ jsonrpc: "2.0", error: { code, message }, id: null });
+}
+
+export function createApp(opts: AppOptions) {
+  const { config, deps } = opts;
+  const logger = deps.logger;
+  const validator = new KeyValidator(deps.client, opts.keyCache ?? new MemoryKeyValidityCache(), config.BOLD_KEY_CACHE_TTL_MS);
+  const sessions = new SessionStore(config.BOLD_SESSION_IDLE_MS, config.BOLD_MAX_SESSIONS);
+  sessions.start();
+
+  const app = express();
+  app.disable("x-powered-by");
+  app.set("trust proxy", true);
+
+  // Never log query strings or headers: only method, path and status.
+  app.use((req, res, next) => {
+    const started = Date.now();
+    res.on("finish", () => logger.info({ method: req.method, path: req.path, status: res.statusCode, ms: Date.now() - started }, "http"));
+    next();
+  });
+
+  app.get("/healthz", (_req, res) => {
+    res.json({ ok: true, sessions: sessions.size });
+  });
+
+  /** Refuse keys in URLs, check Origin, read the credential. */
+  async function authenticate(req: AuthedRequest, res: Response, next: NextFunction) {
+    if (hasKeyInUrl(req.originalUrl)) {
+      res.status(400).json({ error: "invalid_request", error_description: "Never put an API key in the URL. Send it in the Authorization header." });
+      return;
+    }
+    const origin = req.headers.origin;
+    if (origin && !isAllowedOrigin(origin, config)) {
+      res.status(403).json({ error: "forbidden", error_description: "Origin not allowed" });
+      return;
+    }
+    const cred = readCredential(req.headers);
+    if (cred.kind === "none") return sendUnauthorized(res, config.BOLD_PUBLIC_URL, "No API key or access token", "");
+    if (cred.kind === "malformed") return sendUnauthorized(res, config.BOLD_PUBLIC_URL, cred.reason, "invalid_request");
+    if (cred.kind === "oauth_token") {
+      // OAuth sign-in arrives in M3; until then access tokens are not recognised.
+      return sendUnauthorized(res, config.BOLD_PUBLIC_URL, "Access token not recognised");
+    }
+    const { fingerprint, status } = await validator.check(cred.apiKey);
+    req.caller = {
+      apiKey: cred.apiKey,
+      fingerprint,
+      connectionId: null,
+      authMode: "header",
+      keyStatus: status,
+      settings: settingsFromHeaders(req.headers),
+    };
+    // AuthInfo reaches tool handlers as extra.authInfo; `token` holds the fingerprint, never the key.
+    req.auth = { token: fingerprint, clientId: "header", scopes: ["bold"], extra: { caller: req.caller } };
+    next();
+  }
+
+  const getCaller = (extra: Extra): CallerContext => {
+    const caller = extra.authInfo?.extra?.caller as CallerContext | undefined;
+    if (!caller) throw new Error("No caller on request");
+    return caller;
+  };
+
+  app.post("/mcp", express.json({ limit: "1mb" }), authenticate, async (req: AuthedRequest, res) => {
+    const caller = req.caller as CallerContext;
+    const binding = caller.connectionId ?? caller.fingerprint;
+    const sessionId = req.header(SESSION_HEADER);
+    try {
+      if (sessionId) {
+        const session = sessions.get(sessionId);
+        if (!session || session.binding !== binding) return jsonRpcError(res, 404, -32001, "Session not found");
+        sessions.touch(session);
+        await session.transport.handleRequest(req, res, req.body);
+        return;
+      }
+      if (!isInitializeRequest(req.body)) return jsonRpcError(res, 400, -32000, "Bad Request: no session id; send initialize first");
+
+      const server = createBoldServer({ deps, getCaller });
+      const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
+        sessionIdGenerator: () => randomUUID(),
+        onsessioninitialized: (id) => {
+          if (!sessions.add({ id, binding, server, transport, lastSeen: Date.now() })) {
+            logger.warn({ sessions: sessions.size }, "session limit reached");
+          }
+        },
+      });
+      transport.onclose = () => {
+        if (transport.sessionId) void sessions.remove(transport.sessionId);
+      };
+      await server.connect(transport);
+      await transport.handleRequest(req, res, req.body);
+    } catch (err) {
+      logger.error({ err_name: err instanceof Error ? err.name : "unknown", key_fp: caller.fingerprint }, "mcp request failed");
+      if (!res.headersSent) jsonRpcError(res, 500, -32603, "Internal server error");
+    }
+  });
+
+  const sessionRequest = async (req: AuthedRequest, res: Response) => {
+    const caller = req.caller as CallerContext;
+    const sessionId = req.header(SESSION_HEADER);
+    const session = sessionId ? sessions.get(sessionId) : undefined;
+    if (!session || session.binding !== (caller.connectionId ?? caller.fingerprint)) return jsonRpcError(res, 404, -32001, "Session not found");
+    sessions.touch(session);
+    await session.transport.handleRequest(req, res);
+  };
+  app.get("/mcp", authenticate, sessionRequest);
+  app.delete("/mcp", authenticate, sessionRequest);
+
+  app.use((_req, res) => {
+    res.status(404).json({ error: "not_found" });
+  });
+
+  return { app, sessions };
+}
+
+export function isAllowedOrigin(origin: string, config: HttpConfig): boolean {
+  if (config.BOLD_ALLOWED_ORIGINS.includes(origin)) return true;
+  if (origin === config.BOLD_PUBLIC_URL) return true;
+  return /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(origin);
+}

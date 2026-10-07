@@ -21,12 +21,19 @@
     "test:contract": "vitest run test/contract",
     "check:secrets": "node scripts/check-key-leak.mjs",
     "gate:m0": "npm run build && node --experimental-strip-types --no-warnings scripts/m0-gate.ts",
-    "fixtures:record": "npm run build && node --experimental-strip-types --no-warnings scripts/record-fixtures.ts"
+    "fixtures:record": "npm run build && node --experimental-strip-types --no-warnings scripts/record-fixtures.ts",
+    "test:protocol": "vitest run test/protocol test/http",
+    "check:inspector": "node scripts/inspector-check.mjs",
+    "dev:mock-api": "node scripts/mock-partner-api.mjs",
+    "start:http": "node packages/http-server/dist/index.js",
+    "start:stdio": "node packages/stdio/dist/index.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
     "@types/node": "^24.19.1",
     "eslint": "^10.12.0",
+    "globals": "^16.5.0",
     "msw": "^3.0.2",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.1",

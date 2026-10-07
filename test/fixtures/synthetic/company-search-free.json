@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "path": "company-search-free",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "company_name": "acme",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "id": "cmp_synthetic_001",
+              "name": "ACME HOME FURNISHINGS LLC",
+              "domain": "acme.example",
+              "country": "US"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

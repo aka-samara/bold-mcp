@@ -1,0 +1,14 @@
+{
+  "name": "@bold-mcp/http-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@bold-mcp/core": "0.0.0"
+  }
+}

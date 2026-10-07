@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "path": "shareholders-kyb",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "kyb_id": "kyb_synthetic_001",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "name": "Example Holdings Ltd",
+              "percentage": "60.0",
+              "quantity": "600",
+              "share_type": "Ordinary",
+              "value": "600",
+              "verified_date": "2025-01-31"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

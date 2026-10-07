@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "rootDir": ".",
+    "paths": {
+      "@bold-mcp/core": [
+        "./packages/core/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "test/**/*.ts",
+    "scripts/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

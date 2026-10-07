@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "path": "competitors",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "company_id": "cmp_synthetic_001",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "id": "cmp_synthetic_003",
+              "name": "BETA FURNITURE INC",
+              "domain": "beta.example",
+              "country": "US",
+              "no_of_shipments": 54
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

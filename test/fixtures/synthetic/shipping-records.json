@@ -1,0 +1,63 @@
+{
+  "_meta": {
+    "path": "shipping-records",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "bydate": "20260815",
+              "hs_code": "940360",
+              "import_country": "US",
+              "import_country_name": "United States",
+              "export_country": "VN",
+              "export_country_name": "Vietnam",
+              "amount": "12500.00",
+              "manifest_qty": "120",
+              "quantity_unit": "PCS",
+              "weight": "3400.5",
+              "weight_unit": "KG",
+              "export_id": "rec-exp-0001",
+              "shipper_name": "VIET WOOD CO LTD",
+              "import_id": "rec-imp-0001",
+              "consignee_name": "ACME HOME FURNISHINGS LLC",
+              "products": "WOODEN DINING CHAIRS",
+              "loading_port": "HAIPHONG",
+              "unloading_port": "LONG BEACH, CA",
+              "transport_type": "sea",
+              "bill_of_lading_nbr": "MEDUXY0000001",
+              "brands": "-"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

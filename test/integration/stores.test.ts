@@ -94,6 +94,17 @@ function dbContract(name: string, makeDb: () => Promise<Db>) {
       expect(await db.tokens.get(t.access_token)).toBeUndefined();
     });
 
+    it("records and lists unlock audit entries, newest first", async () => {
+      const fp = "fp-audit-" + randomUUID().slice(0, 6);
+      const base = { tool: "reveal_contact_details", connection_id: null, key_fp: fp, subject_type: "contact" as const, unlocked: ["phones"], credits_used: 15 };
+      await db.audit.record({ ...base, subject_id: "ct-1", at: new Date(Date.now() - 1000).toISOString() });
+      await db.audit.record({ ...base, subject_id: "ct-2", at: new Date().toISOString() });
+      const rows = await db.audit.list({ keyFingerprint: fp });
+      expect(rows.map((r) => r.subject_id)).toEqual(["ct-2", "ct-1"]);
+      expect(rows[0]).toMatchObject({ unlocked: ["phones"], credits_used: 15, subject_type: "contact" });
+      expect(await db.audit.list({ subjectId: "ct-1", keyFingerprint: fp })).toHaveLength(1);
+    });
+
     it("records usage log entries", async () => {
       await db.usage.record({ tool: "get_credit_balance", connection_id: null, key_fp: "abc", auth_mode: "header", pool: null, credits_estimated: 0, latency_ms: 12, outcome: "ok" });
     });
@@ -123,7 +134,7 @@ describe.runIf(Boolean(PG))("Postgres", () => {
 
   it("applies migrations once", async () => {
     const db = PostgresDb.fromUrl(url());
-    expect(await migrate(db.pool)).toEqual(["001_init.sql"]);
+    expect(await migrate(db.pool)).toEqual(["001_init.sql", "002_unlock_audit.sql"]);
     expect(await migrate(db.pool)).toEqual([]);
     await db.close();
   });

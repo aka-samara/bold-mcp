@@ -3,7 +3,7 @@ import express, { type NextFunction, type Request, type Response } from "express
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import type { AuthInfo } from "@modelcontextprotocol/sdk/server/auth/types.js";
-import { createBoldServer, type CallerContext, type Extra } from "@bold-mcp/core";
+import { createBoldServer, keyFingerprint, MINUTE, type CallerContext, type Extra } from "@bold-mcp/core";
 import type { HttpConfig } from "./config.js";
 import { sendUnauthorized } from "./auth/challenge.js";
 import { hasKeyInUrl, readCredential, settingsFromHeaders } from "./auth/credentials.js";
@@ -32,7 +32,14 @@ export function createApp(s: Services) {
 
   const app = express();
   app.disable("x-powered-by");
-  app.set("trust proxy", true);
+  // Only trust X-Forwarded-For through known proxy hops, so clients cannot pick their own IP for rate limits.
+  app.set("trust proxy", config.BOLD_TRUST_PROXY_HOPS);
+
+  app.use((_req, res, next) => {
+    res.set({ "X-Content-Type-Options": "nosniff", "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY" });
+    if (config.BOLD_PUBLIC_URL.startsWith("https://")) res.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    next();
+  });
 
   // Never log query strings or headers: only method, path and status.
   app.use((req, res, next) => {
@@ -102,6 +109,14 @@ export function createApp(s: Services) {
       next();
       return;
     }
+    // A key not seen recently costs one Credit Usage call to check: limit those per IP so /mcp can't be used to test keys in bulk.
+    if (!(await s.keyCache.get(keyFingerprint(cred.apiKey)))) {
+      const limit = await deps.rateLimits.consume(`ip:keycheck:${req.ip ?? "unknown"}`, [{ name: "minute", windowMs: MINUTE, limit: 20 }]);
+      if (!limit.allowed) {
+        res.status(429).set("Retry-After", String(Math.ceil(limit.retryAfterMs / 1000))).json({ error: "too_many_requests", error_description: "Too many different API keys from this address. Try again shortly." });
+        return;
+      }
+    }
     const { fingerprint, status } = await validator.check(cred.apiKey);
     req.caller = {
       apiKey: cred.apiKey,
@@ -169,6 +184,15 @@ export function createApp(s: Services) {
 
   app.use((_req, res) => {
     res.status(404).json({ error: "not_found" });
+  });
+
+  // Last resort: never send stack traces or error text to clients; log the error name only.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Express needs four parameters to treat this as an error handler
+  app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+    const status = typeof (err as { status?: unknown })?.status === "number" ? (err as { status: number }).status : 500;
+    if (status >= 500) logger.error({ err_name: err instanceof Error ? err.name : "unknown", path: req.path }, "request failed");
+    if (res.headersSent) return;
+    res.status(status).json({ error: status >= 500 ? "server_error" : "invalid_request" });
   });
 
   return { app, sessions };

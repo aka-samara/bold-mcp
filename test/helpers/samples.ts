@@ -21,3 +21,9 @@ export const PAID_SAMPLE_ARGS: Record<string, Record<string, unknown>> = {
   get_company_profile: { type: "imp", company_id: "cmp_synthetic_001" },
   search_kyb: { company_name: "Acme Home Furnishings", country_code: "US" },
 };
+
+/** One call per unlock tool (always needs confirmation). */
+export const UNLOCK_SAMPLE_ARGS: Record<string, Record<string, unknown>> = {
+  reveal_contact_details: { contact_id: "ct_synthetic_001", lookup_type: ["professional_emails"] },
+  get_kyb_report: { kyb_id: "kyb_synthetic_001", sections: ["details", "financials", "shareholders", "officers"], page_size: 2 },
+};

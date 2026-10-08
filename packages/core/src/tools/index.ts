@@ -11,6 +11,8 @@ import { findCompetitors, listExporters, listImporters, searchCompanies } from "
 import { getCompanyProfile } from "./get_company_profile.js";
 import { searchKyb } from "./search_kyb.js";
 import { searchShipments } from "./search_shipments.js";
+import { getKybReport } from "./get_kyb_report.js";
+import { revealContactDetails } from "./reveal_contact_details.js";
 import type { ToolDefinition } from "./types.js";
 
 /** Free tools (M1). */
@@ -37,4 +39,7 @@ export const PAID_TOOLS: readonly ToolDefinition[] = [
   searchKyb,
 ] as unknown as readonly ToolDefinition[];
 
-export const ALL_TOOLS: readonly ToolDefinition[] = [...FREE_TOOLS, ...PAID_TOOLS];
+/** Unlock tools (M4): always need the user's confirmation. */
+export const UNLOCK_TOOL_DEFS: readonly ToolDefinition[] = [revealContactDetails, getKybReport] as unknown as readonly ToolDefinition[];
+
+export const ALL_TOOLS: readonly ToolDefinition[] = [...FREE_TOOLS, ...PAID_TOOLS, ...UNLOCK_TOOL_DEFS];

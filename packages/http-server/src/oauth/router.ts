@@ -238,6 +238,12 @@ export function oauthRouter(s: Services): Router {
   }
 
   router.get("/authorize", async (req, res) => {
+    // Each request can trigger a CIMD fetch, so limit per IP.
+    const limit = await deps.rateLimits.consume(`ip:authorize:${clientIp(req)}`, [{ name: "minute", windowMs: MINUTE, limit: 60 }]);
+    if (!limit.allowed) {
+      const nonce = pageHeaders(res);
+      return void res.status(429).type("html").send(errorPage("Too many requests", "Wait a minute, then try connecting again.", nonce));
+    }
     try {
       renderForm(res, await parseAuthRequest(req.query as Record<string, unknown>));
     } catch (err) {

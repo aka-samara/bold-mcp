@@ -100,6 +100,9 @@ export async function buildServices(config: HttpConfig, logger: Logger, o: Servi
   deps.onToolCall = (entry) => {
     void dbRef.usage.record(entry).catch(() => logger.warn("usage_log write failed"));
   };
+  deps.onUnlock = (entry) => {
+    void dbRef.audit.record(entry).catch(() => logger.error({ tool: entry.tool, connection_id: entry.connection_id }, "unlock_audit write failed"));
+  };
 
   return {
     config,

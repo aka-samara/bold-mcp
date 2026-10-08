@@ -33,7 +33,8 @@
     "test:integration": "vitest run test/integration",
     "test:browser": "vitest run test/browser",
     "admin": "node packages/http-server/dist/admin.js",
-    "db:up": "docker compose up -d postgres redis"
+    "db:up": "docker compose up -d postgres redis",
+    "load:k6": "k6 run infra/load/mcp-load.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -1,4 +1,4 @@
-import type { SpendingSettings, ToolCallLog } from "@bold-mcp/core";
+import type { SpendingSettings, ToolCallLog, UnlockAuditEntry } from "@bold-mcp/core";
 import type { EncryptedKey } from "../vault/key-vault.js";
 
 export interface OAuthClient {
@@ -56,6 +56,11 @@ export interface Db {
   };
   usage: {
     record(entry: ToolCallLog): Promise<void>;
+  };
+  audit: {
+    record(entry: UnlockAuditEntry): Promise<void>;
+    /** Newest first, for operators answering a data-subject or customer request. */
+    list(filter: { keyFingerprint?: string; subjectId?: string; limit?: number }): Promise<UnlockAuditEntry[]>;
   };
   close(): Promise<void>;
 }

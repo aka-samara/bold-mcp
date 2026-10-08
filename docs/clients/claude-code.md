@@ -1,13 +1,19 @@
 # Claude Code
 
-## Header mode (remote server)
+## Sign in (paste your key)
+
+```sh
+claude mcp add --transport http bold https://mcp.billofladingdata.com/mcp
+```
+
+Then run `/mcp` in Claude Code, pick `bold` and choose **Authenticate**. Your browser opens the Bill of Lading Data page: paste the key, choose **Connect**, and return to the terminal.
+
+## Header mode (remote server, key on your machine)
 
 ```sh
 claude mcp add --transport http bold https://mcp.billofladingdata.com/mcp \
   --header "Authorization: Bearer YOUR_API_KEY"
 ```
-
-Staging: use `https://mcp-staging.billofladingdata.com/mcp`. Local development: `http://localhost:3000/mcp`.
 
 Optional spending headers (credits):
 
@@ -18,6 +24,8 @@ Optional spending headers (credits):
   --header "X-Bold-Allow-KYB: false"
 ```
 
+Add `--scope project` to share the server (without a key: use sign-in or an environment variable such as `--header "Authorization: Bearer ${BOLD_API_KEY}"` in `.mcp.json`) with your team.
+
 ## Local (stdio) package
 
 ```sh
@@ -25,6 +33,8 @@ claude mcp add bold --env BOLD_API_KEY=YOUR_API_KEY -- npx -y @billofladingdata/
 ```
 
 Optional: `BOLD_MAX_CREDITS`, `BOLD_DAILY_CREDITS`, `BOLD_ALLOW_CONTACTS=false`, `BOLD_ALLOW_KYB=false`.
+
+Staging: use `https://mcp-staging.billofladingdata.com/mcp`. Local development: `http://localhost:3000/mcp`.
 
 ## Try it
 

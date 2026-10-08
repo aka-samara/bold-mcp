@@ -18,6 +18,6 @@ npm run test:browser           # connect page in Chromium
 npm run admin -- migrate | expire-unused | revoke-fingerprint <fp>
 ```
 
-Run the HTTP server locally with sign-in: copy `.env.example` to `.env`, fill `BOLD_LOCAL_KMS_KEY`, start Postgres and Redis, then `npm run build && node --env-file=.env packages/http-server/dist/index.js`. Container image: `docker build -f infra/Dockerfile .`
+Run the HTTP server locally with sign-in: copy `.env.example` to `.env`, fill `BOLD_LOCAL_KMS_KEY`, start Postgres and Redis, then `npm run build && node --env-file=.env packages/http-server/dist/index.js`. Container image: `docker build -f infra/Dockerfile .` Load test: `npm run load:k6` (k6, see `infra/load/mcp-load.js`).
 
-Status: M3 — 16 tools (9 free, 7 paid) with the credit guard, over stdio and HTTP (`/mcp`) with either a key in the Authorization header or OAuth paste-your-key sign-in (connect page, encrypted key vault, Postgres, Redis). Unlock tools arrive in M4. See `docs/clients/claude-code.md` to connect.
+Status: M4 — all 18 tools (9 free, 7 paid, 2 unlocks that always ask) with the credit guard and an unlock audit log, over stdio and HTTP (`/mcp`) with either a key in the Authorization header or OAuth paste-your-key sign-in (connect page, encrypted key vault, Postgres, Redis). Security review: `docs/security-review.md`. Client setup: `docs/clients/`. See `docs/clients/claude-code.md` to connect.

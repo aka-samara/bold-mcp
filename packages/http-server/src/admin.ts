@@ -2,6 +2,7 @@
 //   bold-mcp-admin migrate
 //   bold-mcp-admin revoke-fingerprint <key fingerprint>   (a leaked or rotated key: revoke every connection using it)
 //   bold-mcp-admin expire-unused [--days 90]              (run daily: revoke connections idle for N days)
+//   bold-mcp-admin audit [--fingerprint <fp>] [--subject <contact or kyb id>] [--limit 100]
 import { migrate, PostgresDb } from "./db/postgres.js";
 
 const [cmd, ...args] = process.argv.slice(2);
@@ -33,8 +34,20 @@ try {
       process.stdout.write(`Expired ${await db.connections.expireUnused(new Date(Date.now() - days * 86_400_000))} connection(s) unused for ${days} days.\n`);
       break;
     }
+    case "audit": {
+      const val = (n: string) => {
+        const i = args.indexOf(`--${n}`);
+        return i >= 0 ? args[i + 1] : undefined;
+      };
+      await migrate(db.pool);
+      const fp = val("fingerprint");
+      const subject = val("subject");
+      const rows = await db.audit.list({ ...(fp ? { keyFingerprint: fp } : {}), ...(subject ? { subjectId: subject } : {}), limit: Number(val("limit") ?? 100) });
+      for (const r of rows) process.stdout.write(`${JSON.stringify(r)}\n`);
+      break;
+    }
     default:
-      throw new Error("Commands: migrate | revoke-fingerprint <fp> | expire-unused [--days N]");
+      throw new Error("Commands: migrate | revoke-fingerprint <fp> | expire-unused [--days N] | audit [--fingerprint fp] [--subject id]");
   }
 } catch (err) {
   process.stderr.write(`${err instanceof Error ? err.message : "failed"}\n`);

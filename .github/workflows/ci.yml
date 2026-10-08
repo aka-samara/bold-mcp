@@ -16,6 +16,24 @@ jobs:
   check:
     name: Lint, typecheck, test, build
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: bold
+          POSTGRES_PASSWORD: bold
+          POSTGRES_DB: bold
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bold" --health-interval 2s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 2s --health-retries 20
+    env:
+      TEST_DATABASE_URL: postgres://bold:bold@localhost:5432/bold
+      TEST_REDIS_URL: redis://localhost:6379
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,6 +46,13 @@ jobs:
       - run: npm run test:unit
       - run: npm run test:contract
       - run: npm run test:protocol
+      - run: npm run test:oauth
+      - name: Postgres and Redis stores
+        run: npm run test:integration
+      - name: Connect page in Chromium
+        run: |
+          npx playwright-core install --with-deps chromium
+          npm run test:browser
       - run: npm run build
       - name: MCP Inspector CLI (stdio and HTTP header mode)
         run: npm run check:inspector
@@ -52,6 +77,25 @@ jobs:
         env:
           BOLD_TEST_API_KEY: ${{ secrets.BOLD_TEST_API_KEY }}
           KEY_LEAK_REQUIRE: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && '1' || '0' }}
+
+  image:
+    name: Container image build and scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f infra/Dockerfile -t bold-mcp:ci .
+      - name: Start the image and check health
+        run: |
+          docker run -d --name bold -p 8080:8080 -e BOLD_PUBLIC_URL=http://localhost:8080 -e NODE_ENV=development bold-mcp:ci
+          for i in $(seq 1 30); do curl -sf localhost:8080/healthz && exit 0; sleep 1; done
+          docker logs bold; exit 1
+      - name: Scan for high and critical vulnerabilities
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: bold-mcp:ci
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
 
   audit:
     name: Dependency audit

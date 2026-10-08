@@ -3,18 +3,15 @@ import express, { type NextFunction, type Request, type Response } from "express
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { isInitializeRequest } from "@modelcontextprotocol/sdk/types.js";
 import type { AuthInfo } from "@modelcontextprotocol/sdk/server/auth/types.js";
-import { createBoldServer, type CallerContext, type CoreDeps, type Extra } from "@bold-mcp/core";
+import { createBoldServer, type CallerContext, type Extra } from "@bold-mcp/core";
 import type { HttpConfig } from "./config.js";
 import { sendUnauthorized } from "./auth/challenge.js";
 import { hasKeyInUrl, readCredential, settingsFromHeaders } from "./auth/credentials.js";
-import { KeyValidator, MemoryKeyValidityCache, type KeyValidityCache } from "./auth/key-validator.js";
+import { KeyValidator } from "./auth/key-validator.js";
 import { SessionStore } from "./mcp/sessions.js";
-
-export interface AppOptions {
-  config: HttpConfig;
-  deps: CoreDeps;
-  keyCache?: KeyValidityCache;
-}
+import { oauthRouter } from "./oauth/router.js";
+import type { Services } from "./services.js";
+import { KmsError } from "./vault/key-vault.js";
 
 type AuthedRequest = Request & { auth?: AuthInfo; caller?: CallerContext };
 
@@ -24,10 +21,12 @@ function jsonRpcError(res: Response, status: number, code: number, message: stri
   res.status(status).json({ jsonrpc: "2.0", error: { code, message }, id: null });
 }
 
-export function createApp(opts: AppOptions) {
-  const { config, deps } = opts;
+export function createApp(s: Services) {
+  const { config, deps, db } = s;
   const logger = deps.logger;
-  const validator = new KeyValidator(deps.client, opts.keyCache ?? new MemoryKeyValidityCache(), config.BOLD_KEY_CACHE_TTL_MS);
+  const validator = new KeyValidator(deps.client, s.keyCache, config.BOLD_KEY_CACHE_TTL_MS);
+  const resource = `${config.BOLD_PUBLIC_URL}/mcp`;
+  const idleMs = config.BOLD_CONNECTION_IDLE_DAYS * 24 * 60 * 60_000;
   const sessions = new SessionStore(config.BOLD_SESSION_IDLE_MS, config.BOLD_MAX_SESSIONS);
   sessions.start();
 
@@ -46,6 +45,31 @@ export function createApp(opts: AppOptions) {
     res.json({ ok: true, sessions: sessions.size });
   });
 
+  app.use(oauthRouter(s));
+
+  /** OAuth mode: access token → connection → stored key, decrypted for this request only. */
+  async function oauthCaller(token: string): Promise<CallerContext | "invalid"> {
+    const t = await s.tokens.checkAccess(token, resource);
+    if (!t) return "invalid";
+    const conn = await db.connections.get(t.connectionId);
+    if (!conn || conn.revokedAt || conn.invalidAt) return "invalid";
+    if (Date.now() - conn.lastUsedAt.getTime() > idleMs) return "invalid";
+    const apiKey = await s.vault.decrypt(conn.encryptedKey, conn.id);
+    void db.connections.touch(conn.id).catch(() => logger.warn({ connection_id: conn.id }, "connection touch failed"));
+    return {
+      apiKey,
+      fingerprint: conn.keyFingerprint,
+      connectionId: conn.id,
+      authMode: "oauth",
+      keyStatus: "valid",
+      settings: conn.settings,
+      onKeyRejected: async () => {
+        logger.warn({ connection_id: conn.id, key_fp: conn.keyFingerprint }, "stored key rejected by the API; connection marked invalid");
+        await db.connections.markInvalid(conn.id);
+      },
+    };
+  }
+
   /** Refuse keys in URLs, check Origin, read the credential. */
   async function authenticate(req: AuthedRequest, res: Response, next: NextFunction) {
     if (hasKeyInUrl(req.originalUrl)) {
@@ -61,8 +85,22 @@ export function createApp(opts: AppOptions) {
     if (cred.kind === "none") return sendUnauthorized(res, config.BOLD_PUBLIC_URL, "No API key or access token", "");
     if (cred.kind === "malformed") return sendUnauthorized(res, config.BOLD_PUBLIC_URL, cred.reason, "invalid_request");
     if (cred.kind === "oauth_token") {
-      // OAuth sign-in arrives in M3; until then access tokens are not recognised.
-      return sendUnauthorized(res, config.BOLD_PUBLIC_URL, "Access token not recognised");
+      let caller: CallerContext | "invalid";
+      try {
+        caller = await oauthCaller(cred.token);
+      } catch (err) {
+        if (err instanceof KmsError) {
+          logger.error({ err_name: err.name }, "key vault unavailable");
+          res.status(503).set("Retry-After", "30").json({ error: "temporarily_unavailable", error_description: "Stored keys cannot be read right now. Try again shortly." });
+          return;
+        }
+        throw err;
+      }
+      if (caller === "invalid") return sendUnauthorized(res, config.BOLD_PUBLIC_URL, "Access token expired, revoked or unknown. Sign in again.");
+      req.caller = caller;
+      req.auth = { token: caller.fingerprint, clientId: "oauth", scopes: ["bold"], extra: { caller } };
+      next();
+      return;
     }
     const { fingerprint, status } = await validator.check(cred.apiKey);
     req.caller = {

@@ -22,9 +22,28 @@ export const HttpConfigSchema = CoreConfigSchema.extend({
   BOLD_MAX_SESSIONS: z.coerce.number().int().min(1).default(10_000),
   /** HMAC secret for confirmation tokens, shared by all instances (secrets manager). Random per process when unset outside production. */
   BOLD_CONFIRMATION_SECRET: z.string().min(32, "must be at least 32 characters").optional(),
+  /** HMAC secret for connect-page CSRF tokens. Random per process when unset outside production. */
+  BOLD_CSRF_SECRET: z.string().min(32, "must be at least 32 characters").optional(),
+  /** Postgres for connections, clients, token hashes, usage log. Memory when unset (local only). */
+  DATABASE_URL: z.string().optional(),
+  /** Redis for confirmation tokens, rate limits, caches and OAuth codes. Memory when unset (local only). */
+  REDIS_URL: z.string().optional(),
+  /** Key-encryption key provider. "local" is the development stand-in. */
+  BOLD_KMS_PROVIDER: z.enum(["local"]).default("local"),
+  /** 32 bytes, base64. Required for the local KMS stand-in. */
+  BOLD_LOCAL_KMS_KEY: z.string().optional(),
+  BOLD_LOGO_URL: z.url().default("https://billofladingdata.com/assets/BLO-LOGO.png"),
+  BOLD_FIND_KEY_URL: z.url().default("https://billofladingdata.com"),
+  BOLD_TRIAL_URL: z.url().default("https://billofladingdata.com"),
+  /** Days a connection may sit unused before it expires (brief: 90). */
+  BOLD_CONNECTION_IDLE_DAYS: z.coerce.number().int().min(1).default(90),
 }).superRefine((c, ctx) => {
-  if (c.NODE_ENV === "production" && !c.BOLD_CONFIRMATION_SECRET)
-    ctx.addIssue({ code: "custom", path: ["BOLD_CONFIRMATION_SECRET"], message: "is required in production" });
+  if (c.NODE_ENV !== "production") return;
+  for (const k of ["BOLD_CONFIRMATION_SECRET", "BOLD_CSRF_SECRET", "DATABASE_URL", "REDIS_URL"] as const) {
+    if (!c[k]) ctx.addIssue({ code: "custom", path: [k], message: "is required in production" });
+  }
+  if (c.BOLD_KMS_PROVIDER === "local") ctx.addIssue({ code: "custom", path: ["BOLD_KMS_PROVIDER"], message: "must be a cloud KMS in production (local is a development stand-in)" });
+  if (!c.BOLD_PUBLIC_URL.startsWith("https://")) ctx.addIssue({ code: "custom", path: ["BOLD_PUBLIC_URL"], message: "must be https in production" });
 });
 
 export type HttpConfig = z.output<typeof HttpConfigSchema>;

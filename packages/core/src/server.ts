@@ -99,6 +99,7 @@ export function createBoldServer(opts: BoldServerOptions): McpServer {
         ...(errorKind ? { error_kind: errorKind } : {}),
       };
       deps.logger.info({ tool_call: entry }, "tool_call");
+      deps.onToolCall?.(entry);
     };
 
     if (caller.keyStatus === "invalid") {

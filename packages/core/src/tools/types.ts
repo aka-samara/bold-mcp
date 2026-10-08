@@ -9,7 +9,7 @@ import type { ConfirmationTokens } from "../billing/confirmation.js";
 import type { DailySpendStore } from "../billing/daily-spend.js";
 import type { BillingOutcome } from "../billing/actual.js";
 import type { Balances } from "../shaping/credits.js";
-import type { Logger } from "../logging.js";
+import type { Logger, ToolCallLog } from "../logging.js";
 
 export type AuthMode = "header" | "oauth" | "stdio";
 
@@ -53,6 +53,8 @@ export interface CoreDeps {
   balances: BalanceCache;
   confirmations: ConfirmationTokens;
   dailySpend: DailySpendStore;
+  /** Called after every tool call (e.g. to write the usage log). */
+  onToolCall?: (entry: ToolCallLog) => void;
 }
 
 /** What a tool handler gets. `call` applies upstream limits and keeps the key out of the handler. */

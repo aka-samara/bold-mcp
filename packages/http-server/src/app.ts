@@ -29,6 +29,7 @@ export function createApp(s: Services) {
   const idleMs = config.BOLD_CONNECTION_IDLE_DAYS * 24 * 60 * 60_000;
   const sessions = new SessionStore(config.BOLD_SESSION_IDLE_MS, config.BOLD_MAX_SESSIONS);
   sessions.start();
+  s.metrics.gauge("bold_active_sessions", "Open MCP sessions on this instance", () => sessions.size);
 
   const app = express();
   app.disable("x-powered-by");
@@ -97,6 +98,7 @@ export function createApp(s: Services) {
         caller = await oauthCaller(cred.token);
       } catch (err) {
         if (err instanceof KmsError) {
+          s.metrics.kmsErrors.inc();
           logger.error({ err_name: err.name }, "key vault unavailable");
           res.status(503).set("Retry-After", "30").json({ error: "temporarily_unavailable", error_description: "Stored keys cannot be read right now. Try again shortly." });
           return;
@@ -110,7 +112,8 @@ export function createApp(s: Services) {
       return;
     }
     // A key not seen recently costs one Credit Usage call to check: limit those per IP so /mcp can't be used to test keys in bulk.
-    if (!(await s.keyCache.get(keyFingerprint(cred.apiKey)))) {
+    const wasCached = Boolean(await s.keyCache.get(keyFingerprint(cred.apiKey)));
+    if (!wasCached) {
       const limit = await deps.rateLimits.consume(`ip:keycheck:${req.ip ?? "unknown"}`, [{ name: "minute", windowMs: MINUTE, limit: 20 }]);
       if (!limit.allowed) {
         res.status(429).set("Retry-After", String(Math.ceil(limit.retryAfterMs / 1000))).json({ error: "too_many_requests", error_description: "Too many different API keys from this address. Try again shortly." });
@@ -118,6 +121,7 @@ export function createApp(s: Services) {
       }
     }
     const { fingerprint, status } = await validator.check(cred.apiKey);
+    if (!wasCached) s.metrics.keyValidations.inc({ result: status });
     req.caller = {
       apiKey: cred.apiKey,
       fingerprint,

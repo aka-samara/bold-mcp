@@ -9,7 +9,7 @@ const SECRET_NAMES = "^(apiKey|api_key|key|token|accessToken|refreshToken|access
 const LOG_METHODS = "^(log|info|warn|error|debug|trace|fatal|child)$";
 
 export default tseslint.config(
-  { ignores: ["**/dist/**", "**/node_modules/**", "coverage/**"] },
+  { ignores: ["**/dist/**", "packages/stdio/bundle/**", "**/node_modules/**", "coverage/**"] },
   js.configs.recommended,
   ...tseslint.configs.strict,
   {

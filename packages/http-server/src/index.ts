@@ -17,6 +17,7 @@ try {
 const logger = createLogger({ level: config.LOG_LEVEL, name: "bold-mcp-http" });
 const services = await buildServices(config, logger);
 const { app, sessions } = createApp(services);
+if (config.BOLD_METRICS_PORT) services.metrics.listen(config.BOLD_METRICS_PORT);
 
 const server = app.listen(config.PORT, config.HOST, () => {
   logger.info({ port: config.PORT, public_url: config.BOLD_PUBLIC_URL, api_base: config.BOLD_API_BASE_URL }, "listening");

@@ -23,6 +23,7 @@ import {
   RedisKeyValidityCache,
   RedisRateLimitStore,
 } from "./state/redis.js";
+import { Metrics } from "./metrics.js";
 import { KeyVault } from "./vault/key-vault.js";
 import { LocalKms, type Kms } from "./vault/kms.js";
 import { randomBytes } from "node:crypto";
@@ -41,6 +42,7 @@ export interface Services {
   /** Short-timeout client for checking pasted keys (OAuth endpoints must answer within 10 s). */
   validationClient: PartnerApiClient;
   redis: Redis | null;
+  metrics: Metrics;
   close(): Promise<void>;
 }
 
@@ -95,12 +97,18 @@ export async function buildServices(config: HttpConfig, logger: Logger, o: Servi
           }
         : {}),
     });
-  // Every tool call goes to the usage log (no arguments or results).
+  // Every tool call goes to the usage log (no arguments or results) and the metrics.
   const dbRef = db;
+  const metrics = new Metrics();
   deps.onToolCall = (entry) => {
+    metrics.toolCalls.inc({ tool: entry.tool, outcome: entry.outcome, auth_mode: entry.auth_mode });
+    metrics.toolDuration.observe({ tool: entry.tool }, entry.latency_ms / 1000);
+    if (entry.credits_used && entry.pool) metrics.creditsUsed.inc({ tool: entry.tool, pool: entry.pool }, entry.credits_used);
+    if (entry.outcome === "rate_limited") metrics.rateLimited.inc({ scope: entry.error_kind ?? "unknown" });
     void dbRef.usage.record(entry).catch(() => logger.warn("usage_log write failed"));
   };
   deps.onUnlock = (entry) => {
+    metrics.unlocks.inc({ tool: entry.tool });
     void dbRef.audit.record(entry).catch(() => logger.error({ tool: entry.tool, connection_id: entry.connection_id }, "unlock_audit write failed"));
   };
 
@@ -116,6 +124,7 @@ export async function buildServices(config: HttpConfig, logger: Logger, o: Servi
     csrf: new Csrf(config.BOLD_CSRF_SECRET ?? ConfirmationTokens.randomSecret()),
     validationClient: new PartnerApiClient({ baseUrl: config.BOLD_API_BASE_URL, timeoutMs: 8000, maxRetries: 0, ...(o.fetch ? { fetch: o.fetch } : {}) }),
     redis,
+    metrics,
     async close() {
       await db.close();
       redis?.disconnect();

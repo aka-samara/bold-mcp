@@ -4,7 +4,7 @@ import { join } from "node:path";
 import pg from "pg";
 import type { SpendingSettings, ToolCallLog, UnlockAuditEntry } from "@bold-mcp/core";
 import type { EncryptedKey } from "../vault/key-vault.js";
-import type { Connection, Db, OAuthClient, TokenRecord } from "./types.js";
+import type { Connection, Db, OAuthClient, TokenRecord, UsageSummary } from "./types.js";
 
 const MIGRATIONS = fileURLToPath(new URL("./migrations/", import.meta.url));
 
@@ -121,8 +121,12 @@ export class PostgresDb implements Db {
       return r.rowCount ?? 0;
     },
     expireUnused: async (olderThan: Date) => {
-      const r = await this.pool.query("UPDATE connections SET revoked_at = now(), revoked_reason = 'unused 90 days' WHERE revoked_at IS NULL AND last_used_at < $1", [olderThan]);
+      const r = await this.pool.query("UPDATE connections SET revoked_at = now(), revoked_reason = 'unused' WHERE revoked_at IS NULL AND last_used_at < $1", [olderThan]);
       return r.rowCount ?? 0;
+    },
+    sampleActive: async (since: Date, limit: number) => {
+      const r = await this.pool.query<ConnRow>("SELECT * FROM connections WHERE revoked_at IS NULL AND invalid_at IS NULL AND last_used_at >= $1 ORDER BY random() LIMIT $2", [since, limit]);
+      return r.rows.map(toConnection);
     },
   };
 
@@ -149,10 +153,49 @@ export class PostgresDb implements Db {
   usage = {
     record: async (e: ToolCallLog) => {
       await this.pool.query(
-        `INSERT INTO usage_log (connection_id, key_fingerprint, auth_mode, tool, pool, credits_estimated, credits_used, outcome, latency_ms)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-        [e.connection_id, e.key_fp, e.auth_mode, e.tool, e.pool, e.credits_estimated, e.credits_used ?? null, e.outcome, e.latency_ms],
+        `INSERT INTO usage_log (connection_id, key_fingerprint, auth_mode, tool, pool, credits_estimated, credits_used, outcome, latency_ms, error_kind)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        [e.connection_id, e.key_fp, e.auth_mode, e.tool, e.pool, e.credits_estimated, e.credits_used ?? null, e.outcome, e.latency_ms, e.error_kind ?? null],
       );
+    },
+    creditsByPool: async (fp: string, since: Date) => {
+      const r = await this.pool.query<{ pool: string; credits: string }>(
+        "SELECT pool, COALESCE(SUM(credits_used), 0) AS credits FROM usage_log WHERE key_fingerprint = $1 AND created_at >= $2 AND pool IS NOT NULL GROUP BY pool",
+        [fp, since],
+      );
+      const out = { data: 0, contact: 0, kyb: 0 };
+      for (const row of r.rows) if (row.pool in out) out[row.pool as keyof typeof out] = Number(row.credits);
+      return out;
+    },
+    heavySpenders: async (since: Date, min: number) => {
+      const r = await this.pool.query<{ key_fingerprint: string; credits: string }>(
+        "SELECT key_fingerprint, SUM(credits_used) AS credits FROM usage_log WHERE created_at >= $1 AND credits_used > 0 GROUP BY key_fingerprint HAVING SUM(credits_used) > $2 ORDER BY credits DESC",
+        [since, min],
+      );
+      return r.rows.map((x) => ({ key_fp: x.key_fingerprint, credits: Number(x.credits) }));
+    },
+    summary: async (since: Date): Promise<UsageSummary> => {
+      const q = <T extends pg.QueryResultRow>(sql: string) => this.pool.query<T>(sql, [since]).then((r) => r.rows);
+      const [totals] = await q<{ calls: string; keys: string }>("SELECT COUNT(*) AS calls, COUNT(DISTINCT key_fingerprint) AS keys FROM usage_log WHERE created_at >= $1");
+      const [conns] = await q<{ n: string }>("SELECT COUNT(*) AS n FROM connections WHERE created_at >= $1");
+      const pools = await q<{ pool: string; credits: string }>("SELECT pool, COALESCE(SUM(credits_used), 0) AS credits FROM usage_log WHERE created_at >= $1 AND pool IS NOT NULL GROUP BY pool");
+      const tools = await q<{ tool: string; calls: string; credits: string }>(
+        "SELECT tool, COUNT(*) AS calls, COALESCE(SUM(credits_used), 0) AS credits FROM usage_log WHERE created_at >= $1 GROUP BY tool ORDER BY calls DESC LIMIT 10",
+      );
+      const failures = await q<{ tool: string; outcome: string; error_kind: string | null; count: string }>(
+        "SELECT tool, outcome, error_kind, COUNT(*) AS count FROM usage_log WHERE created_at >= $1 AND outcome NOT IN ('ok', 'confirmation_required') GROUP BY tool, outcome, error_kind ORDER BY count DESC LIMIT 10",
+      );
+      const credits_by_pool = { data: 0, contact: 0, kyb: 0 };
+      for (const p of pools) if (p.pool in credits_by_pool) credits_by_pool[p.pool as keyof typeof credits_by_pool] = Number(p.credits);
+      return {
+        since: since.toISOString(),
+        tool_calls: Number(totals?.calls ?? 0),
+        active_keys: Number(totals?.keys ?? 0),
+        new_connections: Number(conns?.n ?? 0),
+        credits_by_pool,
+        top_tools: tools.map((t) => ({ tool: t.tool, calls: Number(t.calls), credits: Number(t.credits) })),
+        top_failures: failures.map((f) => ({ tool: f.tool, outcome: f.outcome, error_kind: f.error_kind, count: Number(f.count) })),
+      };
     },
   };
 

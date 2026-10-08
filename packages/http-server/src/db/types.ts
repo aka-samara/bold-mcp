@@ -47,6 +47,8 @@ export interface Db {
     revoke(id: string, reason: string): Promise<void>;
     revokeByFingerprint(fingerprint: string, reason: string): Promise<number>;
     expireUnused(olderThan: Date): Promise<number>;
+    /** Live connections used since a date, in random order (reconciliation sample). */
+    sampleActive(since: Date, limit: number): Promise<Connection[]>;
   };
   tokens: {
     create(t: Omit<TokenRecord, "usedAt">): Promise<void>;
@@ -56,6 +58,11 @@ export interface Db {
   };
   usage: {
     record(entry: ToolCallLog): Promise<void>;
+    /** Server-estimated credits used per pool by one key since a date. */
+    creditsByPool(keyFingerprint: string, since: Date): Promise<Record<"data" | "contact" | "kyb", number>>;
+    summary(since: Date): Promise<UsageSummary>;
+    /** Keys whose server-estimated spend since a date is above a limit (all pools). */
+    heavySpenders(since: Date, minCredits: number): Promise<{ key_fp: string; credits: number }[]>;
   };
   audit: {
     record(entry: UnlockAuditEntry): Promise<void>;
@@ -63,4 +70,14 @@ export interface Db {
     list(filter: { keyFingerprint?: string; subjectId?: string; limit?: number }): Promise<UnlockAuditEntry[]>;
   };
   close(): Promise<void>;
+}
+
+export interface UsageSummary {
+  since: string;
+  tool_calls: number;
+  active_keys: number;
+  new_connections: number;
+  credits_by_pool: Record<"data" | "contact" | "kyb", number>;
+  top_tools: { tool: string; calls: number; credits: number }[];
+  top_failures: { tool: string; outcome: string; error_kind: string | null; count: number }[];
 }

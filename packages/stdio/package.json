@@ -1,20 +1,33 @@
 {
   "name": "@billofladingdata/mcp",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Bill of Lading Data MCP server for local (stdio) use. Set BOLD_API_KEY.",
   "type": "module",
   "bin": {
-    "bold-mcp": "dist/index.js"
+    "bold-mcp": "bundle/index.js"
   },
   "files": [
-    "dist"
+    "bundle",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc -b"
+    "build": "tsc -b",
+    "bundle": "node ../../scripts/bundle-stdio.mjs",
+    "prepack": "node ../../scripts/bundle-stdio.mjs"
   },
   "dependencies": {
-    "@bold-mcp/core": "0.0.0",
     "@modelcontextprotocol/sdk": "^1.32.1",
-    "pino": "^10.4.0"
+    "jose": "^6.2.12",
+    "pino": "^10.4.0",
+    "zod": "^4.0.0"
+  },
+  "mcpName": "com.billofladingdata/mcp",
+  "license": "UNLICENSED",
+  "homepage": "https://billofladingdata.com",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@bold-mcp/core": "0.0.0"
   }
 }

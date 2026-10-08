@@ -82,5 +82,5 @@ export default function () {
   const body = res.status === 200 ? rpcBody(res) : null;
   check(res, { "tools/call ok": () => res.status === 200 && body && body.result && !body.result.isError });
   toolLatency.add(res.timings.duration, { tool: call.name });
-  sleep(0.8 + Math.random() * 0.4);
+  sleep(1.0 + Math.random() * 0.4); // stays under the 60 calls a minute per-connection limit
 }

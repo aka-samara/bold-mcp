@@ -134,7 +134,7 @@ describe.runIf(Boolean(PG))("Postgres", () => {
 
   it("applies migrations once", async () => {
     const db = PostgresDb.fromUrl(url());
-    expect(await migrate(db.pool)).toEqual(["001_init.sql", "002_unlock_audit.sql"]);
+    expect(await migrate(db.pool)).toEqual(["001_init.sql", "002_unlock_audit.sql", "003_usage_error_kind.sql"]);
     expect(await migrate(db.pool)).toEqual([]);
     await db.close();
   });

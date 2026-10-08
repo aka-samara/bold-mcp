@@ -1,0 +1,39 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.billofladingdata/mcp",
+  "title": "Bill of Lading Data",
+  "description": "Global import/export trade data: shipments, buyers, suppliers, contacts and KYB, with your API key.",
+  "version": "1.0.0",
+  "websiteUrl": "https://billofladingdata.com",
+  "icons": [{ "src": "https://billofladingdata.com/assets/BLO-LOGO.png", "mimeType": "image/png" }],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.billofladingdata.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Optional. \"Bearer YOUR_API_KEY\". Leave out to sign in with your key in the browser instead.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@billofladingdata/mcp",
+      "version": "1.0.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        { "name": "BOLD_API_KEY", "description": "Your Bill of Lading Data API key", "isRequired": true, "isSecret": true },
+        { "name": "BOLD_MAX_CREDITS", "description": "Per-call credit limit before asking (default 150)", "isRequired": false },
+        { "name": "BOLD_DAILY_CREDITS", "description": "Daily credit limit before asking (default 2000)", "isRequired": false },
+        { "name": "BOLD_ALLOW_CONTACTS", "description": "Set to false to turn off contact unlocks", "isRequired": false },
+        { "name": "BOLD_ALLOW_KYB", "description": "Set to false to turn off KYB unlocks", "isRequired": false }
+      ]
+    }
+  ]
+}

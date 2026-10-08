@@ -24,7 +24,7 @@ export { LATEST_PROTOCOL_VERSION as LATEST_SUPPORTED_PROTOCOL } from "@modelcont
 export type Extra = RequestHandlerExtra<ServerRequest, ServerNotification>;
 
 export const SERVER_NAME = "bill-of-lading-data";
-export const SERVER_VERSION = "0.4.0";
+export const SERVER_VERSION = "1.0.0";
 
 /** How long to wait for the user to answer an elicitation. */
 const ELICIT_TIMEOUT_MS = 5 * 60_000;

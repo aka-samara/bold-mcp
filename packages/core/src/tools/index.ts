@@ -7,6 +7,10 @@ import { getCreditHistory } from "./get_credit_history.js";
 import { getFilterOptions } from "./get_filter_options.js";
 import { getMarketInsights } from "./get_market_insights.js";
 import { searchProducts } from "./search_products.js";
+import { findCompetitors, listExporters, listImporters, searchCompanies } from "./company_lists.js";
+import { getCompanyProfile } from "./get_company_profile.js";
+import { searchKyb } from "./search_kyb.js";
+import { searchShipments } from "./search_shipments.js";
 import type { ToolDefinition } from "./types.js";
 
 /** Free tools (M1). */
@@ -22,4 +26,15 @@ export const FREE_TOOLS: readonly ToolDefinition[] = [
   estimateCostTool,
 ] as unknown as readonly ToolDefinition[];
 
-export const ALL_TOOLS: readonly ToolDefinition[] = [...FREE_TOOLS];
+/** Paid tools (M2). */
+export const PAID_TOOLS: readonly ToolDefinition[] = [
+  searchShipments,
+  listImporters,
+  listExporters,
+  searchCompanies,
+  findCompetitors,
+  getCompanyProfile,
+  searchKyb,
+] as unknown as readonly ToolDefinition[];
+
+export const ALL_TOOLS: readonly ToolDefinition[] = [...FREE_TOOLS, ...PAID_TOOLS];

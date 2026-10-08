@@ -2,6 +2,7 @@ import type { AddressInfo } from "node:net";
 import type { Server } from "node:http";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+import { ElicitRequestSchema, type ElicitResult } from "@modelcontextprotocol/sdk/types.js";
 import { createApp } from "../../packages/http-server/src/app.ts";
 import { loadHttpConfig } from "../../packages/http-server/src/config.ts";
 import { testDeps } from "./harness.ts";
@@ -18,8 +19,9 @@ export async function startHttp(env: NodeJS.ProcessEnv = {}) {
     url,
     logs,
     sessions,
-    async connect(headers: Record<string, string>) {
-      const client = new Client({ name: "http-test", version: "1.0.0" });
+    async connect(headers: Record<string, string>, elicit?: () => ElicitResult) {
+      const client = new Client({ name: "http-test", version: "1.0.0" }, elicit ? { capabilities: { elicitation: { form: {} } } } : undefined);
+      if (elicit) client.setRequestHandler(ElicitRequestSchema, async () => elicit());
       const transport = new StreamableHTTPClientTransport(new URL(`${url}/mcp`), { requestInit: { headers } });
       await client.connect(transport);
       return { client, transport };

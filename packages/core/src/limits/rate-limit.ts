@@ -26,7 +26,9 @@ export const MONTH = 30 * DAY;
 export class MemoryRateLimitStore implements RateLimitStore {
   private readonly counts = new Map<string, { n: number; resetAt: number }>();
 
-  async consume(key: string, windows: readonly RateWindow[], now = Date.now()): Promise<ConsumeResult> {
+  constructor(private readonly clock: () => number = Date.now) {}
+
+  async consume(key: string, windows: readonly RateWindow[], now = this.clock()): Promise<ConsumeResult> {
     this.prune(now);
     const slots = windows.map((w) => {
       const start = Math.floor(now / w.windowMs) * w.windowMs;

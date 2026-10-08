@@ -1,10 +1,12 @@
 import { Writable } from "node:stream";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { ElicitRequestSchema, type ElicitResult } from "@modelcontextprotocol/sdk/types.js";
 import {
   createBoldServer,
   createCoreDeps,
   createLogger,
+  MemoryRateLimitStore,
   DEFAULT_SETTINGS,
   keyFingerprint,
   loadCoreConfig,
@@ -30,7 +32,9 @@ export function memoryLogger() {
 
 export function testDeps(env: NodeJS.ProcessEnv = {}): { deps: CoreDeps; logs: string[] } {
   const { logger, lines } = memoryLogger();
-  const deps = createCoreDeps(loadCoreConfig(env), logger, { env });
+  // A frozen clock keeps rate-limit windows from rolling over mid-test.
+  const frozen = Date.UTC(2026, 0, 1, 12, 0, 30);
+  const deps = createCoreDeps(loadCoreConfig(env), logger, { env, rateLimits: new MemoryRateLimitStore(() => frozen) });
   // No waiting between retries in tests.
   (deps.client as unknown as { sleep: (ms: number) => Promise<void> }).sleep = async () => undefined;
   return { deps, logs: lines };
@@ -49,11 +53,13 @@ export function callerFor(apiKey: string, overrides: Partial<CallerContext> = {}
 }
 
 /** An MCP client connected in memory to a fresh server. */
-export async function connectInMemory(deps: CoreDeps, caller: CallerContext, protocolVersion?: string) {
+export async function connectInMemory(deps: CoreDeps, caller: CallerContext, opts: { elicit?: () => ElicitResult } = {}) {
   const server = createBoldServer({ deps, getCaller: () => caller });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await server.connect(serverTransport);
-  const client = new Client({ name: "test-client", version: "1.0.0" }, protocolVersion ? { capabilities: {} } : undefined);
+  const client = new Client({ name: "test-client", version: "1.0.0" }, opts.elicit ? { capabilities: { elicitation: { form: {} } } } : undefined);
+  const elicit = opts.elicit;
+  if (elicit) client.setRequestHandler(ElicitRequestSchema, async () => elicit());
   await client.connect(clientTransport);
   return { client, server, close: async () => { await client.close(); await server.close(); } };
 }

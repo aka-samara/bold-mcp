@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CONTACT_ROLES, CompanyId, PageNo, Source, TradeType, pageOutputShape, pageSize } from "./common.js";
+import { CONTACT_ROLES, CompanyId, PageNo, TradeType, pageOutputShape, pageSize, paidInputShape, paidOutput } from "./common.js";
 
 export const findCompanyContactsInput = z
   .object({
@@ -9,6 +9,8 @@ export const findCompanyContactsInput = z
     roles: z.array(z.enum(CONTACT_ROLES)).max(7).optional(),
     page_size: pageSize(10, 50),
     page_no: PageNo,
+    volume: z.enum(["lite", "pro"]).default("lite").describe('"pro" costs 2 contact credits per page; use only when the free limit is reached or the user asks for many companies'),
+    ...paidInputShape,
   })
   .superRefine((v, ctx) => {
     if (v.company_id && !v.type) ctx.addIssue({ code: "custom", path: ["type"], message: "type is required with company_id" });
@@ -25,4 +27,4 @@ export const ContactRow = z.object({
   available: z.record(z.string(), z.union([z.number(), z.boolean(), z.string(), z.null()])).describe("Which details exist (counts), without revealing them"),
 });
 
-export const findCompanyContactsOutput = z.object({ source: Source, mode: z.enum(["lite", "pro"]), rows: z.array(ContactRow), ...pageOutputShape });
+export const findCompanyContactsOutput = paidOutput({ mode: z.enum(["lite", "pro"]), rows: z.array(ContactRow), ...pageOutputShape });

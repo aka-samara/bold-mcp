@@ -26,7 +26,9 @@
     "check:inspector": "node scripts/inspector-check.mjs",
     "dev:mock-api": "node scripts/mock-partner-api.mjs",
     "start:http": "node packages/http-server/dist/index.js",
-    "start:stdio": "node packages/stdio/dist/index.js"
+    "start:stdio": "node packages/stdio/dist/index.js",
+    "smoke:live": "npm run build && node --experimental-strip-types --no-warnings scripts/live-smoke.ts",
+    "smoke:mock": "node --experimental-strip-types --no-warnings scripts/live-smoke.ts --mock --paid --unlocks"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

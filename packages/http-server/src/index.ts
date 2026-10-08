@@ -14,7 +14,7 @@ try {
 }
 
 const logger = createLogger({ level: config.LOG_LEVEL, name: "bold-mcp-http" });
-const deps = createCoreDeps(config, logger);
+const deps = createCoreDeps(config, logger, config.BOLD_CONFIRMATION_SECRET ? { confirmationSecret: config.BOLD_CONFIRMATION_SECRET } : {});
 const { app, sessions } = createApp({ config, deps });
 
 const server = app.listen(config.PORT, config.HOST, () => {

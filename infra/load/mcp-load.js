@@ -1,3 +1,4 @@
+/* global __ENV, __VU */
 // k6 load test (brief: 50 concurrent connections for 10 minutes; p95 server
 // overhead under 300 ms). Each virtual user is one MCP connection in header
 // mode with its own key and client IP, calling tools at about one a second.

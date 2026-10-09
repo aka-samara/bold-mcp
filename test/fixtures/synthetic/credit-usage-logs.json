@@ -1,0 +1,43 @@
+{
+  "_meta": {
+    "path": "credit-usage-logs",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "id": "log_synthetic_001",
+              "credit_type": "data_credits",
+              "action": "shipping-records",
+              "credits_used": 1,
+              "created_at": "2026-10-07 12:00:00"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

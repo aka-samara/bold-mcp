@@ -1,0 +1,93 @@
+{
+  "_meta": {
+    "path": "search-filters",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ]
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "hs_codes": [
+            {
+              "label": "940360 - Other wooden furniture",
+              "label_cn": "其他木制家具",
+              "value": "940360"
+            }
+          ],
+          "import_countries": [
+            {
+              "label": "United States",
+              "label_cn": "美国",
+              "value": "US"
+            }
+          ],
+          "export_countries": [
+            {
+              "label": "Vietnam",
+              "label_cn": "越南",
+              "value": "VN"
+            }
+          ],
+          "loading_ports": [
+            {
+              "label": "Haiphong",
+              "label_cn": "海防",
+              "value": "HAIPHONG"
+            }
+          ],
+          "unloading_ports": [
+            {
+              "label": "Long Beach, CA",
+              "label_cn": "长滩",
+              "value": "LONG BEACH, CA"
+            }
+          ],
+          "import_value": {
+            "min": 0,
+            "max": 1250000
+          },
+          "export_value": {
+            "min": 0,
+            "max": 980000
+          },
+          "total_shipments": {
+            "min": 1,
+            "max": 412
+          },
+          "quantities": [
+            {
+              "unit": "PCS",
+              "min": 1,
+              "max": 50000
+            }
+          ],
+          "weights": [
+            {
+              "unit": "KG",
+              "min": 0,
+              "max": 220000
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

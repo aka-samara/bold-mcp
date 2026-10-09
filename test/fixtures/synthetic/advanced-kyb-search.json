@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "path": "advanced-kyb-search",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "kyb_id": "kyb_synthetic_001"
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "id": "kyb_synthetic_001",
+          "name": "ACME HOME FURNISHINGS LLC",
+          "registration_number": "0000001",
+          "status": "Active",
+          "incorporation_date": "2001-04-12",
+          "address": "1 Example Way, Springfield",
+          "legal_form": "LLC",
+          "website": "acme.example",
+          "ticker": null
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

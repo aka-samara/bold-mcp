@@ -1,0 +1,35 @@
+{
+  "name": "bold-mcp",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Bill of Lading Data MCP server (global Partner API, API-key access)",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/core",
+    "packages/http-server",
+    "packages/stdio"
+  ],
+  "scripts": {
+    "build": "tsc -b packages/core packages/http-server packages/stdio",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:unit": "vitest run test/unit",
+    "test:contract": "vitest run test/contract",
+    "check:secrets": "node scripts/check-key-leak.mjs",
+    "gate:m0": "npm run build && node --experimental-strip-types --no-warnings scripts/m0-gate.ts",
+    "fixtures:record": "npm run build && node --experimental-strip-types --no-warnings scripts/record-fixtures.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.1",
+    "eslint": "^10.12.0",
+    "msw": "^3.0.2",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^5.0.3"
+  }
+}

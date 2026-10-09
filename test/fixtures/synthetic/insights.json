@@ -1,0 +1,63 @@
+{
+  "_meta": {
+    "path": "insights",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ],
+    "date_range": {
+      "start_date": "2025-10-01",
+      "end_date": "2026-09-30"
+    }
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "import_summary": {
+            "total_import_value": 1234567.89,
+            "total_shipments": 2048,
+            "total_quantity": 98000,
+            "total_weight": 450000.5,
+            "total_importers": 310,
+            "total_suppliers": 145,
+            "total_countries": 22,
+            "total_ports": 41,
+            "total_hs_codes": 3
+          },
+          "top_10_importer_countries": [
+            {
+              "country": "US",
+              "country_name": "United States",
+              "total_import_value": 900000,
+              "total_shipments": 1500
+            }
+          ],
+          "top_10_exporter_countries": [
+            {
+              "country": "VN",
+              "country_name": "Vietnam",
+              "total_export_value": 700000,
+              "total_shipments": 1100
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

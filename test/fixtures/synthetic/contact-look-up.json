@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "path": "contact-look-up",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "contact_id": "ct_synthetic_001",
+    "lookup_type": [
+      "professional_emails"
+    ]
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "id": "ct_synthetic_001",
+          "name": "Jane Example",
+          "position": "Purchasing Manager",
+          "company": "ACME HOME FURNISHINGS LLC",
+          "profile_pic": "https://example.invalid/p.png",
+          "professional_emails": [
+            {
+              "email": "jane@acme.example",
+              "verification": "A"
+            }
+          ],
+          "personal_emails": [],
+          "phones": []
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

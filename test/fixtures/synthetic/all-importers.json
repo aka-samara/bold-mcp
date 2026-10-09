@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "path": "all-importers",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "rank": 1,
+              "id": "cmp_synthetic_001",
+              "name": "ACME HOME FURNISHINGS LLC",
+              "domain": "acme.example",
+              "country": "US",
+              "total_import_value": 450000,
+              "total_shipments": 88,
+              "total_import_quantity": 12000,
+              "total_weight": 98000,
+              "total_suppliers": 12,
+              "countries": [
+                "VN",
+                "CN"
+              ],
+              "ports": [
+                "LONG BEACH, CA"
+              ],
+              "products": "WOODEN DINING CHAIRS; TABLES"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# bold-mcp
+
+MCP server that lets Bill of Lading Data customers use the global Partner API inside ChatGPT, Claude and other AI tools with their existing API key. See `docs/BRIEF.md` for the spec and `CLAUDE.md` for conventions.
+
+```sh
+npm ci
+npm run lint && npm run typecheck && npm test && npm run build
+npm run check:secrets          # needs BOLD_TEST_API_KEY in the environment
+npm run gate:m0                # live: test key works against BOLD_API_BASE_URL
+npm run fixtures:record        # live: record free-endpoint fixtures (0 credits)
+```
+
+Status: M0 (setup). Tools arrive in M1 (free) and M2 (paid).

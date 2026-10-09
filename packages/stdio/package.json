@@ -1,0 +1,16 @@
+{
+  "name": "@billofladingdata/mcp",
+  "version": "0.0.0",
+  "description": "Bill of Lading Data MCP server for local (stdio) use. Set BOLD_API_KEY.",
+  "type": "module",
+  "bin": {
+    "bold-mcp": "dist/index.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@bold-mcp/core": "0.0.0"
+  }
+}

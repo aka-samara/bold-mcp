@@ -1,0 +1,56 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "note": "Error envelopes shared by every path; messages are placeholders until recorded."
+  },
+  "errors": {
+    "400": {
+      "status": 400,
+      "body": {
+        "code": 400,
+        "message": "date_range exceeds 12 months",
+        "data": null
+      }
+    },
+    "401": {
+      "status": 401,
+      "body": {
+        "code": 401,
+        "message": "Invalid API key",
+        "data": null
+      }
+    },
+    "402": {
+      "status": 402,
+      "body": {
+        "code": 402,
+        "message": "Insufficient credits",
+        "data": null
+      }
+    },
+    "403": {
+      "status": 403,
+      "body": {
+        "code": 403,
+        "message": "Forbidden",
+        "data": null
+      }
+    },
+    "404": {
+      "status": 404,
+      "body": {
+        "code": 404,
+        "message": "Not found",
+        "data": null
+      }
+    },
+    "500": {
+      "status": 500,
+      "body": {
+        "code": 500,
+        "message": "Internal server error",
+        "data": null
+      }
+    }
+  }
+}

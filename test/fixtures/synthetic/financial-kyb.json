@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "path": "financial-kyb",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "kyb_id": "kyb_synthetic_001"
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "years": [
+            "2024",
+            "2025"
+          ],
+          "groups": [
+            {
+              "name": "Income statement",
+              "items": [
+                {
+                  "name": "Revenue",
+                  "values": {
+                    "2024": "1000000",
+                    "2025": "1200000"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

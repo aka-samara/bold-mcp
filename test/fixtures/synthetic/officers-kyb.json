@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "path": "officers-kyb",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "kyb_id": "kyb_synthetic_001",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "name": "John Example",
+              "job_title": "Director",
+              "appointed_date": "2010-02-01",
+              "resigned_date": null,
+              "status": "Active",
+              "date_of_birth": "1970-01",
+              "address_city": "Springfield",
+              "address_country": "US"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

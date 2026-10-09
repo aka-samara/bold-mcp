@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "path": "credit-usage",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {},
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "credits": {
+            "data_credits": {
+              "total": 1000,
+              "used": 0,
+              "remaining": 1000
+            },
+            "contact_credits": {
+              "total": 100,
+              "used": 0,
+              "remaining": 100
+            },
+            "kyb_credits": {
+              "total": 100,
+              "used": 0,
+              "remaining": 100
+            }
+          },
+          "usage": {
+            "shipping-records": 0
+          }
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

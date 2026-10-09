@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "path": "products",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "name": "WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS WOODEN DINING CHAIRS ",
+              "hs_code": "940360",
+              "total_shipments": 88,
+              "total_import_value": 450000,
+              "total_import_quantity": 12000
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

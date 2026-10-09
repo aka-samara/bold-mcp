@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "path": "kyb-search",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "company_name": "Acme Home Furnishings",
+    "country_code": "US"
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": [
+          {
+            "id": "kyb_synthetic_001",
+            "name": "ACME HOME FURNISHINGS LLC",
+            "registration_number": "0000001",
+            "vat_number": null,
+            "country_code": "US",
+            "state": "DE",
+            "jurisdiction": "us_de"
+          }
+        ]
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": []
+      }
+    }
+  }
+}

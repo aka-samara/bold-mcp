@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "path": "company-contacts",
+    "synthetic": true,
+    "note": "Shape inferred from docs/BRIEF.md. Replace with a recorded staging response (npm run fixtures:record)."
+  },
+  "request": {
+    "type": "imp",
+    "company_id": "cmp_synthetic_001",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 37,
+          "list": [
+            {
+              "id": "ct_synthetic_001",
+              "name": "Jane Example",
+              "position": "Purchasing Manager",
+              "company": "ACME HOME FURNISHINGS LLC",
+              "country_code": "US",
+              "linkedin_url": "https://www.linkedin.com/in/example",
+              "profile_pic": "https://example.invalid/p.png",
+              "teaser": {
+                "professional_emails": 1,
+                "personal_emails": 0,
+                "phones": 1
+              }
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

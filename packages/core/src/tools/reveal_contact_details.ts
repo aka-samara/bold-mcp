@@ -7,7 +7,7 @@ type LookupType = (typeof LOOKUP_TYPES)[number];
 
 function emails(v: unknown) {
   return (Array.isArray(v) ? v : [])
-    .map((e) => (typeof e === "string" ? { email: e, verification: null } : { email: toStr((e as Record<string, unknown>)?.email), verification: toStr((e as Record<string, unknown>)?.verification ?? (e as Record<string, unknown>)?.grade) }))
+    .map((e) => (typeof e === "string" ? { email: e, verification: null } : { email: toStr((e as Record<string, unknown>)?.email), verification: toStr((e as Record<string, unknown>)?.verification ?? (e as Record<string, unknown>)?.smtp_valid ?? (e as Record<string, unknown>)?.grade) }))
     .filter((e): e is { email: string; verification: string | null } => e.email !== null);
 }
 
@@ -40,8 +40,8 @@ export const revealContactDetails = defineTool({
       ? {
           contact_id: toStr(o.id ?? o.contact_id) ?? args.contact_id,
           name: toStr(o.name),
-          position: toStr(o.position ?? o.title),
-          company: toStr(o.company ?? o.company_name),
+          position: toStr(o.position ?? o.current_title ?? o.title),
+          company: toStr(o.company ?? o.current_employer ?? o.company_name),
           country_code: toStr(o.country_code),
           linkedin_url: toStr(o.linkedin_url),
           professional_emails: want.has("professional_emails") ? emails(o.professional_emails) : [],

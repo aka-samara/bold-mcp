@@ -58,6 +58,8 @@ jobs:
         run: npm run check:inspector
       - name: Smoke run and credit reconciliation against the mock API
         run: npm run smoke:mock
+      - name: Packed stdio package starts and lists 18 tools
+        run: npm run check:stdio-package
 
   key-leak:
     name: API key leak check

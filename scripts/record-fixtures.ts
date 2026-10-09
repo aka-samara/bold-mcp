@@ -8,6 +8,9 @@
 // Options: --company "<name>" (default "walmart"), --hs 940360, --type imp|exp,
 //          --max-credits N (default 500; aborts before spending more).
 //
+// Contact paths are redacted of personal data (scripts/redact-personal.ts);
+// non-2xx responses are reported but not written.
+//
 // Budget rules (from the job brief): page_size 1, each unlock endpoint at most
 // once per run, Credit Usage Logs checked at the end.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -15,6 +18,7 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { ENDPOINTS, getEndpoint, type EndpointPath } from "@bold-mcp/core";
 import { liveContext, readBalances } from "./live.ts";
+import { redactPersonal } from "./redact-personal.ts";
 
 const argv = process.argv.slice(2);
 const flag = (name: string) => argv.includes(`--${name}`);
@@ -134,12 +138,15 @@ for (const path of ORDER) {
   if (path === "company-contacts" && row?.id) ids.contact_id = String(row.id);
   if (path === "kyb-search" && row?.id) ids.kyb_id = String(row.id);
 
+  // A 4xx/5xx is not an `ok` example (KYB Search returned 404 for every company_id on 9 Oct 2026).
+  if (res.status < 200 || res.status >= 300) continue;
+
   const synthetic = JSON.parse(readFileSync(join(synthDir, `${path}.json`), "utf8")) as { responses: Record<string, unknown> };
-  const fixture = ctx.scrub({
+  const fixture = redactPersonal(path, ctx.scrub({
     _meta: { path, synthetic: false, note: `Recorded ${new Date().toISOString().slice(0, 10)} from ${ctx.baseUrl}. The empty response is still synthetic.` },
     request: body,
     responses: { ok: { status: res.status, body: res.body }, empty: synthetic.responses.empty },
-  });
+  }));
   writeFileSync(join(outDir, `${path}.json`), `${JSON.stringify(fixture, null, 2)}\n`);
 }
 

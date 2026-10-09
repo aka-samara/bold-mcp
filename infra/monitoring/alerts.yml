@@ -1,0 +1,52 @@
+# Prometheus alert rules (brief: "Monitoring and alerts"). Load into Prometheus
+# or any compatible service (Grafana Cloud, Amazon Managed Prometheus, Cloud
+# Monitoring with PromQL). Metrics come from BOLD_METRICS_PORT on each instance.
+# Per-key alerts (spend per hour, estimate vs logs) come from the admin jobs,
+# because key fingerprints are kept out of metric labels.
+groups:
+  - name: bold-mcp
+    rules:
+      - alert: BoldMcpToolErrorRateHigh
+        expr: |
+          sum(rate(bold_tool_calls_total{outcome=~"tool_error|exception"}[5m]))
+            / clamp_min(sum(rate(bold_tool_calls_total[5m])), 1e-9) > 0.05
+        for: 5m
+        labels: { severity: page }
+        annotations:
+          summary: "More than 5% of tool calls are failing"
+          runbook: "Check upstream Partner API health and recent deploys; bold_tool_calls_total by tool and outcome shows where."
+
+      - alert: BoldMcpTokenLatencyHigh
+        expr: histogram_quantile(0.95, sum by (le) (rate(bold_token_duration_seconds_bucket[5m]))) > 1
+        for: 5m
+        labels: { severity: page }
+        annotations:
+          summary: "/token p95 above 1 s (clients time out sign-in at 10 s)"
+
+      - alert: BoldMcpFailedKeyValidationsSpike
+        expr: |
+          sum(rate(bold_key_validations_total{result="invalid"}[10m])) * 600 > 50
+            or sum(rate(bold_connect_attempts_total{result="wrong_key"}[10m])) * 600 > 50
+        for: 5m
+        labels: { severity: ticket }
+        annotations:
+          summary: "Many rejected API keys in 10 minutes (possible key guessing)"
+
+      - alert: BoldMcpKmsErrors
+        expr: increase(bold_kms_errors_total[5m]) > 0
+        labels: { severity: page }
+        annotations:
+          summary: "Key vault (KMS) errors: OAuth connections cannot read their keys"
+
+      - alert: BoldMcpUpstreamRateLimited
+        expr: sum(increase(bold_rate_limited_total{scope=~"company-search-free|company-contacts|advanced-company-contacts"}[1h])) > 100
+        labels: { severity: info }
+        annotations:
+          summary: "Customers are hitting Partner API free-tier limits often"
+
+      - alert: BoldMcpInstanceDown
+        expr: up{job="bold-mcp"} == 0
+        for: 2m
+        labels: { severity: page }
+        annotations:
+          summary: "A bold-mcp instance is not answering /metrics"

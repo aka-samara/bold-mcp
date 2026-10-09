@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "synthetic": false
+  },
+  "errors": {
+    "401": {
+      "status": 401,
+      "body": {
+        "code": 401,
+        "message": "Invalid API key",
+        "data": null
+      }
+    }
+  }
+}

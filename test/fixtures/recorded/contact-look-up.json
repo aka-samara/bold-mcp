@@ -1,0 +1,62 @@
+{
+  "_meta": {
+    "path": "contact-look-up",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "contact_id": "305677387",
+    "lookup_type": [
+      "professional_emails"
+    ]
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "id": 305677387,
+          "name": "Redacted",
+          "profile_pic": null,
+          "linkedin_url": "https://www.linkedin.com/in/redacted",
+          "connections": 11,
+          "location": "Redacted",
+          "current_title": "Assistant Manager",
+          "current_employer": "Samsung Electronics HCMC CE Complex",
+          "current_employer_id": 36865994,
+          "current_employer_domain": "samsung.com",
+          "current_employer_website": "https://www.samsung.com",
+          "current_employer_linkedin_url": "https://www.linkedin.com/company/samsung-electronics-hcmc-ce-complex",
+          "birth_year": null,
+          "region_latitude": 0,
+          "region_longitude": 0,
+          "city": "Redacted",
+          "region": null,
+          "country": "Viet Nam",
+          "country_code": "VN",
+          "phones": [],
+          "professional_emails": [
+            {
+              "email": "redacted@samsung.com",
+              "smtp_valid": "valid",
+              "type": "professional",
+              "last_validation_check": null,
+              "grade": "A"
+            }
+          ],
+          "personal_emails": []
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

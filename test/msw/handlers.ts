@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { DEFAULT_API_BASE_URL, ENDPOINTS, type EndpointPath } from "@bold-mcp/core";
-import { loadErrorFixtures, loadFixtures } from "../fixtures/load.ts";
+import { loadErrorFixtures, loadFixtures, type FixtureSource } from "../fixtures/load.ts";
 
 export type Scenario = "ok" | "empty" | "400" | "401" | "402" | "403" | "404" | "500";
 
@@ -16,8 +16,8 @@ export interface PartnerApiMock {
 }
 
 /** msw handlers serving fixtures for all 22 global paths. */
-export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL, opts: { invalidKeys?: string[] } = {}): PartnerApiMock {
-  const fixtures = loadFixtures();
+export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL, opts: { invalidKeys?: string[]; fixtures?: FixtureSource } = {}): PartnerApiMock {
+  const fixtures = loadFixtures(opts.fixtures);
   const errors = loadErrorFixtures();
   const scenarios = new Map<string, Scenario>();
   const overrides = new Map<string, { status: number; body: unknown }>();

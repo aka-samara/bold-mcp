@@ -1,6 +1,6 @@
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import express, { type Request, type Response, type Router } from "express";
-import { ApiKeySchema, DEFAULT_SETTINGS, HOUR, keyFingerprint, MINUTE, parseCreditUsage, PartnerApiError, type SpendingSettings } from "@bold-mcp/core";
+import { ApiKeySchema, DEFAULT_SETTINGS, HOUR, keyFingerprint, MINUTE, parseCreditUsage, PartnerApiError, type Balances, type SpendingSettings } from "@bold-mcp/core";
 import type { OAuthClient } from "../db/types.js";
 import type { Services } from "../services.js";
 import type { EncryptedKey } from "../vault/key-vault.js";
@@ -46,6 +46,9 @@ class AuthorizeError extends Error {
     super(message);
   }
 }
+
+const zeroBalanceOf = (b: Balances) =>
+  [b.data, b.contact, b.kyb].every((p) => (p.total ?? 0) === 0 && (p.remaining ?? 0) === 0);
 
 const str = (v: unknown): string | undefined => (typeof v === "string" && v.length > 0 ? v : undefined);
 const s256 = (verifier: string) => createHash("sha256").update(verifier).digest("base64url");
@@ -261,10 +264,12 @@ export function oauthRouter(s: Services): Router {
     }
     try {
       if (!s.csrf.verify(str(body.csrf), readCookie(req, CSRF_COOKIE), bindTo(a))) {
+        s.metrics.connectAttempts.inc({ result: "csrf" });
         return renderForm(res, a, { error: "This page expired. Paste your key again.", status: 403 });
       }
       const limit = await deps.rateLimits.consume(`ip:connect:${clientIp(req)}`, [{ name: "15 minutes", windowMs: 15 * MINUTE, limit: 5 }]);
       if (!limit.allowed) {
+        s.metrics.connectAttempts.inc({ result: "rate_limited" });
         const wait = Math.ceil(limit.retryAfterMs / 60_000);
         return renderForm(res, a, { error: `Too many attempts. Try again in ${wait} minute${wait === 1 ? "" : "s"}.`, status: 429 });
       }
@@ -282,7 +287,11 @@ export function oauthRouter(s: Services): Router {
       try {
         balances = parseCreditUsage((await s.validationClient.call("credit-usage", {}, apiKey)).data).balances;
       } catch (err) {
-        if (err instanceof PartnerApiError && err.kind === "unauthorized") return renderForm(res, a, { error: "Key not recognised. Paste it again.", settings, status: 400 });
+        if (err instanceof PartnerApiError && err.kind === "unauthorized") {
+          s.metrics.connectAttempts.inc({ result: "wrong_key" });
+          return renderForm(res, a, { error: "Key not recognised. Paste it again.", settings, status: 400 });
+        }
+        s.metrics.connectAttempts.inc({ result: "check_failed" });
         deps.logger.warn({ err_kind: err instanceof PartnerApiError ? err.kind : "unknown" }, "key check failed");
         return renderForm(res, a, { error: "We couldn't check your key just now. Please try again.", settings, status: 503 });
       }
@@ -302,8 +311,9 @@ export function oauthRouter(s: Services): Router {
       const code = randomBytes(32).toString("base64url");
       await s.ephemeral.set(`code:${createHash("sha256").update(code).digest("hex")}`, JSON.stringify(record), CODE_TTL_MS);
       deps.logger.info({ key_fp: record.fingerprint, client_id: a.clientId }, "connect: key accepted");
+      s.metrics.connectAttempts.inc({ result: zeroBalanceOf(balances) ? "success_zero_balance" : "success" });
 
-      const zero = [balances.data, balances.contact, balances.kyb].every((p) => (p.total ?? 0) === 0 && (p.remaining ?? 0) === 0);
+      const zero = zeroBalanceOf(balances);
       const nonce = pageHeaders(res);
       res.clearCookie(CSRF_COOKIE, { path: "/authorize" });
       res.type("html").send(
@@ -328,6 +338,12 @@ export function oauthRouter(s: Services): Router {
     void res.status(status).set("Cache-Control", "no-store").json({ error, error_description: description });
 
   router.post("/token", cors, express.urlencoded({ extended: false, limit: "16kb" }), express.json({ limit: "16kb" }), async (req, res) => {
+    const started = Date.now();
+    res.on("finish", () => {
+      const grant = typeof req.body?.grant_type === "string" && ["authorization_code", "refresh_token"].includes(req.body.grant_type) ? req.body.grant_type : "other";
+      s.metrics.tokenRequests.inc({ grant, status: String(res.statusCode) });
+      s.metrics.tokenDuration.observe({ grant }, (Date.now() - started) / 1000);
+    });
     const limit = await deps.rateLimits.consume(`ip:token:${clientIp(req)}`, [{ name: "minute", windowMs: MINUTE, limit: 60 }]);
     if (!limit.allowed) return tokenError(res, "slow_down", "Too many token requests", 429);
     const b = (req.body ?? {}) as Record<string, unknown>;

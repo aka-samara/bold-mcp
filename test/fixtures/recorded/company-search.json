@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "path": "company-search",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "company_name": "samsung",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 1,
+          "total": 822,
+          "records": [
+            {
+              "id": "35N101762513",
+              "name": "SAMSUNG ELECTRONICS HCMC CE COMPLEX CO., LTD.",
+              "country": {
+                "name": "VIETNAM",
+                "code": "VN",
+                "name_cn": "越南"
+              },
+              "total_shipments": 833521,
+              "total_importer": 1,
+              "total_suppliers": 761,
+              "total_weight": 475858.5159394536,
+              "total_import_value": 4635416521.215525,
+              "total_import_quantity": 45242329427.237076,
+              "total_import_products": 1102,
+              "total_export_value": 0,
+              "total_export_quantity": 0,
+              "total_export_products": 0
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

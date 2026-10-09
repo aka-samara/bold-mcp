@@ -154,3 +154,30 @@ export function toStrArray(value: unknown): string[] {
   const s = toStr(value);
   return s ? s.split(/\s*[;,]\s*/).filter(Boolean) : [];
 }
+
+/** A country given as a code string or as `{ name, code }` (live API) → its 2-letter code, else its name. */
+export function toCountry(value: unknown): string | null {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    const o = value as Record<string, unknown>;
+    return toStr(o.code) ?? toStr(o.name);
+  }
+  return toStr(value);
+}
+
+/** Country lists (strings or `{ name, code }` objects), merged and de-duplicated. */
+export function toCountryList(...values: unknown[]): string[] {
+  const out = new Set<string>();
+  for (const value of values) {
+    const items = Array.isArray(value) ? value : toStrArray(value);
+    for (const item of items) {
+      const c = toCountry(item);
+      if (c) out.add(c);
+    }
+  }
+  return [...out];
+}
+
+/** String lists merged and de-duplicated (e.g. loading and unloading ports). */
+export function toStrList(...values: unknown[]): string[] {
+  return [...new Set(values.flatMap((v) => toStrArray(v)))];
+}

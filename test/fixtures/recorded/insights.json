@@ -1,0 +1,290 @@
+{
+  "_meta": {
+    "path": "insights",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ]
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "import_summary": {
+            "total_import_value": 5305038883.24906,
+            "total_shipments": 1424464,
+            "total_import_quantity": 35233094019.7953,
+            "total_weight": 2211099134.502183,
+            "average_shipment_weight": 1552.2323726694271,
+            "total_importers": 55463,
+            "total_suppliers": 39073,
+            "total_import_countries": 210,
+            "total_export_countries": 171,
+            "total_loading_ports": 2150,
+            "total_unloading_ports": 2979,
+            "total_hs_codes": 657
+          },
+          "top_10_importer_countries": [
+            {
+              "rank": 1,
+              "country": {
+                "name": "UNITED STATES",
+                "name_cn": "美国",
+                "code": "US"
+              },
+              "total_value": 1951575265.1185465,
+              "total_shipments": 539390,
+              "total_quantity": 63189729.06060691,
+              "total_weight": 678214509.1094434
+            },
+            {
+              "rank": 2,
+              "country": {
+                "name": "BULGARIA",
+                "name_cn": "保加利亚",
+                "code": "BG"
+              },
+              "total_value": 353557635.2193663,
+              "total_shipments": 59,
+              "total_quantity": 4872,
+              "total_weight": 177216.68006896973
+            },
+            {
+              "rank": 3,
+              "country": {
+                "name": "SINGAPORE",
+                "name_cn": "新加坡",
+                "code": "SG"
+              },
+              "total_value": 301103666.55044127,
+              "total_shipments": 70789,
+              "total_quantity": 540374.8500867914,
+              "total_weight": 95347009.73381561
+            },
+            {
+              "rank": 4,
+              "country": {
+                "name": "NETHERLANDS",
+                "name_cn": "荷兰",
+                "code": "NL"
+              },
+              "total_value": 196692326.95869434,
+              "total_shipments": 22740,
+              "total_quantity": 3590772.4999965355,
+              "total_weight": 9310211.10203787
+            },
+            {
+              "rank": 5,
+              "country": {
+                "name": "ITALY",
+                "name_cn": "意大利",
+                "code": "IT"
+              },
+              "total_value": 148531951.2926005,
+              "total_shipments": 931,
+              "total_quantity": 75472.97999954224,
+              "total_weight": 253034.31938409805
+            },
+            {
+              "rank": 6,
+              "country": {
+                "name": "JAPAN",
+                "name_cn": "日本",
+                "code": "JP"
+              },
+              "total_value": 147751794.19578505,
+              "total_shipments": 68026,
+              "total_quantity": 4765518.720003586,
+              "total_weight": 112112815.10969041
+            },
+            {
+              "rank": 7,
+              "country": {
+                "name": "SPAIN",
+                "name_cn": "西班牙",
+                "code": "ES"
+              },
+              "total_value": 143036539.22164136,
+              "total_shipments": 11326,
+              "total_quantity": 725584.3399994373,
+              "total_weight": 6976212.171854168
+            },
+            {
+              "rank": 8,
+              "country": {
+                "name": "AUSTRALIA",
+                "name_cn": "澳大利亚",
+                "code": "AU"
+              },
+              "total_value": 142918996.10473555,
+              "total_shipments": 38512,
+              "total_quantity": 1371461.1800521482,
+              "total_weight": 30248256.02235478
+            },
+            {
+              "rank": 9,
+              "country": {
+                "name": "MEXICO",
+                "name_cn": "墨西哥",
+                "code": "MX"
+              },
+              "total_value": 133186664.16999793,
+              "total_shipments": 32385,
+              "total_quantity": 4089957.8001143932,
+              "total_weight": 16029143.985567
+            },
+            {
+              "rank": 10,
+              "country": {
+                "name": "VIETNAM",
+                "name_cn": "越南",
+                "code": "VN"
+              },
+              "total_value": 126134765.00266334,
+              "total_shipments": 58537,
+              "total_quantity": 2364418.0800314993,
+              "total_weight": 2169994.0012844205
+            }
+          ],
+          "top_10_exporter_countries": [
+            {
+              "rank": 1,
+              "country": {
+                "name": "INDONESIA",
+                "name_cn": "印度尼西亚",
+                "code": "ID"
+              },
+              "total_value": 1984447495.1364248,
+              "total_shipments": 137158,
+              "total_quantity": 11241489.430045225,
+              "total_weight": 289397867.251543
+            },
+            {
+              "rank": 2,
+              "country": {
+                "name": "VIETNAM",
+                "name_cn": "越南",
+                "code": "VN"
+              },
+              "total_value": 1940009592.2462227,
+              "total_shipments": 601463,
+              "total_quantity": 32140019.378111895,
+              "total_weight": 67630526.3477397
+            },
+            {
+              "rank": 3,
+              "country": {
+                "name": "CHINA",
+                "name_cn": "中国",
+                "code": "CN"
+              },
+              "total_value": 392590067.7144542,
+              "total_shipments": 191100,
+              "total_quantity": 66003013.11683336,
+              "total_weight": 610951310.5148853
+            },
+            {
+              "rank": 4,
+              "country": {
+                "name": "INDIA",
+                "name_cn": "印度",
+                "code": "IN"
+              },
+              "total_value": 259972155.7382801,
+              "total_shipments": 144321,
+              "total_quantity": 3650282.650086956,
+              "total_weight": 10688385.9958916
+            },
+            {
+              "rank": 5,
+              "country": {
+                "name": "MALAYSIA",
+                "name_cn": "马来西亚",
+                "code": "MY"
+              },
+              "total_value": 208231657.35903198,
+              "total_shipments": 113138,
+              "total_quantity": 35103221687.938324,
+              "total_weight": 961981468.9088762
+            },
+            {
+              "rank": 6,
+              "country": {
+                "name": "MEXICO",
+                "name_cn": "墨西哥",
+                "code": "MX"
+              },
+              "total_value": 126914299.87267452,
+              "total_shipments": 14755,
+              "total_quantity": 975666.4100000113,
+              "total_weight": 2673006.4740868434
+            },
+            {
+              "rank": 7,
+              "country": {
+                "name": "COLOMBIA",
+                "name_cn": "哥伦比亚",
+                "code": "CO"
+              },
+              "total_value": 34649588.956637144,
+              "total_shipments": 4295,
+              "total_quantity": 401682,
+              "total_weight": 5920696.094836526
+            },
+            {
+              "rank": 8,
+              "country": {
+                "name": "BRAZIL",
+                "name_cn": "巴西",
+                "code": "BR"
+              },
+              "total_value": 32367456.04304705,
+              "total_shipments": 13823,
+              "total_quantity": 1141723.3408203125,
+              "total_weight": 71633785.28991835
+            },
+            {
+              "rank": 9,
+              "country": {
+                "name": "ITALY",
+                "name_cn": "意大利",
+                "code": "IT"
+              },
+              "total_value": 31844361.299473803,
+              "total_shipments": 12234,
+              "total_quantity": 500639.82940150425,
+              "total_weight": 6394895.2064467985
+            },
+            {
+              "rank": 10,
+              "country": {
+                "name": "POLAND",
+                "name_cn": "波兰",
+                "code": "PL"
+              },
+              "total_value": 24913021.67203609,
+              "total_shipments": 38457,
+              "total_quantity": 161767.17999999784,
+              "total_weight": 12360177.643016651
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

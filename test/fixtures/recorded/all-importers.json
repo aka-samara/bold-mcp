@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "path": "all-importers",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 1,
+          "total": 55463,
+          "records": [
+            {
+              "rank": 1,
+              "id": "NBDX2H181131182",
+              "name": "ЮСК УКРАЇНА, ТОВ",
+              "domain": "jysk.ua",
+              "country": {
+                "name": "UKRAINE",
+                "code": "UA",
+                "name_cn": "乌克兰"
+              },
+              "total_import_value": 12582978.535906315,
+              "total_shipments": 29020,
+              "total_import_quantity": 0,
+              "total_weight": 8653544.462869167,
+              "total_suppliers": 3,
+              "import_countries": [
+                {
+                  "name": "UKRAINE",
+                  "name_cn": "乌克兰",
+                  "code": "UA"
+                }
+              ],
+              "export_countries": [
+                {
+                  "name": "POLAND",
+                  "name_cn": "波兰",
+                  "code": "PL"
+                }
+              ],
+              "loading_ports": [],
+              "unloading_ports": [],
+              "products": "МЕБЛІ ПОБУТОВІ ЗАГАЛЬНОГО ПРИЗНАЧЕННЯ В РОЗІБРАНОМУ СТАНІ КОМПЛЕКТ САДОВИХ МЕБЛІВ В КОМПЛЕКТІ СТІЛ ТА ДВА СТІЛЬЦЯ СКЛАД ДСП ЛАМІНОВАНЕ МЕТАЛЕВА ОСНОВА АРТИКУЛ 3601307 МОДЕЛЬ GA DSTRUP ЯКІСТЬ BASIC ВСЬОГО 2КОМПЛ ТОРГОВЕЛЬНА МАРКА JYSK ВИРОБНИК JYSK A S КРАЇНА ВИРОБНИЦТВА CN КИТАЙСЬКА НАРОДНА РЕСПУБЛІКА"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

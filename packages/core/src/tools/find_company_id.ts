@@ -1,6 +1,6 @@
 import { compact, SOURCE } from "../schemas/common.js";
 import { findCompanyIdInput, findCompanyIdOutput } from "../schemas/find_company_id.js";
-import { extractRows, pageInfo, toStr } from "../shaping/normalize.js";
+import { extractRows, pageInfo, toCountry, toStr } from "../shaping/normalize.js";
 import { defineTool, FREE_READ_ONLY } from "./types.js";
 
 export const findCompanyId = defineTool({
@@ -23,7 +23,7 @@ export const findCompanyId = defineTool({
     const rows = extractRows(data)
       .map((r) => {
         const o = (r ?? {}) as Record<string, unknown>;
-        return { company_id: toStr(o.id ?? o.company_id), name: toStr(o.name), domain: toStr(o.domain), country: toStr(o.country) };
+        return { company_id: toStr(o.id ?? o.company_id), name: toStr(o.name), domain: toStr(o.domain), country: toCountry(o.country) };
       })
       .filter((r): r is typeof r & { company_id: string } => r.company_id !== null);
     const page = pageInfo(data, rows.length, args.page_no, args.page_size);

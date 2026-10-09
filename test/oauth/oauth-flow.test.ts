@@ -363,6 +363,10 @@ describe("using a connection", () => {
     expect(logs).not.toContain(tokens.access_token);
     expect(logs).not.toContain(tokens.refresh_token);
     expect(logs).toContain("connection created");
+    const metrics = h.services.metrics.render();
+    expect(metrics).toContain('bold_connect_attempts_total{result="success"} 1');
+    expect(metrics).toMatch(/bold_token_requests_total\{grant="authorization_code",status="200"\} 1/);
+    expect(metrics).not.toContain(FAKE_KEY);
   });
 });
 

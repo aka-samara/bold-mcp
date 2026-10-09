@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "path": "products",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 1,
+          "total": 657,
+          "records": [
+            {
+              "name": "DISPLAYS HTS 940360 INV 223/26EX PO XXXXXX, 828114 HBL 7520663P9790CERAMIC TILES HTS 690721 INV 222/26EX PO XXXX13, 828114 HBL 7520663P9790",
+              "hs_code": "940360",
+              "total_shipments": 7107,
+              "total_import_value": 0,
+              "total_import_quantity": 28007501
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { SOURCE } from "../schemas/common.js";
 import { getCompanyProfileInput, getCompanyProfileOutput } from "../schemas/get_company_profile.js";
-import { normalizeFlat, toBool, toStr, toStrArray } from "../shaping/normalize.js";
+import { normalizeFlat, toBool, toCountry, toCountryList, toStr, toStrArray, toStrList } from "../shaping/normalize.js";
 import { defineTool, PAID_READ_ONLY } from "./types.js";
 
 const TOTAL_KEY = /^(total_|no_of_|number_of_)/;
@@ -28,15 +28,15 @@ export const getCompanyProfile = defineTool({
       ? {
           company_id: toStr(o.id ?? o.company_id) ?? args.company_id,
           name: toStr(o.name),
-          country: toStr(o.country),
+          country: toCountry(o.country),
           domain: toStr(o.domain),
           tags: toStrArray(o.tags),
           contact_info: normalizeFlat(o.contact_info),
           social_links: normalizeFlat(o.social_links),
           totals: Object.fromEntries(Object.entries(flat).filter(([k]) => TOTAL_KEY.test(k))),
-          countries: toStrArray(o.countries),
-          ports: toStrArray(o.ports),
-          industry_classifications: { hs: toStrArray(ic.hs ?? ic.hs_codes), naics: toStrArray(ic.naics), sitc: toStrArray(ic.sitc) },
+          countries: toCountryList(o.countries, o.import_countries, o.export_countries),
+          ports: toStrList(o.ports, o.loading_ports, o.unloading_ports),
+          industry_classifications: { hs: toStrArray(ic.hs ?? ic.hs_codes), naics: toStrArray(ic.naics ?? ic.naics_codes), sitc: toStrArray(ic.sitc ?? ic.sitc_codes) },
           is_logistics_company: toBool(o.is_logistics_company),
         }
       : null;

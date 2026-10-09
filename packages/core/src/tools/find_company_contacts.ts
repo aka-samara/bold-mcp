@@ -1,7 +1,24 @@
 import { compact, SOURCE } from "../schemas/common.js";
 import { findCompanyContactsInput, findCompanyContactsOutput } from "../schemas/find_company_contacts.js";
-import { extractRows, normalizeFlat, pageInfo, toStr } from "../shaping/normalize.js";
+import { extractRows, normalizeFlat, pageInfo, toBool, toNumber, toStr } from "../shaping/normalize.js";
 import { defineTool, FREE_READ_ONLY } from "./types.js";
+
+/**
+ * Which details exist, as counts. The live teaser has `*_count` fields next to
+ * arrays of email domains; only the counts (and the premium-phone flag) are kept.
+ */
+function available(teaser: unknown): Record<string, number | boolean | null> {
+  const t = (teaser ?? {}) as Record<string, unknown>;
+  if (!("professional_emails_count" in t || "phones_count" in t || "personal_emails_count" in t)) return normalizeFlat(t) as Record<string, number | boolean | null>;
+  const out: Record<string, number | boolean | null> = {
+    professional_emails: toNumber(t.professional_emails_count),
+    personal_emails: toNumber(t.personal_emails_count),
+    phones: toNumber(t.phones_count),
+  };
+  const premium = toBool(t.is_premium_phone_available);
+  if (premium !== null) out.premium_phone_available = premium;
+  return out;
+}
 
 // Not idempotent: Pro mode spends contact credits on every call (brief).
 const ANNOTATIONS = { ...FREE_READ_ONLY, idempotentHint: false, title: "Find company contacts" };
@@ -41,7 +58,7 @@ export const findCompanyContacts = defineTool({
           company: toStr(o.company),
           country_code: toStr(o.country_code),
           linkedin_url: toStr(o.linkedin_url),
-          available: normalizeFlat(o.teaser),
+          available: available(o.teaser),
         };
       })
       .filter((r): r is typeof r & { contact_id: string } => r.contact_id !== null);

@@ -1,0 +1,3063 @@
+{
+  "_meta": {
+    "path": "search-filters",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ]
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "hs_codes": [
+            {
+              "label": "940360100000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360100000"
+            },
+            {
+              "label": "94036000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036000"
+            },
+            {
+              "label": "9403600000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403600000"
+            },
+            {
+              "label": "940360000000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360000000"
+            },
+            {
+              "label": "94036000000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036000000"
+            },
+            {
+              "label": "940360 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360"
+            },
+            {
+              "label": "9403600300 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403600300"
+            },
+            {
+              "label": "940360900 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360900"
+            },
+            {
+              "label": "9403600 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403600"
+            },
+            {
+              "label": "94036090090 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036090090"
+            },
+            {
+              "label": "9403608081 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403608081"
+            },
+            {
+              "label": "940389 - Furniture; of cane, osier, or similar materials (other than bamboo or rattan)",
+              "label_cn": "",
+              "value": "940389"
+            },
+            {
+              "label": "94036002 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036002"
+            },
+            {
+              "label": "9403609000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403609000"
+            },
+            {
+              "label": "94036019 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036019"
+            },
+            {
+              "label": "94036011 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036011"
+            },
+            {
+              "label": "9403608040 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403608040"
+            },
+            {
+              "label": "9403609900 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403609900"
+            },
+            {
+              "label": "94036061 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036061"
+            },
+            {
+              "label": "94036063 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036063"
+            },
+            {
+              "label": "9403603000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403603000"
+            },
+            {
+              "label": "94032090 - Furniture; metal, other than for office use",
+              "label_cn": "",
+              "value": "94032090"
+            },
+            {
+              "label": "94036010090 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036010090"
+            },
+            {
+              "label": "94036065 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036065"
+            },
+            {
+              "label": "94036067 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036067"
+            },
+            {
+              "label": "940360300000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360300000"
+            },
+            {
+              "label": "94036081 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036081"
+            },
+            {
+              "label": "94036083 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036083"
+            },
+            {
+              "label": "94036085 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036085"
+            },
+            {
+              "label": "940389900 - Furniture; of cane, osier, or similar materials (other than bamboo or rattan)",
+              "label_cn": "",
+              "value": "940389900"
+            },
+            {
+              "label": "94036030000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036030000"
+            },
+            {
+              "label": "94036080 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036080"
+            },
+            {
+              "label": "94036087 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036087"
+            },
+            {
+              "label": "681099 - Cement, concrete or artificial stone; articles (other than prefabricated structural components for building or civil engineering), whether or not reinforced, n.e.c. in heading no. 6810",
+              "label_cn": "",
+              "value": "681099"
+            },
+            {
+              "label": "940360804 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360804"
+            },
+            {
+              "label": "9403600200 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403600200"
+            },
+            {
+              "label": "94036079 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036079"
+            },
+            {
+              "label": "9403601099 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403601099"
+            },
+            {
+              "label": "940360809 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360809"
+            },
+            {
+              "label": "9403601000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403601000"
+            },
+            {
+              "label": "94036099 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036099"
+            },
+            {
+              "label": "9403601001 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403601001"
+            },
+            {
+              "label": "9403601009 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403601009"
+            },
+            {
+              "label": "940340 - Furniture; wooden, for kitchen use",
+              "label_cn": "",
+              "value": "940340"
+            },
+            {
+              "label": "94038900 - Furniture; of cane, osier, or similar materials (other than bamboo or rattan)",
+              "label_cn": "",
+              "value": "94038900"
+            },
+            {
+              "label": "9403600100 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403600100"
+            },
+            {
+              "label": "94036090 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036090"
+            },
+            {
+              "label": "940360000090 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360000090"
+            },
+            {
+              "label": "94036059 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036059"
+            },
+            {
+              "label": "940169 - Seats; with wooden frames, not upholstered, (excluding medical, surgical, dental, veterinary or barber furniture)",
+              "label_cn": "",
+              "value": "940169"
+            },
+            {
+              "label": "94036001 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036001"
+            },
+            {
+              "label": "94036003 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036003"
+            },
+            {
+              "label": "732620900",
+              "label_cn": "",
+              "value": "732620900"
+            },
+            {
+              "label": "94036051 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036051"
+            },
+            {
+              "label": "9403609090 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403609090"
+            },
+            {
+              "label": "9403609990 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403609990"
+            },
+            {
+              "label": "9403609001 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403609001"
+            },
+            {
+              "label": "00219422630",
+              "label_cn": "",
+              "value": "00219422630"
+            },
+            {
+              "label": "94036010 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036010"
+            },
+            {
+              "label": "940360000010 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360000010"
+            },
+            {
+              "label": "9403608093 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403608093"
+            },
+            {
+              "label": "94016990 - Seats; with wooden frames, not upholstered, (excluding medical, surgical, dental, veterinary or barber furniture)",
+              "label_cn": "",
+              "value": "94016990"
+            },
+            {
+              "label": "94036014 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036014"
+            },
+            {
+              "label": "9403609009 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403609009"
+            },
+            {
+              "label": "94036071 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036071"
+            },
+            {
+              "label": "940330 - Furniture; wooden, for office use",
+              "label_cn": "",
+              "value": "940330"
+            },
+            {
+              "label": "9403601039 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403601039"
+            },
+            {
+              "label": "940350908 - Furniture; wooden, for bedroom use",
+              "label_cn": "",
+              "value": "940350908"
+            },
+            {
+              "label": "940350 - Furniture; wooden, for bedroom use",
+              "label_cn": "",
+              "value": "940350"
+            },
+            {
+              "label": "940161 - Seats; with wooden frames, upholstered, (excluding medical, surgical, dental, veterinary or barber furniture)",
+              "label_cn": "",
+              "value": "940161"
+            },
+            {
+              "label": "940360940161 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360940161"
+            },
+            {
+              "label": "94036010000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036010000"
+            },
+            {
+              "label": "940320 - Furniture; metal, other than for office use",
+              "label_cn": "",
+              "value": "940320"
+            },
+            {
+              "label": "94036090010 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036090010"
+            },
+            {
+              "label": "94036031 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036031"
+            },
+            {
+              "label": "94036030 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036030"
+            },
+            {
+              "label": "94036090000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036090000"
+            },
+            {
+              "label": "94036020 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036020"
+            },
+            {
+              "label": "940161401 - Seats; with wooden frames, upholstered, (excluding medical, surgical, dental, veterinary or barber furniture)",
+              "label_cn": "",
+              "value": "940161401"
+            },
+            {
+              "label": "9403600027 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "9403600027"
+            },
+            {
+              "label": "94",
+              "label_cn": "",
+              "value": "94"
+            },
+            {
+              "label": "94036029 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036029"
+            },
+            {
+              "label": "94036021 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036021"
+            },
+            {
+              "label": "94036041 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036041"
+            },
+            {
+              "label": "94039100",
+              "label_cn": "",
+              "value": "94039100"
+            },
+            {
+              "label": "94039900",
+              "label_cn": "",
+              "value": "94039900"
+            },
+            {
+              "label": "940360999 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360999"
+            },
+            {
+              "label": "94036049 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036049"
+            },
+            {
+              "label": "94016900 - Seats; with wooden frames, not upholstered, (excluding medical, surgical, dental, veterinary or barber furniture)",
+              "label_cn": "",
+              "value": "94016900"
+            },
+            {
+              "label": "9000",
+              "label_cn": "",
+              "value": "9000"
+            },
+            {
+              "label": "94036039 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036039"
+            },
+            {
+              "label": "94016100 - Seats; with wooden frames, upholstered, (excluding medical, surgical, dental, veterinary or barber furniture)",
+              "label_cn": "",
+              "value": "94016100"
+            },
+            {
+              "label": "94035000 - Furniture; wooden, for bedroom use",
+              "label_cn": "",
+              "value": "94035000"
+            },
+            {
+              "label": "940360909000 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "940360909000"
+            },
+            {
+              "label": "940330809 - Furniture; wooden, for office use",
+              "label_cn": "",
+              "value": "940330809"
+            },
+            {
+              "label": "94036010010 - Furniture; wooden, other than for office, kitchen or bedroom use",
+              "label_cn": "",
+              "value": "94036010010"
+            }
+          ],
+          "import_countries": [
+            {
+              "label": "NAMIBIA",
+              "label_cn": "纳米比亚",
+              "value": "NA"
+            },
+            {
+              "label": "CHINA",
+              "label_cn": "中国",
+              "value": "CN"
+            },
+            {
+              "label": "URUGUAY",
+              "label_cn": "乌拉圭",
+              "value": "UY"
+            },
+            {
+              "label": "MALAYSIA",
+              "label_cn": "马来西亚",
+              "value": "MY"
+            },
+            {
+              "label": "DENMARK",
+              "label_cn": "丹麦",
+              "value": "DK"
+            },
+            {
+              "label": "CAMEROON",
+              "label_cn": "喀麦隆",
+              "value": "CM"
+            },
+            {
+              "label": "COLOMBIA",
+              "label_cn": "哥伦比亚",
+              "value": "CO"
+            },
+            {
+              "label": "GHANA",
+              "label_cn": "加纳",
+              "value": "GH"
+            },
+            {
+              "label": "GERMANY",
+              "label_cn": "德国",
+              "value": "DE"
+            },
+            {
+              "label": "FRANCE",
+              "label_cn": "法国",
+              "value": "FR"
+            },
+            {
+              "label": "TANZANIA",
+              "label_cn": "坦桑尼亚",
+              "value": "TZ"
+            },
+            {
+              "label": "TIMOR-LESTE",
+              "label_cn": "东帝汶",
+              "value": ""
+            },
+            {
+              "label": "UKRAINE",
+              "label_cn": "乌克兰",
+              "value": "UA"
+            },
+            {
+              "label": "PANAMA",
+              "label_cn": "巴拿马",
+              "value": "PA"
+            },
+            {
+              "label": "JAPAN",
+              "label_cn": "日本",
+              "value": "JP"
+            },
+            {
+              "label": "BRAZIL",
+              "label_cn": "巴西",
+              "value": "BR"
+            },
+            {
+              "label": "IRELAND",
+              "label_cn": "爱尔兰",
+              "value": "IE"
+            },
+            {
+              "label": "UNITED ARAB EMIRATES",
+              "label_cn": "阿拉伯联合酋长国",
+              "value": "AE"
+            },
+            {
+              "label": "ECUADOR",
+              "label_cn": "厄瓜多尔",
+              "value": "EC"
+            },
+            {
+              "label": "PERU",
+              "label_cn": "秘鲁",
+              "value": "PE"
+            },
+            {
+              "label": "ARMENIA",
+              "label_cn": "亚美尼亚",
+              "value": "AM"
+            },
+            {
+              "label": "CANADA",
+              "label_cn": "加拿大",
+              "value": "CA"
+            },
+            {
+              "label": "PAPUA NEW GUINEA",
+              "label_cn": "巴布亚新几内亚",
+              "value": "PG"
+            },
+            {
+              "label": "SOUTH AFRICA",
+              "label_cn": "南非",
+              "value": "ZA"
+            },
+            {
+              "label": "SWEDEN",
+              "label_cn": "瑞典",
+              "value": "SE"
+            },
+            {
+              "label": "MARTINIQUE",
+              "label_cn": "马提尼克岛",
+              "value": ""
+            },
+            {
+              "label": "BHUTAN",
+              "label_cn": "不丹",
+              "value": ""
+            },
+            {
+              "label": "SAUDI ARABIA",
+              "label_cn": "沙特阿拉伯",
+              "value": "SA"
+            },
+            {
+              "label": "TAIWAN (CHINA)",
+              "label_cn": "中国台湾",
+              "value": "TW"
+            },
+            {
+              "label": "UGANDA",
+              "label_cn": "乌干达",
+              "value": "UG"
+            },
+            {
+              "label": "PAKISTAN",
+              "label_cn": "巴基斯坦",
+              "value": "PK"
+            },
+            {
+              "label": "SINGAPORE",
+              "label_cn": "新加坡",
+              "value": "SG"
+            },
+            {
+              "label": "LESOTHO",
+              "label_cn": "莱索托",
+              "value": "LS"
+            },
+            {
+              "label": "ISRAEL",
+              "label_cn": "以色列",
+              "value": "IL"
+            },
+            {
+              "label": "RUSSIA",
+              "label_cn": "俄罗斯",
+              "value": "RU"
+            },
+            {
+              "label": "CZECH",
+              "label_cn": "捷克",
+              "value": "CZ"
+            },
+            {
+              "label": "GREECE",
+              "label_cn": "希腊",
+              "value": "GR"
+            },
+            {
+              "label": "BOTSWANA",
+              "label_cn": "博茨瓦纳",
+              "value": "BW"
+            },
+            {
+              "label": "BRUNEI",
+              "label_cn": "文莱",
+              "value": "BN"
+            },
+            {
+              "label": "MONGOLIA",
+              "label_cn": "蒙古",
+              "value": "MN"
+            },
+            {
+              "label": "CYPRUS",
+              "label_cn": "塞浦路斯",
+              "value": "CY"
+            },
+            {
+              "label": "UNITED KINGDOM",
+              "label_cn": "英国",
+              "value": "GB"
+            },
+            {
+              "label": "HONG KONG (CHINA)",
+              "label_cn": "中国香港",
+              "value": "HK"
+            },
+            {
+              "label": "AUSTRIA",
+              "label_cn": "奥地利",
+              "value": "AT"
+            },
+            {
+              "label": "NEW ZEALAND",
+              "label_cn": "新西兰",
+              "value": "NZ"
+            },
+            {
+              "label": "NORWAY",
+              "label_cn": "挪威",
+              "value": "NO"
+            },
+            {
+              "label": "ROMANIA",
+              "label_cn": "罗马尼亚",
+              "value": "RO"
+            },
+            {
+              "label": "PORTUGAL",
+              "label_cn": "葡萄牙",
+              "value": "PT"
+            },
+            {
+              "label": "SRI LANKA",
+              "label_cn": "斯里兰卡",
+              "value": "LK"
+            },
+            {
+              "label": "VIETNAM",
+              "label_cn": "越南",
+              "value": "VN"
+            },
+            {
+              "label": "MEXICO",
+              "label_cn": "墨西哥",
+              "value": "MX"
+            },
+            {
+              "label": "PARAGUAY",
+              "label_cn": "巴拉圭",
+              "value": "PY"
+            },
+            {
+              "label": "SPAIN",
+              "label_cn": "西班牙",
+              "value": "ES"
+            },
+            {
+              "label": "BELGIUM",
+              "label_cn": "比利时",
+              "value": "BE"
+            },
+            {
+              "label": "CAMBODIA",
+              "label_cn": "柬埔寨",
+              "value": "KH"
+            },
+            {
+              "label": "BANGLADESH",
+              "label_cn": "孟加拉国",
+              "value": "BD"
+            },
+            {
+              "label": "KOREA",
+              "label_cn": "韩国",
+              "value": "KR"
+            },
+            {
+              "label": "PUERTO RICO",
+              "label_cn": "波多黎各",
+              "value": "PR"
+            },
+            {
+              "label": "AUSTRALIA",
+              "label_cn": "澳大利亚",
+              "value": "AU"
+            },
+            {
+              "label": "GUADELOUPE",
+              "label_cn": "瓜德罗普",
+              "value": ""
+            },
+            {
+              "label": "UZBEKISTAN",
+              "label_cn": "乌兹别克斯坦",
+              "value": "UZ"
+            },
+            {
+              "label": "DOMINICAN REPUBLIC",
+              "label_cn": "多米尼加",
+              "value": "DO"
+            },
+            {
+              "label": "SWITZERLAND",
+              "label_cn": "瑞士",
+              "value": "CH"
+            },
+            {
+              "label": "POLAND",
+              "label_cn": "波兰",
+              "value": "PL"
+            },
+            {
+              "label": "REUNION",
+              "label_cn": "留尼汪岛",
+              "value": ""
+            },
+            {
+              "label": "NICARAGUA",
+              "label_cn": "尼加拉瓜",
+              "value": "NI"
+            },
+            {
+              "label": "CONGO DR",
+              "label_cn": "民主刚果",
+              "value": ""
+            },
+            {
+              "label": "ARGENTINA",
+              "label_cn": "阿根廷",
+              "value": "AR"
+            },
+            {
+              "label": "QATAR",
+              "label_cn": "卡塔尔",
+              "value": "QA"
+            },
+            {
+              "label": "COTE D'IVOIRE",
+              "label_cn": "科特迪瓦",
+              "value": "KT"
+            },
+            {
+              "label": "SALVADOR",
+              "label_cn": "萨尔瓦多",
+              "value": "SV"
+            },
+            {
+              "label": "KAZAKHSTAN",
+              "label_cn": "哈萨克斯坦",
+              "value": "KZ"
+            },
+            {
+              "label": "UNITED STATES",
+              "label_cn": "美国",
+              "value": "US"
+            },
+            {
+              "label": "SOUTH SUDAN",
+              "label_cn": "南苏丹",
+              "value": ""
+            },
+            {
+              "label": "CHILE",
+              "label_cn": "智利",
+              "value": "CL"
+            },
+            {
+              "label": "OMAN",
+              "label_cn": "阿曼",
+              "value": "OM"
+            },
+            {
+              "label": "LAOS",
+              "label_cn": "老挝",
+              "value": "LA"
+            },
+            {
+              "label": "MAURITIUS",
+              "label_cn": "毛里求斯",
+              "value": "MU"
+            },
+            {
+              "label": "MALDIVES",
+              "label_cn": "马尔代夫",
+              "value": "MV"
+            },
+            {
+              "label": "IRAQ",
+              "label_cn": "伊拉克",
+              "value": "IQ"
+            },
+            {
+              "label": "NETHERLANDS",
+              "label_cn": "荷兰",
+              "value": "NL"
+            },
+            {
+              "label": "BULGARIA",
+              "label_cn": "保加利亚",
+              "value": "BG"
+            },
+            {
+              "label": "KUWAIT",
+              "label_cn": "科威特",
+              "value": "KW"
+            },
+            {
+              "label": "NEPAL",
+              "label_cn": "尼泊尔",
+              "value": "NP"
+            },
+            {
+              "label": "PHILIPPINES",
+              "label_cn": "菲律宾",
+              "value": "PH"
+            },
+            {
+              "label": "KENYA",
+              "label_cn": "肯尼亚",
+              "value": "KE"
+            },
+            {
+              "label": "TURKEY",
+              "label_cn": "土耳其",
+              "value": "TR"
+            },
+            {
+              "label": "BAHRAIN",
+              "label_cn": "巴林",
+              "value": "BH"
+            },
+            {
+              "label": "MALI",
+              "label_cn": "马里",
+              "value": "ML"
+            },
+            {
+              "label": "INDIA",
+              "label_cn": "印度",
+              "value": "IN"
+            },
+            {
+              "label": "INDONESIA",
+              "label_cn": "印度尼西亚",
+              "value": "ID"
+            },
+            {
+              "label": "ITALY",
+              "label_cn": "意大利",
+              "value": "IT"
+            },
+            {
+              "label": "COSTA RICA",
+              "label_cn": "哥斯达黎加",
+              "value": "CR"
+            },
+            {
+              "label": "TAJIKISTAN",
+              "label_cn": "塔吉克斯坦",
+              "value": "TJ"
+            },
+            {
+              "label": "GUATEMALA",
+              "label_cn": "危地马拉",
+              "value": "GT"
+            },
+            {
+              "label": "JAMAICA",
+              "label_cn": "牙买加",
+              "value": "JM"
+            },
+            {
+              "label": "THAILAND",
+              "label_cn": "泰国",
+              "value": "TH"
+            },
+            {
+              "label": "UNKNOWN",
+              "label_cn": "未知",
+              "value": ""
+            },
+            {
+              "label": "MALAWI",
+              "label_cn": "马拉维",
+              "value": "MW"
+            }
+          ],
+          "export_countries": [
+            {
+              "label": "NAMIBIA",
+              "label_cn": "纳米比亚",
+              "value": "NA"
+            },
+            {
+              "label": "EGYPT",
+              "label_cn": "埃及",
+              "value": "EG"
+            },
+            {
+              "label": "KYRGYZSTAN",
+              "label_cn": "吉尔吉斯斯坦",
+              "value": "KG"
+            },
+            {
+              "label": "BOSNIA AND HERZEGOVINA",
+              "label_cn": "波斯尼亚和黑塞哥维那",
+              "value": "BA"
+            },
+            {
+              "label": "CHINA",
+              "label_cn": "中国",
+              "value": "CN"
+            },
+            {
+              "label": "MALAYSIA",
+              "label_cn": "马来西亚",
+              "value": "MY"
+            },
+            {
+              "label": "DENMARK",
+              "label_cn": "丹麦",
+              "value": "DK"
+            },
+            {
+              "label": "ZAMBIA",
+              "label_cn": "赞比亚",
+              "value": "ZM"
+            },
+            {
+              "label": "COLOMBIA",
+              "label_cn": "哥伦比亚",
+              "value": "CO"
+            },
+            {
+              "label": "GERMANY",
+              "label_cn": "德国",
+              "value": "DE"
+            },
+            {
+              "label": "GHANA",
+              "label_cn": "加纳",
+              "value": "GH"
+            },
+            {
+              "label": "FRANCE",
+              "label_cn": "法国",
+              "value": "FR"
+            },
+            {
+              "label": "TANZANIA",
+              "label_cn": "坦桑尼亚",
+              "value": "TZ"
+            },
+            {
+              "label": "UKRAINE",
+              "label_cn": "乌克兰",
+              "value": "UA"
+            },
+            {
+              "label": "SLOVAKIA",
+              "label_cn": "斯洛伐克",
+              "value": "SK"
+            },
+            {
+              "label": "PANAMA",
+              "label_cn": "巴拿马",
+              "value": "PA"
+            },
+            {
+              "label": "HONDURAS",
+              "label_cn": "洪都拉斯",
+              "value": "HN"
+            },
+            {
+              "label": "JAPAN",
+              "label_cn": "日本",
+              "value": "JP"
+            },
+            {
+              "label": "NIGERIA",
+              "label_cn": "尼日利亚",
+              "value": "NG"
+            },
+            {
+              "label": "BRAZIL",
+              "label_cn": "巴西",
+              "value": "BR"
+            },
+            {
+              "label": "IRELAND",
+              "label_cn": "爱尔兰",
+              "value": "IE"
+            },
+            {
+              "label": "UNITED ARAB EMIRATES",
+              "label_cn": "阿拉伯联合酋长国",
+              "value": "AE"
+            },
+            {
+              "label": "SENEGAL",
+              "label_cn": "塞内加尔",
+              "value": "SN"
+            },
+            {
+              "label": "ECUADOR",
+              "label_cn": "厄瓜多尔",
+              "value": "EC"
+            },
+            {
+              "label": "PERU",
+              "label_cn": "秘鲁",
+              "value": "PE"
+            },
+            {
+              "label": "ARMENIA",
+              "label_cn": "亚美尼亚",
+              "value": "AM"
+            },
+            {
+              "label": "CANADA",
+              "label_cn": "加拿大",
+              "value": "CA"
+            },
+            {
+              "label": "SOUTH AFRICA",
+              "label_cn": "南非",
+              "value": "ZA"
+            },
+            {
+              "label": "SWEDEN",
+              "label_cn": "瑞典",
+              "value": "SE"
+            },
+            {
+              "label": "SAUDI ARABIA",
+              "label_cn": "沙特阿拉伯",
+              "value": "SA"
+            },
+            {
+              "label": "TAIWAN (CHINA)",
+              "label_cn": "中国台湾",
+              "value": "TW"
+            },
+            {
+              "label": "UGANDA",
+              "label_cn": "乌干达",
+              "value": "UG"
+            },
+            {
+              "label": "PAKISTAN",
+              "label_cn": "巴基斯坦",
+              "value": "PK"
+            },
+            {
+              "label": "AZERBAIJAN",
+              "label_cn": "阿塞拜疆",
+              "value": "AZ"
+            },
+            {
+              "label": "SINGAPORE",
+              "label_cn": "新加坡",
+              "value": "SG"
+            },
+            {
+              "label": "ISRAEL",
+              "label_cn": "以色列",
+              "value": "IL"
+            },
+            {
+              "label": "GEORGIA",
+              "label_cn": "格鲁吉亚",
+              "value": "GE"
+            },
+            {
+              "label": "RUSSIA",
+              "label_cn": "俄罗斯",
+              "value": "RU"
+            },
+            {
+              "label": "CZECH",
+              "label_cn": "捷克",
+              "value": "CZ"
+            },
+            {
+              "label": "GREECE",
+              "label_cn": "希腊",
+              "value": "GR"
+            },
+            {
+              "label": "BOTSWANA",
+              "label_cn": "博茨瓦纳",
+              "value": "BW"
+            },
+            {
+              "label": "LITHUANIA",
+              "label_cn": "立陶宛",
+              "value": "LT"
+            },
+            {
+              "label": "LEBANON",
+              "label_cn": "黎巴嫩",
+              "value": "LB"
+            },
+            {
+              "label": "CYPRUS",
+              "label_cn": "塞浦路斯",
+              "value": "CY"
+            },
+            {
+              "label": "MONGOLIA",
+              "label_cn": "蒙古",
+              "value": "MN"
+            },
+            {
+              "label": "UNITED KINGDOM",
+              "label_cn": "英国",
+              "value": "GB"
+            },
+            {
+              "label": "HONG KONG (CHINA)",
+              "label_cn": "中国香港",
+              "value": "HK"
+            },
+            {
+              "label": "RWANDA",
+              "label_cn": "卢旺达",
+              "value": ""
+            },
+            {
+              "label": "MOROCCO",
+              "label_cn": "摩洛哥",
+              "value": "MA"
+            },
+            {
+              "label": "AUSTRIA",
+              "label_cn": "奥地利",
+              "value": "AT"
+            },
+            {
+              "label": "ESTONIA",
+              "label_cn": "爱沙尼亚",
+              "value": "EE"
+            },
+            {
+              "label": "NORWAY",
+              "label_cn": "挪威",
+              "value": "NO"
+            },
+            {
+              "label": "ROMANIA",
+              "label_cn": "罗马尼亚",
+              "value": "RO"
+            },
+            {
+              "label": "PORTUGAL",
+              "label_cn": "葡萄牙",
+              "value": "PT"
+            },
+            {
+              "label": "SRI LANKA",
+              "label_cn": "斯里兰卡",
+              "value": "LK"
+            },
+            {
+              "label": "BELARUS",
+              "label_cn": "白俄罗斯",
+              "value": "BY"
+            },
+            {
+              "label": "BOLIVIA",
+              "label_cn": "玻利维亚",
+              "value": "BO"
+            },
+            {
+              "label": "IRAN",
+              "label_cn": "伊朗",
+              "value": "IR"
+            },
+            {
+              "label": "VIETNAM",
+              "label_cn": "越南",
+              "value": "VN"
+            },
+            {
+              "label": "MEXICO",
+              "label_cn": "墨西哥",
+              "value": "MX"
+            },
+            {
+              "label": "TOGO",
+              "label_cn": "多哥",
+              "value": "TG"
+            },
+            {
+              "label": "PARAGUAY",
+              "label_cn": "巴拉圭",
+              "value": "PY"
+            },
+            {
+              "label": "SPAIN",
+              "label_cn": "西班牙",
+              "value": "ES"
+            },
+            {
+              "label": "BELGIUM",
+              "label_cn": "比利时",
+              "value": "BE"
+            },
+            {
+              "label": "CAMBODIA",
+              "label_cn": "柬埔寨",
+              "value": "KH"
+            },
+            {
+              "label": "BANGLADESH",
+              "label_cn": "孟加拉国",
+              "value": "BD"
+            },
+            {
+              "label": "KOREA",
+              "label_cn": "韩国",
+              "value": "KR"
+            },
+            {
+              "label": "AUSTRALIA",
+              "label_cn": "澳大利亚",
+              "value": "AU"
+            },
+            {
+              "label": "UZBEKISTAN",
+              "label_cn": "乌兹别克斯坦",
+              "value": "UZ"
+            },
+            {
+              "label": "SWITZERLAND",
+              "label_cn": "瑞士",
+              "value": "CH"
+            },
+            {
+              "label": "DOMINICAN REPUBLIC",
+              "label_cn": "多米尼加",
+              "value": "DO"
+            },
+            {
+              "label": "POLAND",
+              "label_cn": "波兰",
+              "value": "PL"
+            },
+            {
+              "label": "BURKINA FASO",
+              "label_cn": "布基纳法索",
+              "value": "BF"
+            },
+            {
+              "label": "NICARAGUA",
+              "label_cn": "尼加拉瓜",
+              "value": "NI"
+            },
+            {
+              "label": "ARGENTINA",
+              "label_cn": "阿根廷",
+              "value": "AR"
+            },
+            {
+              "label": "FINLAND",
+              "label_cn": "芬兰",
+              "value": "FI"
+            },
+            {
+              "label": "QATAR",
+              "label_cn": "卡塔尔",
+              "value": "QA"
+            },
+            {
+              "label": "COTE D'IVOIRE",
+              "label_cn": "科特迪瓦",
+              "value": "KT"
+            },
+            {
+              "label": "SALVADOR",
+              "label_cn": "萨尔瓦多",
+              "value": "SV"
+            },
+            {
+              "label": "KAZAKHSTAN",
+              "label_cn": "哈萨克斯坦",
+              "value": "KZ"
+            },
+            {
+              "label": "UNITED STATES",
+              "label_cn": "美国",
+              "value": "US"
+            },
+            {
+              "label": "CHILE",
+              "label_cn": "智利",
+              "value": "CL"
+            },
+            {
+              "label": "OMAN",
+              "label_cn": "阿曼",
+              "value": "OM"
+            },
+            {
+              "label": "MAURITIUS",
+              "label_cn": "毛里求斯",
+              "value": "MU"
+            },
+            {
+              "label": "NETHERLANDS",
+              "label_cn": "荷兰",
+              "value": "NL"
+            },
+            {
+              "label": "BULGARIA",
+              "label_cn": "保加利亚",
+              "value": "BG"
+            },
+            {
+              "label": "LATVIA",
+              "label_cn": "拉脱维亚",
+              "value": "LV"
+            },
+            {
+              "label": "ETHIOPIA",
+              "label_cn": "埃塞俄比亚",
+              "value": "ET"
+            },
+            {
+              "label": "PHILIPPINES",
+              "label_cn": "菲律宾",
+              "value": "PH"
+            },
+            {
+              "label": "KENYA",
+              "label_cn": "肯尼亚",
+              "value": "KE"
+            },
+            {
+              "label": "TURKEY",
+              "label_cn": "土耳其",
+              "value": "TR"
+            },
+            {
+              "label": "MALI",
+              "label_cn": "马里",
+              "value": "ML"
+            },
+            {
+              "label": "INDIA",
+              "label_cn": "印度",
+              "value": "IN"
+            },
+            {
+              "label": "INDONESIA",
+              "label_cn": "印度尼西亚",
+              "value": "ID"
+            },
+            {
+              "label": "ITALY",
+              "label_cn": "意大利",
+              "value": "IT"
+            },
+            {
+              "label": "COSTA RICA",
+              "label_cn": "哥斯达黎加",
+              "value": "CR"
+            },
+            {
+              "label": "GUATEMALA",
+              "label_cn": "危地马拉",
+              "value": "GT"
+            },
+            {
+              "label": "THAILAND",
+              "label_cn": "泰国",
+              "value": "TH"
+            },
+            {
+              "label": "UNKNOWN",
+              "label_cn": "未知",
+              "value": ""
+            },
+            {
+              "label": "MALAWI",
+              "label_cn": "马拉维",
+              "value": "MW"
+            }
+          ],
+          "import_value": {
+            "min": 0,
+            "max": 353350016
+          },
+          "export_value": {
+            "min": 0,
+            "max": 0
+          },
+          "quantities": [
+            {
+              "unit": "PIECES",
+              "min": 1,
+              "max": 66585
+            },
+            {
+              "unit": "METERS",
+              "min": 1,
+              "max": 200
+            },
+            {
+              "unit": "Unidad",
+              "min": 0.009999999776482582,
+              "max": 3042
+            },
+            {
+              "unit": "UNK",
+              "min": 1,
+              "max": 399
+            },
+            {
+              "unit": "PE",
+              "min": 0,
+              "max": 19725
+            },
+            {
+              "unit": "PCS",
+              "min": 0,
+              "max": 256475
+            },
+            {
+              "unit": "LM",
+              "min": 1,
+              "max": 8
+            },
+            {
+              "unit": "PAIRS",
+              "min": 1,
+              "max": 70
+            },
+            {
+              "unit": "BT",
+              "min": 0,
+              "max": 2700
+            },
+            {
+              "unit": "CAS",
+              "min": 1,
+              "max": 612
+            },
+            {
+              "unit": "NA",
+              "min": 20,
+              "max": 150
+            },
+            {
+              "unit": "NUMERO DE UNIDADES",
+              "min": 1,
+              "max": 96000
+            },
+            {
+              "unit": "Sea-chest (Baul de marinero)",
+              "min": 4,
+              "max": 1590
+            },
+            {
+              "unit": "1A",
+              "min": 1,
+              "max": 1
+            },
+            {
+              "unit": "Carton (Carton)",
+              "min": 1,
+              "max": 1275
+            },
+            {
+              "unit": "CBM",
+              "min": 0,
+              "max": 1260
+            },
+            {
+              "unit": "UNPACKED OR UNPACKAGED",
+              "min": 1,
+              "max": 265
+            },
+            {
+              "unit": "SQM",
+              "min": 0,
+              "max": 263.760009765625
+            },
+            {
+              "unit": "PLATES",
+              "min": 1,
+              "max": 432
+            },
+            {
+              "unit": "NUMERO DE ARTICULOS",
+              "min": 1,
+              "max": 54688
+            },
+            {
+              "unit": "КГ",
+              "min": 0,
+              "max": 20200
+            },
+            {
+              "unit": "MTR",
+              "min": 0.4000000059604645,
+              "max": 3340
+            },
+            {
+              "unit": "SQUARE METERS",
+              "min": 0.4000000059604645,
+              "max": 1456
+            },
+            {
+              "unit": "PK",
+              "min": 0,
+              "max": 33576
+            },
+            {
+              "unit": "SET",
+              "min": 1,
+              "max": 10398
+            },
+            {
+              "unit": "PCE",
+              "min": 1,
+              "max": 23291.849609375
+            },
+            {
+              "unit": " Pieces",
+              "min": 1,
+              "max": 1800
+            },
+            {
+              "unit": "Pieces/item [Number]",
+              "min": 1,
+              "max": 952
+            },
+            {
+              "unit": "KGM",
+              "min": 0.8799999952316284,
+              "max": 19356.130859375
+            },
+            {
+              "unit": "BL",
+              "min": 0,
+              "max": 172
+            },
+            {
+              "unit": "Set",
+              "min": 1,
+              "max": 14940
+            },
+            {
+              "unit": "PACKAGE",
+              "min": 1,
+              "max": 183
+            },
+            {
+              "unit": "Metros",
+              "min": 3.75,
+              "max": 5700.1298828125
+            },
+            {
+              "unit": "BX",
+              "min": 0,
+              "max": 1535
+            },
+            {
+              "unit": "PACKAGE, SHOW",
+              "min": 1,
+              "max": 17076
+            },
+            {
+              "unit": "OZ",
+              "min": 1,
+              "max": 6
+            },
+            {
+              "unit": "Package (Bulto)",
+              "min": 1,
+              "max": 1392
+            },
+            {
+              "unit": "BG",
+              "min": 2,
+              "max": 50
+            },
+            {
+              "unit": "Number",
+              "min": 0,
+              "max": 30000
+            },
+            {
+              "unit": "NE",
+              "min": 0,
+              "max": 135
+            },
+            {
+              "unit": "U",
+              "min": 1,
+              "max": 16594
+            },
+            {
+              "unit": "BK",
+              "min": 68,
+              "max": 1074
+            },
+            {
+              "unit": "SE",
+              "min": 1,
+              "max": 350
+            },
+            {
+              "unit": "EE",
+              "min": 0,
+              "max": 2
+            },
+            {
+              "unit": "KILOGRAM",
+              "min": 1.2000000476837158,
+              "max": 7316
+            },
+            {
+              "unit": "Piece",
+              "min": 0.7699999809265137,
+              "max": 14350
+            },
+            {
+              "unit": "Kilogram",
+              "min": 0.10000000149011612,
+              "max": 75851
+            },
+            {
+              "unit": "KG",
+              "min": 1,
+              "max": 3150
+            },
+            {
+              "unit": "4D",
+              "min": 1,
+              "max": 1
+            },
+            {
+              "unit": "NMB",
+              "min": 0,
+              "max": 105092
+            },
+            {
+              "unit": "Cubic metre",
+              "min": 0.009999999776482582,
+              "max": 62909
+            },
+            {
+              "unit": "PARCEL",
+              "min": 1,
+              "max": 6158
+            },
+            {
+              "unit": "PRS",
+              "min": 1,
+              "max": 11
+            },
+            {
+              "unit": "EA",
+              "min": 1,
+              "max": 6417.8798828125
+            },
+            {
+              "unit": "BOX",
+              "min": 1,
+              "max": 2782
+            },
+            {
+              "unit": "PKG",
+              "min": 1,
+              "max": 113478
+            },
+            {
+              "unit": "UNIT",
+              "min": 1,
+              "max": 22773
+            },
+            {
+              "unit": "PC",
+              "min": 0,
+              "max": 606
+            },
+            {
+              "unit": "LT",
+              "min": 0,
+              "max": 1
+            },
+            {
+              "unit": "Unit",
+              "min": 0.17000000178813934,
+              "max": 2450000
+            },
+            {
+              "unit": "SFT",
+              "min": 1,
+              "max": 8000
+            },
+            {
+              "unit": "BARREL",
+              "min": 1,
+              "max": 146
+            },
+            {
+              "unit": "Metric ton",
+              "min": 0,
+              "max": 101.9800033569336
+            },
+            {
+              "unit": "",
+              "min": 0,
+              "max": 2418
+            },
+            {
+              "unit": "MET TON AIR DRY",
+              "min": 2,
+              "max": 30
+            },
+            {
+              "unit": "PAIL",
+              "min": 1,
+              "max": 12
+            },
+            {
+              "unit": "UNIT (UNIDAD)",
+              "min": 1,
+              "max": 34564
+            },
+            {
+              "unit": "EC",
+              "min": 3,
+              "max": 1658
+            },
+            {
+              "unit": "METRIC TON (1000",
+              "min": 0.019999999552965164,
+              "max": 54.599998474121094
+            },
+            {
+              "unit": "шт",
+              "min": 0,
+              "max": 14350
+            },
+            {
+              "unit": "PIECE",
+              "min": 0.3499999940395355,
+              "max": 35094032384
+            },
+            {
+              "unit": "PALLET",
+              "min": 1,
+              "max": 20
+            },
+            {
+              "unit": "CARTON",
+              "min": 1,
+              "max": 150
+            },
+            {
+              "unit": "TAM",
+              "min": 1,
+              "max": 210
+            },
+            {
+              "unit": "BOX/BAG/PACK",
+              "min": 1,
+              "max": 500
+            },
+            {
+              "unit": "Case (Caja)",
+              "min": 1,
+              "max": 1728
+            },
+            {
+              "unit": "CUBIC METERS",
+              "min": 0.12999999523162842,
+              "max": 1.690000057220459
+            },
+            {
+              "unit": "TEU",
+              "min": 0,
+              "max": 0
+            },
+            {
+              "unit": "Box (Caja)",
+              "min": 1,
+              "max": 1136
+            },
+            {
+              "unit": "CR",
+              "min": 1,
+              "max": 21
+            },
+            {
+              "unit": "UNT",
+              "min": 0,
+              "max": 100000
+            },
+            {
+              "unit": "ШТ",
+              "min": 0,
+              "max": 6300
+            },
+            {
+              "unit": "Bundle (Bulto)",
+              "min": 1,
+              "max": 938
+            },
+            {
+              "unit": "u",
+              "min": 0.07999999821186066,
+              "max": 13094
+            },
+            {
+              "unit": "Cubic Metre",
+              "min": 0.009999999776482582,
+              "max": 1546.199951171875
+            },
+            {
+              "unit": "METRIC TON (1000 KG)",
+              "min": 0,
+              "max": 51.70000076293945
+            },
+            {
+              "unit": "CS",
+              "min": 0,
+              "max": 770
+            },
+            {
+              "unit": "CT",
+              "min": 0,
+              "max": 13418
+            },
+            {
+              "unit": "SX",
+              "min": 1,
+              "max": 8848
+            },
+            {
+              "unit": "CRT",
+              "min": 1,
+              "max": 310
+            },
+            {
+              "unit": "UNKNOWN",
+              "min": 1,
+              "max": 14434
+            },
+            {
+              "unit": "PR",
+              "min": 1,
+              "max": 20
+            },
+            {
+              "unit": "UN",
+              "min": 0,
+              "max": 1000
+            },
+            {
+              "unit": "MTK",
+              "min": 0.4000000059604645,
+              "max": 248.9600067138672
+            },
+            {
+              "unit": "CTN",
+              "min": 1,
+              "max": 24108840
+            },
+            {
+              "unit": "MTQ",
+              "min": 0,
+              "max": 1372
+            },
+            {
+              "unit": "CUBIC METRE",
+              "min": 0,
+              "max": 14500
+            },
+            {
+              "unit": "кг",
+              "min": 12.699999809265137,
+              "max": 2988
+            },
+            {
+              "unit": "LO",
+              "min": 0,
+              "max": 7
+            },
+            {
+              "unit": "4C",
+              "min": 0,
+              "max": 6
+            }
+          ],
+          "weights": [
+            {
+              "unit": "KG",
+              "min": -15,
+              "max": 787040
+            },
+            {
+              "unit": "kG",
+              "min": 0,
+              "max": 48360
+            },
+            {
+              "unit": "LB",
+              "min": 273,
+              "max": 284671
+            },
+            {
+              "unit": "KGS",
+              "min": 810,
+              "max": 30090
+            },
+            {
+              "unit": "",
+              "min": 0,
+              "max": 917720
+            },
+            {
+              "unit": "KGM",
+              "min": 0.1599999964237213,
+              "max": 422862
+            }
+          ],
+          "loading_ports": [
+            {
+              "label": "DNVMPBD",
+              "label_cn": "",
+              "value": "DNVMPBD"
+            },
+            {
+              "label": "MYPKG",
+              "label_cn": "",
+              "value": "MYPKG"
+            },
+            {
+              "label": "KLANG",
+              "label_cn": "",
+              "value": "KLANG"
+            },
+            {
+              "label": "CKCLONGAN",
+              "label_cn": "",
+              "value": "CKCLONGAN"
+            },
+            {
+              "label": "COLOMBO",
+              "label_cn": "",
+              "value": "COLOMBO"
+            },
+            {
+              "label": "MYTPP",
+              "label_cn": "",
+              "value": "MYTPP"
+            },
+            {
+              "label": "QINGDAO",
+              "label_cn": "",
+              "value": "QINGDAO"
+            },
+            {
+              "label": "HQKCXKCNHP",
+              "label_cn": "",
+              "value": "HQKCXKCNHP"
+            },
+            {
+              "label": "Ташкент",
+              "label_cn": "",
+              "value": "Ташкент"
+            },
+            {
+              "label": "ESPECIAL DE CARTAGENA",
+              "label_cn": "",
+              "value": "ESPECIAL DE CARTAGENA"
+            },
+            {
+              "label": "Ennore",
+              "label_cn": "",
+              "value": "Ennore"
+            },
+            {
+              "label": "GRFL ICD/Ballabhgarh",
+              "label_cn": "",
+              "value": "GRFL ICD/Ballabhgarh"
+            },
+            {
+              "label": "HQVINHPHUC",
+              "label_cn": "",
+              "value": "HQVINHPHUC"
+            },
+            {
+              "label": "TANJUNG PERAK",
+              "label_cn": "",
+              "value": "TANJUNG PERAK"
+            },
+            {
+              "label": "TANJUNG EMAS",
+              "label_cn": "",
+              "value": "TANJUNG EMAS"
+            },
+            {
+              "label": "CAIMEPVT",
+              "label_cn": "",
+              "value": "CAIMEPVT"
+            },
+            {
+              "label": "TIANJINXINGANG",
+              "label_cn": "",
+              "value": "TIANJINXINGANG"
+            },
+            {
+              "label": "Shanghai",
+              "label_cn": "",
+              "value": "Shanghai"
+            },
+            {
+              "label": "SINGAPORE",
+              "label_cn": "",
+              "value": "SINGAPORE"
+            },
+            {
+              "label": "VADO LIGURE",
+              "label_cn": "",
+              "value": "VADO LIGURE"
+            },
+            {
+              "label": "Jodhpur-Bhagat Ki Kothi",
+              "label_cn": "",
+              "value": "Jodhpur-Bhagat Ki Kothi"
+            },
+            {
+              "label": "Jawaharlal Nehru (Nhava Sheva)",
+              "label_cn": "",
+              "value": "Jawaharlal Nehru (Nhava Sheva)"
+            },
+            {
+              "label": "Port Kelang",
+              "label_cn": "",
+              "value": "Port Kelang"
+            },
+            {
+              "label": "CTHANHBP",
+              "label_cn": "",
+              "value": "CTHANHBP"
+            },
+            {
+              "label": "KCNVNSGBD",
+              "label_cn": "",
+              "value": "KCNVNSGBD"
+            },
+            {
+              "label": "HQNAMDINH",
+              "label_cn": "",
+              "value": "HQNAMDINH"
+            },
+            {
+              "label": "PASIR GUDANG",
+              "label_cn": "",
+              "value": "PASIR GUDANG"
+            },
+            {
+              "label": "Jodhpur-Thar",
+              "label_cn": "",
+              "value": "Jodhpur-Thar"
+            },
+            {
+              "label": "HQCPNHCM",
+              "label_cn": "",
+              "value": "HQCPNHCM"
+            },
+            {
+              "label": "Tashkent",
+              "label_cn": "",
+              "value": "Tashkent"
+            },
+            {
+              "label": "HQCKCDNA",
+              "label_cn": "",
+              "value": "HQCKCDNA"
+            },
+            {
+              "label": "TNHATDN",
+              "label_cn": "",
+              "value": "TNHATDN"
+            },
+            {
+              "label": "Qingdao",
+              "label_cn": "",
+              "value": "Qingdao"
+            },
+            {
+              "label": "NINGBO",
+              "label_cn": "",
+              "value": "NINGBO"
+            },
+            {
+              "label": "HQTTHUAN",
+              "label_cn": "",
+              "value": "HQTTHUAN"
+            },
+            {
+              "label": "HQTSNHAT",
+              "label_cn": "",
+              "value": "HQTSNHAT"
+            },
+            {
+              "label": "TIJUANA TIJUANA BAJA CALIFORNIA.",
+              "label_cn": "",
+              "value": "TIJUANA TIJUANA BAJA CALIFORNIA."
+            },
+            {
+              "label": "NUEVO LAREDO NUEVO LAREDO TAMAULIPAS.",
+              "label_cn": "",
+              "value": "NUEVO LAREDO NUEVO LAREDO TAMAULIPAS."
+            },
+            {
+              "label": "TPP",
+              "label_cn": "",
+              "value": "TPP"
+            },
+            {
+              "label": "Mundra",
+              "label_cn": "",
+              "value": "Mundra"
+            },
+            {
+              "label": "PORT KELANG",
+              "label_cn": "",
+              "value": "PORT KELANG"
+            },
+            {
+              "label": "PGU",
+              "label_cn": "",
+              "value": "PGU"
+            },
+            {
+              "label": "Jaigaon",
+              "label_cn": "",
+              "value": "Jaigaon"
+            },
+            {
+              "label": "TANJUNG PRIOK",
+              "label_cn": "",
+              "value": "TANJUNG PRIOK"
+            },
+            {
+              "label": "PRATTELN",
+              "label_cn": "",
+              "value": "PRATTELN"
+            },
+            {
+              "label": "VHUONGBD",
+              "label_cn": "",
+              "value": "VHUONGBD"
+            },
+            {
+              "label": "PTTMP00000000",
+              "label_cn": "",
+              "value": "PTTMP00000000"
+            },
+            {
+              "label": "Jaipur-Kanakpura",
+              "label_cn": "",
+              "value": "Jaipur-Kanakpura"
+            },
+            {
+              "label": "DNVLBTDN",
+              "label_cn": "",
+              "value": "DNVLBTDN"
+            },
+            {
+              "label": "KCNSTHANBD",
+              "label_cn": "",
+              "value": "KCNSTHANBD"
+            },
+            {
+              "label": "Vung Tau",
+              "label_cn": "",
+              "value": "Vung Tau"
+            },
+            {
+              "label": "Xingang",
+              "label_cn": "",
+              "value": "Xingang"
+            },
+            {
+              "label": "MYTKP",
+              "label_cn": "",
+              "value": "MYTKP"
+            },
+            {
+              "label": "NANSHA",
+              "label_cn": "",
+              "value": "NANSHA"
+            },
+            {
+              "label": "CKTHANHHOA",
+              "label_cn": "",
+              "value": "CKTHANHHOA"
+            },
+            {
+              "label": "CKQUYNHON",
+              "label_cn": "",
+              "value": "CKQUYNHON"
+            },
+            {
+              "label": "Yantian",
+              "label_cn": "",
+              "value": "Yantian"
+            },
+            {
+              "label": "Lianyungang",
+              "label_cn": "",
+              "value": "Lianyungang"
+            },
+            {
+              "label": "HQSGKV4",
+              "label_cn": "",
+              "value": "HQSGKV4"
+            },
+            {
+              "label": "LIANYUNGANG",
+              "label_cn": "",
+              "value": "LIANYUNGANG"
+            },
+            {
+              "label": "HQLTRUNG2",
+              "label_cn": "",
+              "value": "HQLTRUNG2"
+            },
+            {
+              "label": "SONGTHANBD",
+              "label_cn": "",
+              "value": "SONGTHANBD"
+            },
+            {
+              "label": "CTHOPBD",
+              "label_cn": "",
+              "value": "CTHOPBD"
+            },
+            {
+              "label": "Pakwara (Moradabad)",
+              "label_cn": "",
+              "value": "Pakwara (Moradabad)"
+            },
+            {
+              "label": "CNNGB-",
+              "label_cn": "",
+              "value": "CNNGB-"
+            },
+            {
+              "label": "Tanjung Perak",
+              "label_cn": "",
+              "value": "Tanjung Perak"
+            },
+            {
+              "label": "Tanjung Emas",
+              "label_cn": "",
+              "value": "Tanjung Emas"
+            },
+            {
+              "label": "HQTQUANG",
+              "label_cn": "",
+              "value": "HQTQUANG"
+            },
+            {
+              "label": "MYPGU",
+              "label_cn": "",
+              "value": "MYPGU"
+            },
+            {
+              "label": "Dadri Icd/Noida",
+              "label_cn": "",
+              "value": "Dadri Icd/Noida"
+            },
+            {
+              "label": "Ningbo",
+              "label_cn": "",
+              "value": "Ningbo"
+            },
+            {
+              "label": "HQHAIDUONG",
+              "label_cn": "",
+              "value": "HQHAIDUONG"
+            },
+            {
+              "label": "HQCNC",
+              "label_cn": "",
+              "value": "HQCNC"
+            },
+            {
+              "label": "J10",
+              "label_cn": "",
+              "value": "J10"
+            },
+            {
+              "label": "Dhenkanal",
+              "label_cn": "",
+              "value": "Dhenkanal"
+            },
+            {
+              "label": "KCXLBINHDN",
+              "label_cn": "",
+              "value": "KCXLBINHDN"
+            },
+            {
+              "label": "BIENHOADN",
+              "label_cn": "",
+              "value": "BIENHOADN"
+            },
+            {
+              "label": "Ahmedabad",
+              "label_cn": "",
+              "value": "Ahmedabad"
+            },
+            {
+              "label": "XINGANG",
+              "label_cn": "",
+              "value": "XINGANG"
+            },
+            {
+              "label": "Delhi",
+              "label_cn": "",
+              "value": "Delhi"
+            },
+            {
+              "label": "HQLTRUNG",
+              "label_cn": "",
+              "value": "HQLTRUNG"
+            },
+            {
+              "label": "HQSGKV1",
+              "label_cn": "",
+              "value": "HQSGKV1"
+            },
+            {
+              "label": "HQPHUYEN",
+              "label_cn": "",
+              "value": "HQPHUYEN"
+            },
+            {
+              "label": "PKG",
+              "label_cn": "",
+              "value": "PKG"
+            },
+            {
+              "label": "Tughlakabad",
+              "label_cn": "",
+              "value": "Tughlakabad"
+            },
+            {
+              "label": "Maseru Bridge",
+              "label_cn": "",
+              "value": "Maseru Bridge"
+            },
+            {
+              "label": "NTRACHDN",
+              "label_cn": "",
+              "value": "NTRACHDN"
+            },
+            {
+              "label": "Nansha",
+              "label_cn": "",
+              "value": "Nansha"
+            },
+            {
+              "label": "HQKCNQNGAI",
+              "label_cn": "",
+              "value": "HQKCNQNGAI"
+            },
+            {
+              "label": "SEMARANG",
+              "label_cn": "",
+              "value": "SEMARANG"
+            },
+            {
+              "label": "HQTDMOT",
+              "label_cn": "",
+              "value": "HQTDMOT"
+            },
+            {
+              "label": "N/A",
+              "label_cn": "",
+              "value": "N/A"
+            },
+            {
+              "label": "Tanjung Priok",
+              "label_cn": "",
+              "value": "Tanjung Priok"
+            },
+            {
+              "label": "TPR",
+              "label_cn": "",
+              "value": "TPR"
+            },
+            {
+              "label": "SHANGHAI",
+              "label_cn": "",
+              "value": "SHANGHAI"
+            },
+            {
+              "label": "J25",
+              "label_cn": "",
+              "value": "J25"
+            },
+            {
+              "label": "BRRIG-",
+              "label_cn": "",
+              "value": "BRRIG-"
+            },
+            {
+              "label": "TKP",
+              "label_cn": "",
+              "value": "TKP"
+            },
+            {
+              "label": "GUAYAQUIL - MARITIMO",
+              "label_cn": "",
+              "value": "GUAYAQUIL - MARITIMO"
+            },
+            {
+              "label": "SHEKOU",
+              "label_cn": "",
+              "value": "SHEKOU"
+            }
+          ],
+          "unloading_ports": [
+            {
+              "label": "",
+              "label_cn": "",
+              "value": ""
+            },
+            {
+              "label": "Savannah, Georgia",
+              "label_cn": "",
+              "value": "Savannah, Georgia"
+            },
+            {
+              "label": "AURORA",
+              "label_cn": "",
+              "value": "AURORA"
+            },
+            {
+              "label": "KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA PABEAN TANJUNG PERAK",
+              "label_cn": "",
+              "value": "KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA PABEAN TANJUNG PERAK"
+            },
+            {
+              "label": "PHUNTSHOLING",
+              "label_cn": "",
+              "value": "PHUNTSHOLING"
+            },
+            {
+              "label": "LAXUS",
+              "label_cn": "",
+              "value": "LAXUS"
+            },
+            {
+              "label": "KANTOR PELAYANAN UTAMA BEA DAN CUKAI TIPE A TANJUNG PRIOK",
+              "label_cn": "",
+              "value": "KANTOR PELAYANAN UTAMA BEA DAN CUKAI TIPE A TANJUNG PRIOK"
+            },
+            {
+              "label": "KOBE",
+              "label_cn": "",
+              "value": "KOBE"
+            },
+            {
+              "label": "Long Beach",
+              "label_cn": "",
+              "value": "Long Beach"
+            },
+            {
+              "label": "BOGOTÁ D.C.",
+              "label_cn": "",
+              "value": "BOGOTÁ D.C."
+            },
+            {
+              "label": "LONDON GATEWAY PORT",
+              "label_cn": "",
+              "value": "LONDON GATEWAY PORT"
+            },
+            {
+              "label": "NEWARK",
+              "label_cn": "",
+              "value": "NEWARK"
+            },
+            {
+              "label": "DUNKERQUE",
+              "label_cn": "",
+              "value": "DUNKERQUE"
+            },
+            {
+              "label": "LONG BEACH",
+              "label_cn": "",
+              "value": "LONG BEACH"
+            },
+            {
+              "label": "HOUSTON",
+              "label_cn": "",
+              "value": "HOUSTON"
+            },
+            {
+              "label": "CHICAGO",
+              "label_cn": "",
+              "value": "CHICAGO"
+            },
+            {
+              "label": "OAKLAND",
+              "label_cn": "",
+              "value": "OAKLAND"
+            },
+            {
+              "label": "NAGOYA AICHI",
+              "label_cn": "",
+              "value": "NAGOYA AICHI"
+            },
+            {
+              "label": "BALTIMORE",
+              "label_cn": "",
+              "value": "BALTIMORE"
+            },
+            {
+              "label": "New York",
+              "label_cn": "",
+              "value": "New York"
+            },
+            {
+              "label": "TANJUNG PERAK",
+              "label_cn": "",
+              "value": "TANJUNG PERAK"
+            },
+            {
+              "label": "Antwerpen",
+              "label_cn": "",
+              "value": "Antwerpen"
+            },
+            {
+              "label": "VALENCIA",
+              "label_cn": "",
+              "value": "VALENCIA"
+            },
+            {
+              "label": "SOUTHAMPTON",
+              "label_cn": "",
+              "value": "SOUTHAMPTON"
+            },
+            {
+              "label": "Nagoya, Aichi",
+              "label_cn": "",
+              "value": "Nagoya, Aichi"
+            },
+            {
+              "label": "NANSHA PT",
+              "label_cn": "",
+              "value": "NANSHA PT"
+            },
+            {
+              "label": "SINGAPORE",
+              "label_cn": "",
+              "value": "SINGAPORE"
+            },
+            {
+              "label": "SINSG",
+              "label_cn": "",
+              "value": "SINSG"
+            },
+            {
+              "label": "KPU BEA DAN CUKAI TIPE A TJ PRIOK",
+              "label_cn": "",
+              "value": "KPU BEA DAN CUKAI TIPE A TJ PRIOK"
+            },
+            {
+              "label": "Los Angeles",
+              "label_cn": "",
+              "value": "Los Angeles"
+            },
+            {
+              "label": "KAMPEN",
+              "label_cn": "",
+              "value": "KAMPEN"
+            },
+            {
+              "label": "MANZANILLO MANZANILLO COLIMA.",
+              "label_cn": "",
+              "value": "MANZANILLO MANZANILLO COLIMA."
+            },
+            {
+              "label": "LS218",
+              "label_cn": "",
+              "value": "LS218"
+            },
+            {
+              "label": "BOGOTÁ, D.C.",
+              "label_cn": "",
+              "value": "BOGOTÁ, D.C."
+            },
+            {
+              "label": "Jawaharlal Nehru (Nhava Sheva)",
+              "label_cn": "",
+              "value": "Jawaharlal Nehru (Nhava Sheva)"
+            },
+            {
+              "label": "ROTTERDAM",
+              "label_cn": "",
+              "value": "ROTTERDAM"
+            },
+            {
+              "label": "Norfolk",
+              "label_cn": "",
+              "value": "Norfolk"
+            },
+            {
+              "label": "MARíTIMA DEL CALLAO",
+              "label_cn": "",
+              "value": "MARíTIMA DEL CALLAO"
+            },
+            {
+              "label": "05100010",
+              "label_cn": "",
+              "value": "05100010"
+            },
+            {
+              "label": "Charleston",
+              "label_cn": "",
+              "value": "Charleston"
+            },
+            {
+              "label": "MONTREAL",
+              "label_cn": "",
+              "value": "MONTREAL"
+            },
+            {
+              "label": "FELIXSTOWE",
+              "label_cn": "",
+              "value": "FELIXSTOWE"
+            },
+            {
+              "label": "LE HAVRE",
+              "label_cn": "",
+              "value": "LE HAVRE"
+            },
+            {
+              "label": "New York/Newark Area, Newark, New Jersey",
+              "label_cn": "",
+              "value": "New York/Newark Area, Newark, New Jersey"
+            },
+            {
+              "label": "HAMBURG",
+              "label_cn": "",
+              "value": "HAMBURG"
+            },
+            {
+              "label": "Los Angeles, California",
+              "label_cn": "",
+              "value": "Los Angeles, California"
+            },
+            {
+              "label": "NORTH BERGEN",
+              "label_cn": "",
+              "value": "NORTH BERGEN"
+            },
+            {
+              "label": "Oakland",
+              "label_cn": "",
+              "value": "Oakland"
+            },
+            {
+              "label": "SYDNEY",
+              "label_cn": "",
+              "value": "SYDNEY"
+            },
+            {
+              "label": "LAZARO CARDENAS LAZARO CARDENAS MICHOACAN.",
+              "label_cn": "",
+              "value": "LAZARO CARDENAS LAZARO CARDENAS MICHOACAN."
+            },
+            {
+              "label": "TOKYO",
+              "label_cn": "",
+              "value": "TOKYO"
+            },
+            {
+              "label": "VENLO",
+              "label_cn": "",
+              "value": "VENLO"
+            },
+            {
+              "label": "VANCOUVER",
+              "label_cn": "",
+              "value": "VANCOUVER"
+            },
+            {
+              "label": "CHARLESTON",
+              "label_cn": "",
+              "value": "CHARLESTON"
+            },
+            {
+              "label": "AJMAN",
+              "label_cn": "",
+              "value": "AJMAN"
+            },
+            {
+              "label": "TIJUANA TIJUANA BAJA CALIFORNIA.",
+              "label_cn": "",
+              "value": "TIJUANA TIJUANA BAJA CALIFORNIA."
+            },
+            {
+              "label": "MEMPHIS",
+              "label_cn": "",
+              "value": "MEMPHIS"
+            },
+            {
+              "label": "NUEVO LAREDO NUEVO LAREDO TAMAULIPAS.",
+              "label_cn": "",
+              "value": "NUEVO LAREDO NUEVO LAREDO TAMAULIPAS."
+            },
+            {
+              "label": "ASHDOD",
+              "label_cn": "",
+              "value": "ASHDOD"
+            },
+            {
+              "label": "TANJUNG PRIOK",
+              "label_cn": "",
+              "value": "TANJUNG PRIOK"
+            },
+            {
+              "label": "KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA PABEAN BELAWAN",
+              "label_cn": "",
+              "value": "KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA PABEAN BELAWAN"
+            },
+            {
+              "label": "BRISBANE",
+              "label_cn": "",
+              "value": "BRISBANE"
+            },
+            {
+              "label": "SAVANNAH",
+              "label_cn": "",
+              "value": "SAVANNAH"
+            },
+            {
+              "label": "FREMANTLE",
+              "label_cn": "",
+              "value": "FREMANTLE"
+            },
+            {
+              "label": "JAKARTA",
+              "label_cn": "",
+              "value": "JAKARTA"
+            },
+            {
+              "label": "LOS ANGELES",
+              "label_cn": "",
+              "value": "LOS ANGELES"
+            },
+            {
+              "label": "NEW YORK",
+              "label_cn": "",
+              "value": "NEW YORK"
+            },
+            {
+              "label": "MOERDIJK",
+              "label_cn": "",
+              "value": "MOERDIJK"
+            },
+            {
+              "label": "DALLAS",
+              "label_cn": "",
+              "value": "DALLAS"
+            },
+            {
+              "label": "MELBOURNE",
+              "label_cn": "",
+              "value": "MELBOURNE"
+            },
+            {
+              "label": "GENOVA",
+              "label_cn": "",
+              "value": "GENOVA"
+            },
+            {
+              "label": "FOS-SUR-MER",
+              "label_cn": "",
+              "value": "FOS-SUR-MER"
+            },
+            {
+              "label": "Tanjung Perak",
+              "label_cn": "",
+              "value": "Tanjung Perak"
+            },
+            {
+              "label": "JACKSONVILLE",
+              "label_cn": "",
+              "value": "JACKSONVILLE"
+            },
+            {
+              "label": "ANTWERPEN",
+              "label_cn": "",
+              "value": "ANTWERPEN"
+            },
+            {
+              "label": "Kobe",
+              "label_cn": "",
+              "value": "Kobe"
+            },
+            {
+              "label": "AD DAMMAM",
+              "label_cn": "",
+              "value": "AD DAMMAM"
+            },
+            {
+              "label": "NORFOLK",
+              "label_cn": "",
+              "value": "NORFOLK"
+            },
+            {
+              "label": "TACOMA",
+              "label_cn": "",
+              "value": "TACOMA"
+            },
+            {
+              "label": "VERACRUZ VERACRUZ VERACRUZ.",
+              "label_cn": "",
+              "value": "VERACRUZ VERACRUZ VERACRUZ."
+            },
+            {
+              "label": "Chennai (ex Madras)",
+              "label_cn": "",
+              "value": "Chennai (ex Madras)"
+            },
+            {
+              "label": "MALE SEACARGO PORT",
+              "label_cn": "",
+              "value": "MALE SEACARGO PORT"
+            },
+            {
+              "label": "SHEKOU PT",
+              "label_cn": "",
+              "value": "SHEKOU PT"
+            },
+            {
+              "label": "OSAKA",
+              "label_cn": "",
+              "value": "OSAKA"
+            },
+            {
+              "label": "LOUISA",
+              "label_cn": "",
+              "value": "LOUISA"
+            },
+            {
+              "label": "Rotterdam",
+              "label_cn": "",
+              "value": "Rotterdam"
+            },
+            {
+              "label": "XINGANG",
+              "label_cn": "",
+              "value": "XINGANG"
+            },
+            {
+              "label": "BARCELONA",
+              "label_cn": "",
+              "value": "BARCELONA"
+            },
+            {
+              "label": "Long Beach, California",
+              "label_cn": "",
+              "value": "Long Beach, California"
+            },
+            {
+              "label": "Savannah",
+              "label_cn": "",
+              "value": "Savannah"
+            },
+            {
+              "label": "JEBEL ALI",
+              "label_cn": "",
+              "value": "JEBEL ALI"
+            },
+            {
+              "label": "MISSISSAUGA",
+              "label_cn": "",
+              "value": "MISSISSAUGA"
+            },
+            {
+              "label": "Tanjung Priok",
+              "label_cn": "",
+              "value": "Tanjung Priok"
+            },
+            {
+              "label": "Tokyo",
+              "label_cn": "",
+              "value": "Tokyo"
+            },
+            {
+              "label": "Bangalore",
+              "label_cn": "",
+              "value": "Bangalore"
+            },
+            {
+              "label": "SHANGHAI",
+              "label_cn": "",
+              "value": "SHANGHAI"
+            },
+            {
+              "label": "SUNGAI NIBONG",
+              "label_cn": "",
+              "value": "SUNGAI NIBONG"
+            },
+            {
+              "label": "KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA PABEAN CIKARANG",
+              "label_cn": "",
+              "value": "KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA PABEAN CIKARANG"
+            },
+            {
+              "label": "INCHEON",
+              "label_cn": "",
+              "value": "INCHEON"
+            },
+            {
+              "label": "GUAYAQUIL - MARITIMO",
+              "label_cn": "",
+              "value": "GUAYAQUIL - MARITIMO"
+            }
+          ],
+          "total_shipments": {
+            "min": 1,
+            "max": 157
+          }
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

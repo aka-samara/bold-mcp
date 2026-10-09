@@ -1,0 +1,378 @@
+{
+  "_meta": {
+    "path": "company-details",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "company_id": "35N101762513"
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "name": "SAMSUNG ELECTRONICS HCMC CE COMPLEX CO., LTD.",
+          "country": {
+            "name": "VIETNAM",
+            "code": "VN",
+            "name_cn": "越南"
+          },
+          "domain": "-",
+          "tags": [],
+          "contact_info": {
+            "phone": "+84 24 3553 8637",
+            "email": ""
+          },
+          "social_links": {
+            "linkedin": "https://vn.linkedin.com/company/samsung-electronics-hcmc-ce-complex",
+            "twitter": "https://www.twitter.com/samsung"
+          },
+          "total_weight": 475858.5159394536,
+          "total_shipments": 833521,
+          "total_suppliers": 761,
+          "total_import_value": 4635416521.215525,
+          "total_import_quantity": 45242329427.237076,
+          "total_import_products": 1102,
+          "import_countries": [
+            {
+              "name": "VIETNAM",
+              "code": "VN",
+              "name_cn": "越南"
+            },
+            {
+              "name": "UNKNOWN",
+              "code": "null",
+              "name_cn": "未知"
+            },
+            {
+              "name": "KOREA",
+              "code": "KR",
+              "name_cn": "韩国"
+            }
+          ],
+          "export_countries": [
+            {
+              "name": "VIETNAM",
+              "code": "VN",
+              "name_cn": "越南"
+            },
+            {
+              "name": "KOREA",
+              "code": "KR",
+              "name_cn": "韩国"
+            },
+            {
+              "name": "CHINA",
+              "code": "CN",
+              "name_cn": "中国"
+            },
+            {
+              "name": "HONG KONG (CHINA)",
+              "code": "HK",
+              "name_cn": "中国香港"
+            },
+            {
+              "name": "THAILAND",
+              "code": "TH",
+              "name_cn": "泰国"
+            },
+            {
+              "name": "TAIWAN (CHINA)",
+              "code": "TW",
+              "name_cn": "中国台湾"
+            },
+            {
+              "name": "UNKNOWN",
+              "code": "null",
+              "name_cn": "未知"
+            },
+            {
+              "name": "CAMBODIA",
+              "code": "KH",
+              "name_cn": "柬埔寨"
+            },
+            {
+              "name": "SINGAPORE",
+              "code": "SG",
+              "name_cn": "新加坡"
+            },
+            {
+              "name": "INDONESIA",
+              "code": "ID",
+              "name_cn": "印度尼西亚"
+            },
+            {
+              "name": "MALAYSIA",
+              "code": "MY",
+              "name_cn": "马来西亚"
+            },
+            {
+              "name": "JAPAN",
+              "code": "JP",
+              "name_cn": "日本"
+            },
+            {
+              "name": "CANADA",
+              "code": "CA",
+              "name_cn": "加拿大"
+            },
+            {
+              "name": "PHILIPPINES",
+              "code": "PH",
+              "name_cn": "菲律宾"
+            },
+            {
+              "name": "INDIA",
+              "code": "IN",
+              "name_cn": "印度"
+            },
+            {
+              "name": "UNITED STATES",
+              "code": "US",
+              "name_cn": "美国"
+            },
+            {
+              "name": "GERMANY",
+              "code": "DE",
+              "name_cn": "德国"
+            },
+            {
+              "name": "MEXICO",
+              "code": "MX",
+              "name_cn": "墨西哥"
+            },
+            {
+              "name": "SLOVENIA",
+              "code": "SI",
+              "name_cn": "斯洛文尼亚"
+            },
+            {
+              "name": "AUSTRIA",
+              "code": "AT",
+              "name_cn": "奥地利"
+            },
+            {
+              "name": "SOUTH AFRICA",
+              "code": "ZA",
+              "name_cn": "南非"
+            },
+            {
+              "name": "GEORGIA",
+              "code": "GE",
+              "name_cn": "格鲁吉亚"
+            },
+            {
+              "name": "EGYPT",
+              "code": "EG",
+              "name_cn": "埃及"
+            },
+            {
+              "name": "ITALY",
+              "code": "IT",
+              "name_cn": "意大利"
+            },
+            {
+              "name": "SLOVAKIA",
+              "code": "SK",
+              "name_cn": "斯洛伐克"
+            },
+            {
+              "name": "TURKEY",
+              "code": "TR",
+              "name_cn": "土耳其"
+            },
+            {
+              "name": "UNITED KINGDOM",
+              "code": "GB",
+              "name_cn": "英国"
+            },
+            {
+              "name": "HUNGARY",
+              "code": "HU",
+              "name_cn": "匈牙利"
+            },
+            {
+              "name": "UNITED ARAB EMIRATES",
+              "code": "AE",
+              "name_cn": "阿拉伯联合酋长国"
+            },
+            {
+              "name": "IRELAND",
+              "code": "IE",
+              "name_cn": "爱尔兰"
+            },
+            {
+              "name": "SWITZERLAND",
+              "code": "CH",
+              "name_cn": "瑞士"
+            },
+            {
+              "name": "POLAND",
+              "code": "PL",
+              "name_cn": "波兰"
+            },
+            {
+              "name": "AUSTRALIA",
+              "code": "AU",
+              "name_cn": "澳大利亚"
+            },
+            {
+              "name": "NETHERLANDS",
+              "code": "NL",
+              "name_cn": "荷兰"
+            },
+            {
+              "name": "SPAIN",
+              "code": "ES",
+              "name_cn": "西班牙"
+            },
+            {
+              "name": "BRAZIL",
+              "code": "BR",
+              "name_cn": "巴西"
+            },
+            {
+              "name": "ROMANIA",
+              "code": "RO",
+              "name_cn": "罗马尼亚"
+            },
+            {
+              "name": "SAUDI ARABIA",
+              "code": "SA",
+              "name_cn": "沙特阿拉伯"
+            },
+            {
+              "name": "IRAQ",
+              "code": "IQ",
+              "name_cn": "伊拉克"
+            },
+            {
+              "name": "ISRAEL",
+              "code": "IL",
+              "name_cn": "以色列"
+            },
+            {
+              "name": "JORDAN",
+              "code": "JO",
+              "name_cn": "约旦"
+            },
+            {
+              "name": "BELGIUM",
+              "code": "BE",
+              "name_cn": "比利时"
+            },
+            {
+              "name": "CHILE",
+              "code": "CL",
+              "name_cn": "智利"
+            },
+            {
+              "name": "FRANCE",
+              "code": "FR",
+              "name_cn": "法国"
+            },
+            {
+              "name": "QATAR",
+              "code": "QA",
+              "name_cn": "卡塔尔"
+            },
+            {
+              "name": "BAHRAIN",
+              "code": "BH",
+              "name_cn": "巴林"
+            },
+            {
+              "name": "KUWAIT",
+              "code": "KW",
+              "name_cn": "科威特"
+            },
+            {
+              "name": "MYANMAR",
+              "code": "MM",
+              "name_cn": "缅甸"
+            },
+            {
+              "name": "NEW ZEALAND",
+              "code": "NZ",
+              "name_cn": "新西兰"
+            },
+            {
+              "name": "OMAN",
+              "code": "OM",
+              "name_cn": "阿曼"
+            },
+            {
+              "name": "PUERTO RICO",
+              "code": "PR",
+              "name_cn": "波多黎各"
+            },
+            {
+              "name": "WESTERN SAHARA",
+              "code": "null",
+              "name_cn": "西撒哈拉"
+            }
+          ],
+          "loading_ports": [
+            "BIENHOADN",
+            "HQCNC",
+            "HQCKCDNA",
+            "NTRACHDN",
+            "HQTDMOT",
+            "NVPMYBRVT",
+            "DNVMPBD",
+            "HQHUNGYEN",
+            "CTHANHBP",
+            "SONGTHANBD",
+            "TNHATDN",
+            "VHUONGBD",
+            "HQBACNINH",
+            "TANJUNG PRIOK",
+            "KCNVNSGBD",
+            "Tanjung Priok",
+            "CCHQ Nhơn Trạch",
+            "HQYENPHONG",
+            "CENGKARENG / SOEKARNO HATTA (U)",
+            "CCHQ Sóng Thần",
+            "CENGKARENG SOEKARNO HATTA U",
+            "Cengkareng / Soekarno Hatta (u)",
+            "CCHQ Biên Hoà",
+            "CCHQ Cảng Cát Lở",
+            "HQKCXKCNHP",
+            "CCHQTDMOT",
+            "CCCNCHCM",
+            "CCHQ Thống Nhất",
+            "HQVINHPHUC",
+            "CKCLONGAN",
+            "CCHQ Chơn Thành",
+            "TIJUANA TIJUANA BAJA CALIFORNIA.",
+            "HQTTHUAN"
+          ],
+          "unloading_ports": [
+            "Hải quan Khu công nghệ cao",
+            "HO CHI MINH CITY",
+            "Ho Chi Minh City",
+            "Hải quan Chuyển phát nhanh"
+          ],
+          "industry_classifications": {
+            "hs_codes": [],
+            "naics_codes": [],
+            "sitc_codes": []
+          },
+          "is_logistics_company": false
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

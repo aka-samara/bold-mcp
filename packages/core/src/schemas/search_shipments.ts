@@ -36,6 +36,7 @@ export const searchShipmentsInput = z
 
 export const ShipmentRow = z
   .object({
+    shipment_id: z.string().nullable().describe("Shipment record id, NOT a company_id"),
     date: z.string().nullable().describe("Shipment date, YYYY-MM-DD"),
     import_record_id: z.string().nullable().describe("Record id, NOT a company_id. Use consignee_name with find_company_id."),
     export_record_id: z.string().nullable().describe("Record id, NOT a company_id. Use shipper_name with find_company_id."),

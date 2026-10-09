@@ -2,7 +2,7 @@ import { compact, SOURCE } from "../schemas/common.js";
 import {
   findCompetitorsInput, findCompetitorsOutput, listExportersOutput, listImportersOutput, rankedListInput, searchCompaniesInput, searchCompaniesOutput,
 } from "../schemas/company_lists.js";
-import { extractRows, pageInfo, toNumber, toStr, toStrArray, truncate, type PageInfo } from "../shaping/normalize.js";
+import { extractRows, pageInfo, toCountry, toCountryList, toNumber, toStr, toStrArray, toStrList, truncate, type PageInfo } from "../shaping/normalize.js";
 import { tradeFilterBody } from "./shared.js";
 import { defineTool, PAID_READ_ONLY } from "./types.js";
 
@@ -11,18 +11,23 @@ const rowsOf = (data: unknown) => extractRows(data).map((r) => (r ?? {}) as Row)
 const idOf = (o: Row) => toStr(o.id ?? o.company_id);
 const hasId = <T extends { company_id: string | null }>(r: T): r is T & { company_id: string } => r.company_id !== null;
 
-function rankedBase(o: Row) {
+/**
+ * `partners`: the live API gives import_countries and export_countries; the
+ * trading partners are the exporting countries for an importer and the
+ * importing countries for an exporter.
+ */
+function rankedBase(o: Row, partners: "import_countries" | "export_countries") {
   const products = truncate(toStrArray(o.products).join("; ") || null);
   return {
     rank: toNumber(o.rank),
     company_id: idOf(o),
     name: toStr(o.name),
     domain: toStr(o.domain),
-    country: toStr(o.country),
+    country: toCountry(o.country),
     total_shipments: toNumber(o.total_shipments),
     total_weight: toNumber(o.total_weight),
-    countries: toStrArray(o.countries),
-    ports: toStrArray(o.ports),
+    countries: toCountryList(o.countries ?? o[partners]),
+    ports: toStrList(o.ports, o.loading_ports, o.unloading_ports),
     products: products.text,
     products_truncated: products.truncated,
   };
@@ -50,7 +55,7 @@ export const listImporters = defineTool({
     const data = await rt.call("all-importers", compact({ ...filter, page_size: args.page_size, page_no: args.page_no }));
     const raw = rowsOf(data);
     const rows = raw
-      .map((o) => ({ ...rankedBase(o), total_import_value: toNumber(o.total_import_value), total_import_quantity: toNumber(o.total_import_quantity), total_suppliers: toNumber(o.total_suppliers) }))
+      .map((o) => ({ ...rankedBase(o, "export_countries"), total_import_value: toNumber(o.total_import_value), total_import_quantity: toNumber(o.total_import_quantity), total_suppliers: toNumber(o.total_suppliers) }))
       .filter(hasId);
     const page = pageInfo(data, rows.length, args.page_no, args.page_size);
     return { structured: { source: SOURCE, status: "ok" as const, pool: "data" as const, rows, ...page, next_page_cost_credits: 0 }, summary: pageSummary("importers", rows.length, page), billing: { units: raw.length } };
@@ -76,7 +81,7 @@ export const listExporters = defineTool({
     const data = await rt.call("all-exporters", compact({ ...filter, page_size: args.page_size, page_no: args.page_no }));
     const raw = rowsOf(data);
     const rows = raw
-      .map((o) => ({ ...rankedBase(o), total_export_value: toNumber(o.total_export_value), total_export_quantity: toNumber(o.total_export_quantity), total_buyers: toNumber(o.total_buyers) }))
+      .map((o) => ({ ...rankedBase(o, "import_countries"), total_export_value: toNumber(o.total_export_value), total_export_quantity: toNumber(o.total_export_quantity), total_buyers: toNumber(o.total_buyers) }))
       .filter(hasId);
     const page = pageInfo(data, rows.length, args.page_no, args.page_size);
     return { structured: { source: SOURCE, status: "ok" as const, pool: "data" as const, rows, ...page, next_page_cost_credits: 0 }, summary: pageSummary("exporters", rows.length, page), billing: { units: raw.length } };
@@ -103,7 +108,7 @@ export const searchCompanies = defineTool({
     );
     const raw = rowsOf(data);
     const rows = raw
-      .map((o) => ({ company_id: idOf(o), name: toStr(o.name), domain: toStr(o.domain), country: toStr(o.country), total_shipments: toNumber(o.total_shipments), total_import_value: toNumber(o.total_import_value) }))
+      .map((o) => ({ company_id: idOf(o), name: toStr(o.name), domain: toStr(o.domain), country: toCountry(o.country), total_shipments: toNumber(o.total_shipments), total_import_value: toNumber(o.total_import_value) }))
       .filter(hasId);
     const page = pageInfo(data, rows.length, args.page_no, args.page_size);
     return { structured: { source: SOURCE, status: "ok" as const, pool: "data" as const, rows, ...page, next_page_cost_credits: 0 }, summary: pageSummary("companies", rows.length, page), billing: { units: raw.length } };
@@ -127,7 +132,7 @@ export const findCompetitors = defineTool({
     const data = await rt.call("competitors", { type: args.type, company_id: args.company_id, page_size: args.page_size, page_no: args.page_no });
     const raw = rowsOf(data);
     const rows = raw
-      .map((o) => ({ company_id: idOf(o), name: toStr(o.name), domain: toStr(o.domain), country: toStr(o.country), no_of_shipments: toNumber(o.no_of_shipments) }))
+      .map((o) => ({ company_id: idOf(o), name: toStr(o.name), domain: toStr(o.domain), country: toCountry(o.country), no_of_shipments: toNumber(o.no_of_shipments) }))
       .filter(hasId);
     const page = pageInfo(data, rows.length, args.page_no, args.page_size);
     return { structured: { source: SOURCE, status: "ok" as const, pool: "data" as const, rows, ...page, next_page_cost_credits: 0 }, summary: pageSummary("competitors", rows.length, page), billing: { units: raw.length } };

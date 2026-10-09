@@ -9,3 +9,4 @@ test/fixtures/recorded/.raw/
 playwright-report/
 test-results/
 packages/stdio/bundle/
+dump.rdb

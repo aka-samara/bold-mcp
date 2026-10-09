@@ -13,6 +13,11 @@ RUN npx tsc -b packages/core packages/http-server && node scripts/copy-assets.mj
  && npm prune --omit=dev --ignore-scripts
 
 FROM node:24-alpine
+# The server runs with plain `node`; drop the package managers that ship in the
+# base image so their bundled dependencies aren't in the runtime image.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+      /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
+      /usr/local/bin/yarn /usr/local/bin/yarnpkg /opt/yarn-v*
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=8080
 WORKDIR /app
 COPY --from=build --chown=node:node /app/package.json ./

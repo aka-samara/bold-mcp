@@ -89,13 +89,13 @@ jobs:
           docker run -d --name bold -p 8080:8080 -e BOLD_PUBLIC_URL=http://localhost:8080 -e NODE_ENV=development bold-mcp:ci
           for i in $(seq 1 30); do curl -sf localhost:8080/healthz && exit 0; sleep 1; done
           docker logs bold; exit 1
+      # Trivy's own image, pinned by digest so the tag can't be re-pointed
+      # (the trivy-action tag used before no longer resolves).
       - name: Scan for high and critical vulnerabilities
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: bold-mcp:ci
-          severity: HIGH,CRITICAL
-          ignore-unfixed: true
-          exit-code: "1"
+        run: >-
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
+          aquasec/trivy:0.74.0@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969
+          image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 --no-progress bold-mcp:ci
 
   audit:
     name: Dependency audit

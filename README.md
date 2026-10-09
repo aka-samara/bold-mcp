@@ -8,6 +8,8 @@ npm run lint && npm run typecheck && npm test && npm run build
 npm run check:secrets          # needs BOLD_TEST_API_KEY in the environment
 npm run gate:m0                # live: test key works against BOLD_API_BASE_URL
 npm run fixtures:record        # live: record free-endpoint fixtures (0 credits)
+npm run check:inspector        # MCP Inspector CLI against built stdio + HTTP servers
+npm run dev:mock-api           # local Partner API stand-in on :4010
 ```
 
-Status: M0 (setup). Tools arrive in M1 (free) and M2 (paid).
+Status: M1 — 9 free tools over header-mode HTTP (`/mcp`) and stdio. Paid tools arrive in M2. See `docs/clients/claude-code.md` to connect.

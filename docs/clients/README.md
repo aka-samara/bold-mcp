@@ -1,3 +1,5 @@
 # Client setup
 
-Copy-paste setup for each client (Claude, ChatGPT, Claude Code, Cursor, VS Code, Windsurf, Gemini CLI, agent SDKs) lands here in M4. Header-mode setup for Claude Code is added in M1.
+- [Claude Code](claude-code.md) — header mode and stdio (M1).
+
+Claude (web/desktop), ChatGPT, Cursor, VS Code, Windsurf, Gemini CLI and agent SDK snippets land in M4, once the paste-your-key sign-in (M3) exists.

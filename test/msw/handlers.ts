@@ -14,7 +14,7 @@ export interface PartnerApiMock {
 }
 
 /** msw handlers serving fixtures for all 22 global paths. */
-export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL): PartnerApiMock {
+export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL, opts: { invalidKeys?: string[] } = {}): PartnerApiMock {
   const fixtures = loadFixtures();
   const errors = loadErrorFixtures();
   const scenarios = new Map<string, Scenario>();
@@ -24,7 +24,8 @@ export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL): Pa
     http.post(`${baseUrl}/${ep.path}`, async ({ request }) => {
       const body: unknown = await request.json().catch(() => null);
       calls.push({ path: ep.path, body, hasApiKey: Boolean(request.headers.get("api-key")) });
-      if (!request.headers.get("api-key")) {
+      const key = request.headers.get("api-key");
+      if (!key || opts.invalidKeys?.includes(key)) {
         const e = errors["401"];
         return HttpResponse.json(e?.body ?? null, { status: 401 });
       }

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",
+    "jose": "^6.2.12",
     "pino": "^10.4.0",
     "zod": "^4.0.0"
   }

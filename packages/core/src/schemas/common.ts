@@ -90,3 +90,35 @@ export const pageOutputShape = {
 export const LabelValue = z.object({ label: z.string().nullable(), value: z.string().nullable(), label_cn: z.string().nullable().optional() });
 export const Range = z.object({ min: z.number().nullable(), max: z.number().nullable() });
 export const UnitRangeOut = z.object({ unit: z.string().nullable(), min: z.number().nullable(), max: z.number().nullable() });
+
+// ---- Paid tools ---------------------------------------------------------------
+
+/** Inputs every paid tool takes (brief: optional max_credits and confirmation_token). */
+export const paidInputShape = {
+  max_credits: z.number().int().min(0).optional().describe("Optional cap for this call; above it the user is asked to confirm"),
+  confirmation_token: z.string().max(2000).optional().describe("From a previous confirmation_required result, after the user agreed"),
+};
+
+export const ConfirmationInfo = z.object({
+  message: z.string(),
+  reasons: z.array(z.string()),
+  pool: z.enum(["data", "contact", "kyb"]),
+  estimated_max_credits: z.number(),
+  pool_remaining: z.number().nullable(),
+  confirmation_token: z.string().describe("Pass back unchanged with the same arguments once the user agrees"),
+  expires_at: z.string(),
+});
+
+export const creditOutputShape = {
+  status: z.enum(["ok", "confirmation_required", "cancelled"]).describe('"confirmation_required": ask the user, then call again with confirmation_token'),
+  pool: z.enum(["data", "contact", "kyb"]).nullable().describe("Credit pool this call charges"),
+  credits_used: z.number().optional().describe("Credits this call used, estimated from what was returned"),
+  credits_used_is_estimate: z.boolean().optional(),
+  credits_remaining: z.number().nullable().optional().describe("Pool balance after the call"),
+  confirmation: ConfirmationInfo.optional(),
+};
+
+/** Output for a tool that can spend credits: data fields are absent when confirmation is required. */
+export function paidOutput<S extends z.ZodRawShape>(dataShape: S) {
+  return z.object({ source: Source, ...creditOutputShape, ...z.object(dataShape).partial().shape });
+}

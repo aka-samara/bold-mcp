@@ -20,6 +20,11 @@ export const HttpConfigSchema = CoreConfigSchema.extend({
   BOLD_KEY_CACHE_TTL_MS: z.coerce.number().int().min(1000).default(5 * 60_000),
   BOLD_SESSION_IDLE_MS: z.coerce.number().int().min(60_000).default(30 * 60_000),
   BOLD_MAX_SESSIONS: z.coerce.number().int().min(1).default(10_000),
+  /** HMAC secret for confirmation tokens, shared by all instances (secrets manager). Random per process when unset outside production. */
+  BOLD_CONFIRMATION_SECRET: z.string().min(32, "must be at least 32 characters").optional(),
+}).superRefine((c, ctx) => {
+  if (c.NODE_ENV === "production" && !c.BOLD_CONFIRMATION_SECRET)
+    ctx.addIssue({ code: "custom", path: ["BOLD_CONFIRMATION_SECRET"], message: "is required in production" });
 });
 
 export type HttpConfig = z.output<typeof HttpConfigSchema>;

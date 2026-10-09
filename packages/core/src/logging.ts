@@ -51,5 +51,7 @@ export interface ToolCallLog {
   latency_ms: number;
   outcome: "ok" | "tool_error" | "rate_limited" | "invalid_key" | "confirmation_required" | "exception";
   error_kind?: string;
+  /** Paid tools: credits the call used (estimated from what was returned). */
+  credits_used?: number;
   upstream_calls?: number;
 }

@@ -20,7 +20,7 @@ function list(v: unknown): string[] {
   return Array.isArray(v) ? [...new Set(v.filter((x): x is string => typeof x === "string"))] : [];
 }
 
-function costKeyFor(tool: string, args: Args): CostKey | null {
+export function costKeyFor(tool: string, args: Args): CostKey | null {
   if (tool === "find_company_contacts") return args.volume === "pro" ? "find_company_contacts_pro" : "find_company_contacts";
   return (COST_KEYS as string[]).includes(tool) ? (tool as CostKey) : null;
 }

@@ -147,3 +147,10 @@ export function pageInfo(data: unknown, rowsReturned: number, pageNo: number, pa
   const has_more = total !== null ? pageNo * pageSize < total : rowsReturned >= pageSize;
   return { total, page_no: pageNo, page_size: pageSize, has_more };
 }
+
+/** An array of strings (or a comma/semicolon-separated string) → string[]; anything else → []. */
+export function toStrArray(value: unknown): string[] {
+  if (Array.isArray(value)) return value.map((v) => toStr(typeof v === "object" && v !== null ? ((v as Record<string, unknown>).name ?? (v as Record<string, unknown>).value) : v)).filter((v): v is string => v !== null);
+  const s = toStr(value);
+  return s ? s.split(/\s*[;,]\s*/).filter(Boolean) : [];
+}

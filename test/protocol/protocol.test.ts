@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { setupServer } from "msw/node";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { createBoldServer, FREE_TOOLS, LATEST_SUPPORTED_PROTOCOL } from "@bold-mcp/core";
+import { ALL_TOOLS, createBoldServer, LATEST_SUPPORTED_PROTOCOL } from "@bold-mcp/core";
 import { createPartnerApiMock } from "../msw/handlers.ts";
 import { callerFor, connectInMemory, FAKE_KEY, testDeps } from "../helpers/harness.ts";
 
@@ -44,19 +44,29 @@ describe("initialize", () => {
 });
 
 describe("tools/list", () => {
-  it("lists the M1 free tools with schemas, annotations and description rules", async () => {
+  it("lists every implemented tool with schemas, annotations and description rules", async () => {
     const { deps } = testDeps();
     const c = await connectInMemory(deps, callerFor(FAKE_KEY));
     const { tools } = await c.client.listTools();
-    expect(tools.map((t) => t.name).sort()).toEqual(FREE_TOOLS.map((t) => t.name).sort());
+    expect(tools.map((t) => t.name).sort()).toEqual(ALL_TOOLS.map((t) => t.name).sort());
     for (const t of tools) {
+      const def = ALL_TOOLS.find((d) => d.name === t.name);
       expect(t.name).toMatch(/^[a-z]+(_[a-z]+)*$/);
       expect(t.inputSchema.type).toBe("object");
       expect(t.outputSchema?.type).toBe("object");
       expect(t.description?.length ?? 0, t.name).toBeLessThan(1000);
       expect(t.description?.split("\n")[0], t.name).toMatch(/^(Free|Costs)/);
-      expect(t.annotations).toMatchObject({ readOnlyHint: true, idempotentHint: true, destructiveHint: false });
+      expect(t.annotations, t.name).toMatchObject({ readOnlyHint: true, destructiveHint: false, openWorldHint: true });
+      if (def?.paid && !["find_company_contacts"].includes(t.name)) {
+        expect(t.inputSchema.properties, t.name).toHaveProperty("max_credits");
+        expect(t.inputSchema.properties, t.name).toHaveProperty("confirmation_token");
+        expect(t.outputSchema?.properties, t.name).toHaveProperty("credits_remaining");
+      } else if (t.name !== "find_company_contacts") {
+        expect(t.annotations?.idempotentHint, t.name).toBe(true);
+      }
     }
+    const sc = tools.find((t) => t.name === "search_companies");
+    expect(sc?.description).toContain("Use find_company_id (free) if you only need the id.");
     await c.close();
   });
 

@@ -4,6 +4,11 @@ import type { EndpointPath } from "../client/endpoints.js";
 import type { PartnerApiClient } from "../client/partner-client.js";
 import type { CostTable } from "../billing/costs.js";
 import type { ConcurrencyLimiter, RateLimitStore } from "../limits/rate-limit.js";
+import type { BalanceCache } from "../billing/balance-cache.js";
+import type { ConfirmationTokens } from "../billing/confirmation.js";
+import type { DailySpendStore } from "../billing/daily-spend.js";
+import type { BillingOutcome } from "../billing/actual.js";
+import type { Balances } from "../shaping/credits.js";
 import type { Logger } from "../logging.js";
 
 export type AuthMode = "header" | "oauth" | "stdio";
@@ -45,6 +50,9 @@ export interface CoreDeps {
   rateLimits: RateLimitStore;
   concurrency: ConcurrencyLimiter;
   logger: Logger;
+  balances: BalanceCache;
+  confirmations: ConfirmationTokens;
+  dailySpend: DailySpendStore;
 }
 
 /** What a tool handler gets. `call` applies upstream limits and keeps the key out of the handler. */
@@ -52,6 +60,8 @@ export interface ToolRuntime {
   deps: CoreDeps;
   caller: Omit<CallerContext, "apiKey" | "onKeyRejected">;
   call(path: EndpointPath, body: Record<string, unknown>): Promise<unknown>;
+  /** Pool balances from Credit Usage, cached 60 s per key. */
+  balances(opts?: { fresh?: boolean }): Promise<Balances>;
   signal: AbortSignal | undefined;
 }
 
@@ -59,6 +69,8 @@ export interface ToolResult<O> {
   structured: O;
   /** Short plain-text summary. Never includes free text from API data. */
   summary: string;
+  /** Paid tools: what was returned, for credits_used. */
+  billing?: BillingOutcome;
 }
 
 export interface ToolDefinition<I extends z.ZodObject = z.ZodObject, O extends z.ZodObject = z.ZodObject> {
@@ -70,12 +82,32 @@ export interface ToolDefinition<I extends z.ZodObject = z.ZodObject, O extends z
   outputSchema: O;
   annotations: ToolAnnotations;
   endpoints: readonly EndpointPath[];
+  /** Can spend credits: goes through the credit guard and gets credit fields in its output. */
+  paid?: boolean;
+  /** Contact/KYB unlock: always needs confirmation and respects the allow switches. */
+  unlock?: boolean;
   handler(args: z.output<I>, rt: ToolRuntime): Promise<ToolResult<z.output<O>>>;
 }
 
 export function defineTool<I extends z.ZodObject, O extends z.ZodObject>(def: ToolDefinition<I, O>): ToolDefinition<I, O> {
   return def;
 }
+
+/** Paid tools: read-only and open-world (brief); not idempotent because each call is charged. */
+export const PAID_READ_ONLY: ToolAnnotations = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: false,
+  openWorldHint: true,
+};
+
+/** Unlock tools (brief: read-only, non-destructive, idempotent, open-world; safety comes from server confirmation). */
+export const UNLOCK_ANNOTATIONS: ToolAnnotations = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: true,
+};
 
 /** Annotations for free, read-only, idempotent tools. */
 export const FREE_READ_ONLY: ToolAnnotations = {

@@ -8,6 +8,8 @@ export interface PartnerApiMock {
   handlers: ReturnType<typeof http.post>[];
   /** Serve this scenario for one path until reset. */
   setScenario(path: EndpointPath, scenario: Scenario): void;
+  /** Serve this exact response for one path until reset. */
+  setResponse(path: EndpointPath, status: number, body: unknown): void;
   /** Requests seen, with the api-key header reduced to a presence flag. */
   calls: { path: string; body: unknown; hasApiKey: boolean }[];
   reset(): void;
@@ -18,6 +20,7 @@ export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL, opt
   const fixtures = loadFixtures();
   const errors = loadErrorFixtures();
   const scenarios = new Map<string, Scenario>();
+  const overrides = new Map<string, { status: number; body: unknown }>();
   const calls: PartnerApiMock["calls"] = [];
 
   const handlers = ENDPOINTS.map((ep) =>
@@ -29,6 +32,8 @@ export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL, opt
         const e = errors["401"];
         return HttpResponse.json(e?.body ?? null, { status: 401 });
       }
+      const override = overrides.get(ep.path);
+      if (override) return HttpResponse.json(override.body as never, { status: override.status });
       const scenario = scenarios.get(ep.path) ?? "ok";
       const fixture = fixtures.get(ep.path);
       const response = /^\d+$/.test(scenario) ? errors[scenario] : fixture?.responses[scenario];
@@ -41,8 +46,10 @@ export function createPartnerApiMock(baseUrl: string = DEFAULT_API_BASE_URL, opt
     handlers,
     calls,
     setScenario: (path, scenario) => void scenarios.set(path, scenario),
+    setResponse: (path, status, body) => void overrides.set(path, { status, body }),
     reset() {
       scenarios.clear();
+      overrides.clear();
       calls.length = 0;
     },
   };

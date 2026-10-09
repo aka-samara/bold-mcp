@@ -111,6 +111,29 @@ describe("header mode end to end", () => {
     expect(b.status).toBe(400);
   });
 
+  it("applies X-Bold-Max-Credits and asks over HTTP with elicitation", async () => {
+    let asked = 0;
+    const { client } = await h.connect({ authorization: `Bearer ${FAKE_KEY}`, "x-bold-max-credits": "10" }, () => {
+      asked++;
+      return { action: "accept", content: { confirm: true } };
+    });
+    const r = (await client.callTool({ name: "get_company_profile", arguments: { type: "imp", company_id: "c1" } })) as { structuredContent?: Record<string, unknown> };
+    await client.close();
+    expect(asked).toBe(1);
+    expect(r.structuredContent?.status).toBe("ok");
+    expect(mock.calls.filter((c) => c.path === "company-details")).toHaveLength(1);
+  });
+
+  it("returns confirmation_required over HTTP when the client cannot elicit", async () => {
+    const { client } = await h.connect({ authorization: `Bearer ${FAKE_KEY}`, "x-bold-max-credits": "10" });
+    const r = (await client.callTool({ name: "get_company_profile", arguments: { type: "imp", company_id: "c1" } })) as { structuredContent?: Record<string, unknown> };
+    const token = (r.structuredContent?.confirmation as { confirmation_token: string }).confirmation_token;
+    const ok = (await client.callTool({ name: "get_company_profile", arguments: { type: "imp", company_id: "c1", confirmation_token: token } })) as { structuredContent?: Record<string, unknown> };
+    await client.close();
+    expect(r.structuredContent?.status).toBe("confirmation_required");
+    expect(ok.structuredContent?.status).toBe("ok");
+  });
+
   it("serves /healthz", async () => {
     const res = await fetch(`${h.url}/healthz`);
     expect(await res.json()).toMatchObject({ ok: true });

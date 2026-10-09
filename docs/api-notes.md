@@ -8,16 +8,16 @@ Status key: **open** (needs the team), **confirmed** (checked live), **assumed**
 
 | # | Topic | Status | Note |
 | --- | --- | --- | --- |
-| 1 | Base URL for the test key | open | Brief input #2 is open. Default is `https://tradedata.billofladingdata.com/partner-api`; override with `BOLD_API_BASE_URL`. The M0 gate (`npm run gate:m0`) has not run yet: the build environment had no test key and its network policy blocked `tradedata.billofladingdata.com` (7 Oct 2026). |
+| 1 | Base URL for the test key | confirmed | The test key works against `https://tradedata.billofladingdata.com/partner-api` (M0 gate passed 9 Oct 2026: Credit Usage and Credit Usage Logs both 200). The key is sent only in the `api-key` header (see decisions D46). Override with `BOLD_API_BASE_URL`. |
 
 ## Response shapes
 
 | # | Topic | Status | Note |
 | --- | --- | --- | --- |
-| 2 | Envelope | assumed | Every path returns `{ code, message, data }` (brief). Contract tests enforce this on fixtures; recording will fail loudly if a path differs. |
-| 3 | List payloads | assumed | The brief does not give the paging wrapper. Synthetic fixtures use `data: { total, list: [...] }` as a placeholder. Replace with the recorded shape before M1 schemas are finalised. |
-| 4 | KYB Search payload | assumed | Brief says an array of `{id, name, registration_number, vat_number, country_code, state, jurisdiction}`; synthetic fixture uses a bare array as `data`. |
-| 5 | Error bodies | assumed | Brief lists 200, 400, 401, 402, 403, 404, 500 and no 429. Error messages in synthetic fixtures are placeholders. The recorder captures a real 401 with a deliberately invalid key (free endpoint). |
+| 2 | Envelope | confirmed | All 17 recorded paths return `{ code, message, data }`. Errors return `{ code, message }` with no `data`, for example `{ "code": 404, "message": "Company not found" }`. |
+| 3 | List payloads | confirmed | Paged paths return `data: { page_no, page_size, total, records: [...] }`. Countries are objects `{ name, code, name_cn }` (code can be the string `"null"` for UNKNOWN); company lists give `import_countries`, `export_countries`, `loading_ports` and `unloading_ports` rather than `countries`/`ports`. Shipping records use `country_imp`/`country_exp` (+ `_en`, `_cn`), `start_port`/`end_port`, `manifest_units`, a record `id`, and numeric `amount`, `weight` and `bydate` (`YYYYMMDD`). Contact ids are numbers; the contact teaser has `*_count` fields plus arrays of email domains. Contact Look Up returns `current_title`, `current_employer` and emails as `{ email, smtp_valid, type, grade }`. The tools now read all of these (tested in `test/contract/recorded.test.ts`). |
+| 4 | KYB Search payload | open | Not seen yet. On 9 Oct 2026 KYB Search returned 404 "Company not found" for every `company_id` + `type` tried (Samsung VN and KR, Walmart US, Tesco GB, two others), and 403 "Request failed with status code 403" for every `company_name` + `country_code` (Samsung KR, Walmart US, Tesco GB). No KYB credits were charged. Without a `kyb_id` the four KYB report sections could not be tested. Needs the team: is KYB enabled for the test key, and is the 403 an upstream registry error? |
+| 5 | Error bodies | confirmed (401, 403, 404) | A real 401 is recorded in `test/fixtures/recorded/_errors.json`. The 403 and 404 bodies are in item 4. 400, 402 and 500 are still synthetic. |
 | 6 | Products field descriptions | known | The docs copy Competitors' response field descriptions into Products; ignore them (brief). |
 
 ## Protocol
@@ -30,8 +30,8 @@ Status key: **open** (needs the team), **confirmed** (checked live), **assumed**
 
 | # | Topic | Status | Note |
 | --- | --- | --- | --- |
-| 7 | KYB Search pool | assumed | Team says 3 credits per search; pool assumed KYB. Confirm in Credit Usage Logs on the first paid recording run. |
-| 8 | `credit_type` / `action` values in Credit Usage Logs | open | Needed to reconcile estimates per tool. Capture from the first recording run. |
+| 7 | KYB Search pool | open | Still unconfirmed: no KYB Search call succeeded (item 4), and failed calls charged nothing. |
+| 8 | `credit_type` / `action` values in Credit Usage Logs | confirmed | `credit_type` is `data_credits`, `contact_credits` or `kyb_credits`. Actions seen: `shipping_record_view` (1 per record), `company_record_view` (15 per company, for All Importers, All Exporters, Company Search and Competitors), `company_profile_view` (20, Company Details), `advanced_contact_search` (2, Contacts Pro) and `professional_email_lookup` (10). Credit Usage also counts `personal_email_lookups`, `phone_lookups`, `search_kyb`, `financial_kyb`, `share_holder_kyb` and `officer_kyb`. Every charge matched the cost table. Older entries on this account show `company_record_view` at 45 credits (8 Oct, before this job); these are probably pages of 3 records. |
 
 ## Live test spend
 
@@ -39,5 +39,7 @@ Budget for the whole job: 2,000 data · 100 contact · 100 KYB credits.
 
 | Date | Run | Data | Contact | KYB | Source |
 | --- | --- | --- | --- | --- | --- |
-| — | No live runs yet | 0 | 0 | 0 | — |
-| | **Total** | **0** | **0** | **0** | |
+| 2026-10-09 | M0 gate, free fixture recording, free probes | 0 | 0 | 0 | credit-usage-logs |
+| 2026-10-09 | `fixtures:record --paid --unlocks` (company samsung) | 81 | 12 | 0 | credit-usage-logs |
+| 2026-10-09 | `smoke:live --paid --unlocks` (company samsung) | 81 | 12 | 0 | credit-usage-logs |
+| | **Total** | **162** | **24** | **0** | Budget left: 1,838 / 76 / 100 |

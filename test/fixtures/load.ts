@@ -37,13 +37,16 @@ function readDir(dir: string): string[] {
   }
 }
 
+export type FixtureSource = "synthetic" | "recorded";
+
 /**
- * Fixtures by path. A recorded staging response (test/fixtures/recorded)
- * replaces the synthetic one for the same path.
+ * Fixtures by path. Synthetic fixtures carry the known values the contract
+ * tests assert on; recorded live responses (test/fixtures/recorded) are served
+ * with `"recorded"`, falling back to synthetic for paths not recorded.
  */
-export function loadFixtures(): Map<EndpointPath, Fixture> {
+export function loadFixtures(source: FixtureSource = "synthetic"): Map<EndpointPath, Fixture> {
   const out = new Map<EndpointPath, Fixture>();
-  for (const dir of [SYNTHETIC, RECORDED]) {
+  for (const dir of source === "recorded" ? [SYNTHETIC, RECORDED] : [SYNTHETIC]) {
     for (const file of readDir(dir)) {
       const fixture = FixtureSchema.parse(JSON.parse(readFileSync(join(dir, file), "utf8")));
       const path = fixture._meta.path;
@@ -53,6 +56,13 @@ export function loadFixtures(): Map<EndpointPath, Fixture> {
     }
   }
   return out;
+}
+
+/** Recorded paths only, for tests that check live shapes. */
+export function loadRecordedFixtures(): Map<EndpointPath, Fixture> {
+  const synthetic = loadFixtures("synthetic");
+  const merged = loadFixtures("recorded");
+  return new Map([...merged].filter(([path, f]) => f !== synthetic.get(path) && !f._meta.synthetic));
 }
 
 /** Error envelopes; recorded ones (test/fixtures/recorded/_errors.json) win. */

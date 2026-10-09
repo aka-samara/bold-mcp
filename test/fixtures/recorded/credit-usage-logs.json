@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "path": "credit-usage-logs",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "page_size": 2,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 2,
+          "total": 5057,
+          "records": [
+            {
+              "id": "28e5ffd7-a8cc-4751-b8b1-eb73d41f3c29",
+              "credit_type": "data_credits",
+              "action": "company_record_view",
+              "credits_used": 45,
+              "created_at": "2026-10-08T16:49:46.000Z"
+            },
+            {
+              "id": "8cdea133-a789-43e4-9280-0c6e19047b8d",
+              "credit_type": "data_credits",
+              "action": "company_record_view",
+              "credits_used": 45,
+              "created_at": "2026-10-08T16:17:07.000Z"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

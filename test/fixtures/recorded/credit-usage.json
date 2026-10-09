@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "path": "credit-usage",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {},
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "credits": {
+            "data_credits": {
+              "total": 220000,
+              "used": 212771,
+              "remaining": 7229
+            },
+            "contact_credits": {
+              "total": 12500,
+              "used": 65,
+              "remaining": 12435
+            },
+            "kyb_credits": {
+              "total": 10000,
+              "used": 210,
+              "remaining": 9790
+            }
+          },
+          "usage": {
+            "company_record_views": 10152,
+            "company_profile_views": 145,
+            "shipping_record_views": 53104,
+            "country_specific_shipping_record_views": 2957,
+            "country_specific_company_profile_views": 13,
+            "personal_email_lookups": 1,
+            "professional_email_lookups": 4,
+            "phone_lookups": 1,
+            "advanced_contact_searches": 0,
+            "search_kyb": 7,
+            "financial_kyb": 4,
+            "share_holder_kyb": 4,
+            "officer_kyb": 6
+          }
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": null
+      }
+    }
+  }
+}

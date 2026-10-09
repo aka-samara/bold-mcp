@@ -18,7 +18,9 @@ const SPEC = new Map(ENDPOINTS.map((e) => [e.path, e]));
 function rowCount(data) {
   if (Array.isArray(data)) return data.length;
   if (data && typeof data === "object") {
-    const arr = Object.values(data).find(Array.isArray);
+    // A list payload (`records` live, `list` synthetic); any other object is one
+    // record, even when it has array fields (company-details `tags`, contact `phones`).
+    const arr = ["records", "list", "rows", "items"].map((k) => data[k]).find(Array.isArray);
     return arr ? arr.length : Object.keys(data).length > 0 ? 1 : 0;
   }
   return 0;
@@ -85,9 +87,9 @@ export function startMock(port = 0) {
         }
       }
       if (m[1] === "credit-usage-logs") {
-        const synthetic = Array.isArray(body.data?.list) ? body.data.list : [];
-        const list = [...charges].reverse().concat(synthetic);
-        body.data = { total: list.length, list: list.slice(0, request.page_size ?? 250) };
+        const listKey = Array.isArray(body.data?.records) ? "records" : "list";
+        const list = [...charges].reverse().concat(Array.isArray(body.data?.[listKey]) ? body.data[listKey] : []);
+        body.data = { total: list.length, [listKey]: list.slice(0, request.page_size ?? 250) };
       }
       const spec = SPEC.get(m[1]);
       const credits = spec ? charge(spec, request, body.data) : 0;

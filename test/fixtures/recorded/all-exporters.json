@@ -1,0 +1,92 @@
+{
+  "_meta": {
+    "path": "all-exporters",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 1,
+          "total": 39073,
+          "records": [
+            {
+              "rank": 1,
+              "id": "NBDDIY300084435",
+              "name": "JYSK SP.Z.O.O.",
+              "domain": "jysk.pl",
+              "country": {
+                "name": "POLAND",
+                "code": "PL",
+                "name_cn": "波兰"
+              },
+              "total_export_value": 12573624.98870325,
+              "total_shipments": 28797,
+              "total_export_quantity": 3738,
+              "total_weight": 8671213.35898447,
+              "total_buyers": 4,
+              "import_countries": [
+                {
+                  "name": "UKRAINE",
+                  "name_cn": "乌克兰",
+                  "code": "UA"
+                },
+                {
+                  "name": "ARMENIA",
+                  "name_cn": "亚美尼亚",
+                  "code": "AM"
+                },
+                {
+                  "name": "VIETNAM",
+                  "name_cn": "越南",
+                  "code": "VN"
+                }
+              ],
+              "export_countries": [
+                {
+                  "name": "POLAND",
+                  "name_cn": "波兰",
+                  "code": "PL"
+                }
+              ],
+              "loading_ports": [
+                "RADOMSKO",
+                "Radomsko",
+                "Radom"
+              ],
+              "unloading_ports": [
+                "05100010",
+                "Hải quan cửa khẩu cảng Sài Gòn khu vực 1",
+                "Hải quan cửa khẩu cảng Đình Vũ"
+              ],
+              "products": "МЕБЛІ ПОБУТОВІ ЗАГАЛЬНОГО ПРИЗНАЧЕННЯ В РОЗІБРАНОМУ СТАНІ КОМПЛЕКТ САДОВИХ МЕБЛІВ В КОМПЛЕКТІ СТІЛ ТА ДВА СТІЛЬЦЯ СКЛАД ДСП ЛАМІНОВАНЕ МЕТАЛЕВА ОСНОВА АРТИКУЛ 3601307 МОДЕЛЬ GA DSTRUP ЯКІСТЬ BASIC ВСЬОГО 2КОМПЛ ТОРГОВЕЛЬНА МАРКА JYSK ВИРОБНИК JYSK A S КРАЇНА ВИРОБНИЦТВА CN КИТАЙСЬКА НАРОДНА РЕСПУБЛІКА"
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

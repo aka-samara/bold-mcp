@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "path": "company-contacts",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "company_id": "35N101762513",
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 1,
+          "total": 80,
+          "records": [
+            {
+              "id": 305677387,
+              "name": "Redacted",
+              "profile_pic": null,
+              "linkedin_url": "https://www.linkedin.com/in/redacted",
+              "position": "Assistant Manager",
+              "company": "Samsung Electronics HCMC CE Complex",
+              "company_website": "https://www.samsung.com",
+              "country_code": "VN",
+              "teaser": {
+                "emails": [
+                  "samsung.com"
+                ],
+                "phones": [],
+                "preview": [],
+                "is_premium_phone_available": false,
+                "personal_emails": [],
+                "professional_emails": [
+                  "samsung.com"
+                ],
+                "emails_count": 1,
+                "phones_count": 0,
+                "personal_emails_count": 0,
+                "professional_emails_count": 1
+              }
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

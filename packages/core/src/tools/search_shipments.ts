@@ -4,7 +4,19 @@ import { extractRows, normalizeFlat, pageInfo, toIsoDate, toStr, truncate } from
 import { defineTool, PAID_READ_ONLY } from "./types.js";
 
 /** Fields renamed or reshaped below; everything else passes through normalised. */
-const RESHAPED = new Set(["bydate", "import_id", "export_id", "products"]);
+const RESHAPED = new Set(["bydate", "import_id", "export_id", "products", "id", "type", "is_shipping"]);
+
+/** Live field names → the names this tool returns. */
+const RENAMED: Record<string, string> = {
+  country_imp: "import_country",
+  country_imp_en: "import_country_name",
+  country_exp: "export_country",
+  country_exp_en: "export_country_name",
+  start_port: "loading_port",
+  end_port: "unloading_port",
+  manifest_units: "quantity_unit",
+  or_country: "origin_country",
+};
 
 export const searchShipments = defineTool({
   name: "search_shipments",
@@ -45,10 +57,15 @@ export const searchShipments = defineTool({
     const rows = extractRows(data).map((r) => {
       const o = (r ?? {}) as Record<string, unknown>;
       // Other fields (countries, value, weight, ports, brands, …) pass through normalised.
-      const rest = Object.fromEntries(Object.entries(normalizeFlat(o, args.language)).filter(([k]) => !RESHAPED.has(k)));
+      const rest = Object.fromEntries(
+        Object.entries(normalizeFlat(o, args.language))
+          .filter(([k]) => !RESHAPED.has(k))
+          .map(([k, v]) => [RENAMED[k] ?? k, v]),
+      );
       const text = truncate(toStr(o.products));
       return {
         ...rest,
+        shipment_id: toStr(o.id),
         date: toIsoDate(o.bydate ?? o.date),
         import_record_id: toStr(o.import_id),
         export_record_id: toStr(o.export_id),

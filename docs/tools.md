@@ -31,7 +31,7 @@
 - Product text is cut to 200 characters with `products_truncated: true`.
 - Filter option lists show at most 100 items each, with `total` and `truncated`.
 - `find_company_id` rows use `company_id` (the API's `id`) so it chains into other tools.
-- `find_company_contacts` rows use `contact_id`, never include `profile_pic`, and show `available` (which details exist) instead of the details.
+- `find_company_contacts` rows use `contact_id`, never include `profile_pic`, and show `available` (counts of professional emails, personal emails and phones, plus `premium_phone_available`) instead of the details.
 - Local limits: 60 tool calls a minute and 5 at once per connection; Company Search Free 30/min, 450/hr, 1,500/day and Contacts Lite 10/min, 150/hr, 25,000/month per key, with a message offering the paid alternative.
 
 ## Paid tools and the credit guard (M2)
@@ -43,7 +43,7 @@
   - asks through MCP elicitation when the client supports it, otherwise returns `status: "confirmation_required"` with a signed, single-use, 10-minute `confirmation_token` bound to the connection, tool and exact arguments.
 - `find_company_contacts` with `volume: "pro"` calls Contacts Pro and charges 2 contact credits per non-empty page. Its annotation is not idempotent because of Pro mode.
 - Header-mode spending settings: `X-Bold-Max-Credits`, `X-Bold-Daily-Credits`, `X-Bold-Allow-Contacts`, `X-Bold-Allow-KYB`. Stdio: `BOLD_MAX_CREDITS`, `BOLD_DAILY_CREDITS`, `BOLD_ALLOW_CONTACTS`, `BOLD_ALLOW_KYB`.
-- `search_shipments` rows rename `import_id`/`export_id` to `import_record_id`/`export_record_id` and `bydate` to `date` (ISO), so record ids are never mistaken for company ids.
+- `search_shipments` rows rename `import_id`/`export_id` to `import_record_id`/`export_record_id` and `bydate` to `date` (ISO), so record ids are never mistaken for company ids. The record's own `id` becomes `shipment_id`, and the live field names `country_imp`/`country_exp` (+ `_en`), `start_port`/`end_port` and `manifest_units` become `import_country`/`export_country` (+ `_name`), `loading_port`/`unloading_port` and `quantity_unit`.
 
 ## Unlock tools (M4)
 

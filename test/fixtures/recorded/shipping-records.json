@@ -1,0 +1,72 @@
+{
+  "_meta": {
+    "path": "shipping-records",
+    "synthetic": false,
+    "note": "Recorded 2026-10-09 from https://tradedata.billofladingdata.com/partner-api. The empty response is still synthetic."
+  },
+  "request": {
+    "type": "imp",
+    "hs_codes": [
+      "940360"
+    ],
+    "page_size": 1,
+    "page_no": 1
+  },
+  "responses": {
+    "ok": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "page_no": 1,
+          "page_size": 1,
+          "total": 1424464,
+          "records": [
+            {
+              "id": "WpIkHKEBZmIKspGOqELy",
+              "type": "imp",
+              "hs_code": "9403608081",
+              "hs_code_desc": "Furniture; wooden, other than for office, kitchen or bedroom use",
+              "bydate": 20261006,
+              "country_imp": "US",
+              "country_imp_cn": "美国",
+              "country_imp_en": "UNITED STATES",
+              "country_exp": "BR",
+              "country_exp_cn": "巴西",
+              "country_exp_en": "BRAZIL",
+              "amount": 0,
+              "manifest_units": "PCS",
+              "manifest_qty": 204,
+              "weight_unit": "KG",
+              "weight": 18828,
+              "transport_type": "sea",
+              "export_id": "35N103026786",
+              "shipper_name": "ALLINK TRANSPORTES INTERNACIONAIS L",
+              "import_id": "35N100058681",
+              "consignee_name": "SHIPCO TRANSPORT INC (13-3468377 )",
+              "products": "PLANET CARRIER 08 BOXES CONTAINING PLANET CARRIER DUE XXXXXXXXXXXXXXX NCM 8483.9000VOLKSWAGEN VEHICLES 36 UNT CONTAINING PIECES OF VOLKSWAGEN VEHICLES DUE 26BR001520344-0 NCM 84879000 87089990 85011019ARMCHAIR 02 BOXES CONTAINING 02 PCS OF ARMCHAIR DUE 26BR001463767-5 NCM 94036000 HS CODE 9403.60.80.81 WOODEN PACKING MATERIAL NOT",
+              "start_port": "Sao Paulo",
+              "end_port": "New York/Newark Area, Newark, New Jersey",
+              "is_shipping": 1,
+              "bill_of_lading_nbr": "HLCUSS5260825780",
+              "or_country": "BRAZIL",
+              "brands": ""
+            }
+          ]
+        }
+      }
+    },
+    "empty": {
+      "status": 200,
+      "body": {
+        "code": 200,
+        "message": "Success",
+        "data": {
+          "total": 0,
+          "list": []
+        }
+      }
+    }
+  }
+}

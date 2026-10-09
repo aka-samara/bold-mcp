@@ -17,14 +17,14 @@ import { registerResources } from "./resources/index.js";
 import { parseCreditUsage, type Balances } from "./shaping/credits.js";
 import { SOURCE } from "./schemas/common.js";
 import { ALL_TOOLS } from "./tools/index.js";
-import type { CallerContext, CoreDeps, ToolDefinition, ToolRuntime } from "./tools/types.js";
+import type { CallerContext, CoreDeps, ToolDefinition, ToolRuntime, UnlockAuditEntry } from "./tools/types.js";
 
 export { LATEST_PROTOCOL_VERSION as LATEST_SUPPORTED_PROTOCOL } from "@modelcontextprotocol/sdk/types.js";
 
 export type Extra = RequestHandlerExtra<ServerRequest, ServerNotification>;
 
 export const SERVER_NAME = "bill-of-lading-data";
-export const SERVER_VERSION = "0.2.0";
+export const SERVER_VERSION = "0.4.0";
 
 /** How long to wait for the user to answer an elicitation. */
 const ELICIT_TIMEOUT_MS = 5 * 60_000;
@@ -167,6 +167,12 @@ export function createBoldServer(opts: BoldServerOptions): McpServer {
           const label = POOL_LABEL[credits.pool];
           summary += ` Credits used: ${fmt(credits.credits_used)} ${label} (estimated); ${credits.credits_remaining === null ? "remaining balance unknown" : `${fmt(credits.credits_remaining)} ${label} credits remaining`}.`;
         }
+      }
+      if (out.audit) {
+        // Audit trail for unlocks: ids and types only, never the revealed details (brief: Privacy).
+        const entry: UnlockAuditEntry = { ...out.audit, tool: tool.name, connection_id: caller.connectionId, key_fp: caller.fingerprint, credits_used: charged, at: new Date().toISOString() };
+        deps.logger.info({ unlock: entry }, "unlock");
+        deps.onUnlock?.(entry);
       }
       log("ok");
       return { content: [{ type: "text", text: summary }], structuredContent: structured };

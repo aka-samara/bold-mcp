@@ -3,7 +3,7 @@ import { setupServer } from "msw/node";
 import { createPartnerApiMock, type Scenario } from "../msw/handlers.ts";
 import { BAD_KEY, FAKE_KEY } from "../helpers/harness.ts";
 import { INIT_BODY, startHttp } from "../helpers/http.ts";
-import { PAID_SAMPLE_ARGS, SAMPLE_ARGS } from "../helpers/samples.ts";
+import { PAID_SAMPLE_ARGS, SAMPLE_ARGS, UNLOCK_SAMPLE_ARGS } from "../helpers/samples.ts";
 
 const mock = createPartnerApiMock(undefined, { invalidKeys: [BAD_KEY] });
 const msw = setupServer(...mock.handlers);
@@ -35,6 +35,13 @@ describe("key safety", () => {
       seen.push(JSON.stringify(confirm));
       const token = confirm.structuredContent?.confirmation?.confirmation_token;
       if (token) seen.push(JSON.stringify(await client.callTool({ name: "list_importers", arguments: { hs_codes: ["940360"], page_size: 20, confirmation_token: token } })));
+      // Unlocks: always confirmed, then run.
+      for (const [tool, args] of Object.entries(UNLOCK_SAMPLE_ARGS)) {
+        const first = (await client.callTool({ name: tool, arguments: args })) as { structuredContent?: { confirmation?: { confirmation_token: string } } };
+        seen.push(JSON.stringify(first));
+        const t = first.structuredContent?.confirmation?.confirmation_token;
+        if (t) seen.push(JSON.stringify(await client.callTool({ name: tool, arguments: { ...args, confirmation_token: t } })));
+      }
       for (const scenario of ["400", "401", "402", "403", "404", "500", "empty"] satisfies Scenario[]) {
         mock.setScenario("insights", scenario);
         seen.push(JSON.stringify(await client.callTool({ name: "get_market_insights", arguments: { type: "imp", hs_codes: ["940360"] } })));

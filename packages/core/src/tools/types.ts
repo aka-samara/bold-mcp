@@ -55,6 +55,16 @@ export interface CoreDeps {
   dailySpend: DailySpendStore;
   /** Called after every tool call (e.g. to write the usage log). */
   onToolCall?: (entry: ToolCallLog) => void;
+  /** Called after every unlock that returned data (brief: audit-log each unlock). */
+  onUnlock?: (entry: UnlockAuditEntry) => void;
+}
+
+export interface UnlockAuditEntry extends UnlockAudit {
+  tool: string;
+  connection_id: string | null;
+  key_fp: string;
+  credits_used: number;
+  at: string;
 }
 
 /** What a tool handler gets. `call` applies upstream limits and keeps the key out of the handler. */
@@ -73,6 +83,15 @@ export interface ToolResult<O> {
   summary: string;
   /** Paid tools: what was returned, for credits_used. */
   billing?: BillingOutcome;
+  /** Unlock tools: what was unlocked, for the audit log (ids and types only, never the revealed details). */
+  audit?: UnlockAudit;
+}
+
+export interface UnlockAudit {
+  subject_type: "contact" | "kyb";
+  subject_id: string;
+  /** Lookup types or sections that returned data. */
+  unlocked: string[];
 }
 
 export interface ToolDefinition<I extends z.ZodObject = z.ZodObject, O extends z.ZodObject = z.ZodObject> {

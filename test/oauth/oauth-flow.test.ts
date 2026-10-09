@@ -306,6 +306,29 @@ describe("using a connection", () => {
     expect(sent).not.toMatch(/authorization:/i);
   });
 
+  it("audit-logs unlocks against the connection, with settings from the connect page", async () => {
+    const { tokens } = await signIn(h.url, FAKE_KEY, { allow_contacts: "on" });
+    const client = await mcpClient(tokens.access_token);
+    const args = { contact_id: "ct_synthetic_001", lookup_type: ["professional_emails"] };
+    const first = (await client.callTool({ name: "reveal_contact_details", arguments: args })) as { structuredContent?: { confirmation?: { confirmation_token: string } } };
+    const token = first.structuredContent?.confirmation?.confirmation_token as string;
+    await client.callTool({ name: "reveal_contact_details", arguments: { ...args, confirmation_token: token } });
+    await client.close();
+    await new Promise((r) => setTimeout(r, 20));
+    const conn = (await h.services.tokens.checkAccess(tokens.access_token, RESOURCE))?.connectionId;
+    const rows = await h.services.db.audit.list({ subjectId: "ct_synthetic_001" });
+    expect(rows).toEqual([expect.objectContaining({ connection_id: conn, subject_type: "contact", unlocked: ["professional_emails"], credits_used: 10 })]);
+  });
+
+  it("refuses unlocks the user switched off on the connect page", async () => {
+    const { tokens } = await signIn(h.url, FAKE_KEY, { allow_contacts: "off", allow_kyb: "off" });
+    const client = await mcpClient(tokens.access_token);
+    const r = (await client.callTool({ name: "get_kyb_report", arguments: { kyb_id: "k", sections: ["details"] } })) as { isError?: boolean; content: { text: string }[] };
+    await client.close();
+    expect(r.isError).toBe(true);
+    expect(r.content[0]?.text).toContain("KYB unlocks are turned off");
+  });
+
   it("answers 401 with the challenge for an unknown token", async () => {
     const res = await mcpPost("boldmcp_unknowntoken");
     expect(res.status).toBe(401);

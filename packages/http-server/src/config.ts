@@ -35,6 +35,8 @@ export const HttpConfigSchema = CoreConfigSchema.extend({
   BOLD_LOGO_URL: z.url().default("https://billofladingdata.com/assets/BLO-LOGO.png"),
   BOLD_FIND_KEY_URL: z.url().default("https://billofladingdata.com"),
   BOLD_TRIAL_URL: z.url().default("https://billofladingdata.com"),
+  /** Proxies in front of the server (load balancer = 1). Client IPs for rate limits come from X-Forwarded-For only through these hops. */
+  BOLD_TRUST_PROXY_HOPS: z.coerce.number().int().min(0).max(5).default(0),
   /** Days a connection may sit unused before it expires (brief: 90). */
   BOLD_CONNECTION_IDLE_DAYS: z.coerce.number().int().min(1).default(90),
 }).superRefine((c, ctx) => {

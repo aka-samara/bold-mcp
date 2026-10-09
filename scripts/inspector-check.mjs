@@ -14,7 +14,7 @@ const run = promisify(execFile);
 const root = fileURLToPath(new URL("..", import.meta.url));
 const INSPECTOR = "@modelcontextprotocol/inspector@2.9.0";
 const FAKE_KEY = "inspector-check-fake-key-000000000000";
-const EXPECTED_TOOLS = Number(process.env.EXPECTED_TOOLS ?? 16);
+const EXPECTED_TOOLS = Number(process.env.EXPECTED_TOOLS ?? 18);
 
 const mock = await startMock(0);
 const apiBase = `http://127.0.0.1:${mock.address().port}/partner-api`;

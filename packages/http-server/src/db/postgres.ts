@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import pg from "pg";
-import type { SpendingSettings, ToolCallLog } from "@bold-mcp/core";
+import type { SpendingSettings, ToolCallLog, UnlockAuditEntry } from "@bold-mcp/core";
 import type { EncryptedKey } from "../vault/key-vault.js";
 import type { Connection, Db, OAuthClient, TokenRecord } from "./types.js";
 
@@ -153,6 +153,23 @@ export class PostgresDb implements Db {
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
         [e.connection_id, e.key_fp, e.auth_mode, e.tool, e.pool, e.credits_estimated, e.credits_used ?? null, e.outcome, e.latency_ms],
       );
+    },
+  };
+
+  audit = {
+    record: async (e: UnlockAuditEntry) => {
+      await this.pool.query(
+        `INSERT INTO unlock_audit (created_at, connection_id, key_fingerprint, tool, subject_type, subject_id, unlocked, credits_used)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [e.at, e.connection_id, e.key_fp, e.tool, e.subject_type, e.subject_id, e.unlocked, e.credits_used],
+      );
+    },
+    list: async (f: { keyFingerprint?: string; subjectId?: string; limit?: number }): Promise<UnlockAuditEntry[]> => {
+      const r = await this.pool.query<{ created_at: Date; connection_id: string | null; key_fingerprint: string; tool: string; subject_type: "contact" | "kyb"; subject_id: string; unlocked: string[]; credits_used: number }>(
+        `SELECT * FROM unlock_audit WHERE ($1::text IS NULL OR key_fingerprint = $1) AND ($2::text IS NULL OR subject_id = $2) ORDER BY id DESC LIMIT $3`,
+        [f.keyFingerprint ?? null, f.subjectId ?? null, f.limit ?? 100],
+      );
+      return r.rows.map((x) => ({ at: x.created_at.toISOString(), connection_id: x.connection_id, key_fp: x.key_fingerprint, tool: x.tool, subject_type: x.subject_type, subject_id: x.subject_id, unlocked: x.unlocked, credits_used: x.credits_used }));
     },
   };
 

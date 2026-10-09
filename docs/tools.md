@@ -20,8 +20,8 @@
 | `find_competitors` | competitors | 15 per record | Data | M2 | shipped |
 | `get_company_profile` | company-details | 20 | Data | M2 | shipped |
 | `search_kyb` | kyb-search | 3 per search | KYB | M2 | shipped |
-| `reveal_contact_details` | contact-look-up | 10 / 10 / 15 per person | Contact | M4 | planned |
-| `get_kyb_report` | advanced-kyb-search, financial-kyb, shareholders-kyb, officers-kyb | 10 per section | KYB | M4 | planned |
+| `reveal_contact_details` | contact-look-up | 10 / 10 / 15 per person | Contact | M4 | shipped |
+| `get_kyb_report` | advanced-kyb-search, financial-kyb, shareholders-kyb, officers-kyb | 10 per section | KYB | M4 | shipped |
 
 ## Shared behaviour
 
@@ -44,3 +44,12 @@
 - `find_company_contacts` with `volume: "pro"` calls Contacts Pro and charges 2 contact credits per non-empty page. Its annotation is not idempotent because of Pro mode.
 - Header-mode spending settings: `X-Bold-Max-Credits`, `X-Bold-Daily-Credits`, `X-Bold-Allow-Contacts`, `X-Bold-Allow-KYB`. Stdio: `BOLD_MAX_CREDITS`, `BOLD_DAILY_CREDITS`, `BOLD_ALLOW_CONTACTS`, `BOLD_ALLOW_KYB`.
 - `search_shipments` rows rename `import_id`/`export_id` to `import_record_id`/`export_record_id` and `bydate` to `date` (ISO), so record ids are never mistaken for company ids.
+
+## Unlock tools (M4)
+
+- `reveal_contact_details` (`contact_id` from `find_company_contacts`, `lookup_type[]` of `professional_emails`, `personal_emails`, `phones`) and `get_kyb_report` (`kyb_id` from `search_kyb`, `sections[]` of `details`, `financials`, `shareholders`, `officers`, plus `page_size` ≤ 100 and `page_no` for shareholders and officers).
+- Both **always** ask the user first (elicitation or `confirmation_token`), whatever the limits, and are refused outright when the connection's allow switch is off (connect page, `X-Bold-Allow-Contacts: false`, `X-Bold-Allow-KYB: false`, or `BOLD_ALLOW_CONTACTS=false` / `BOLD_ALLOW_KYB=false` for stdio). The worst case is the sum of the requested lookup types, or 10 × sections.
+- Charged only for what comes back: `returned_types` / `returned_sections` list what was charged. A KYB section that fails is reported in `section_errors` and not charged; the other sections still return.
+- Contact results never include `profile_pic`; officer rows never include date-of-birth fields. Financials become one table per statement (`group`, `years`, and rows of `item` plus a value per year).
+- Revealed details appear only in `structuredContent`, never in the text summary or logs. Each unlock that returned data is written to the audit log (`unlock_audit`: connection, key fingerprint, contact or KYB id, what was unlocked, credits, time); `bold-mcp-admin audit` lists it.
+- Annotated read-only, non-destructive, idempotent and open-world (brief), so ChatGPT treats them as reads; safety comes from the server's confirmation.

@@ -1,4 +1,4 @@
-import type { ToolCallLog } from "@bold-mcp/core";
+import type { ToolCallLog, UnlockAuditEntry } from "@bold-mcp/core";
 import type { Connection, Db, OAuthClient, TokenRecord } from "./types.js";
 
 /** In-memory Db for tests and local runs without Postgres. */
@@ -7,6 +7,7 @@ export class MemoryDb implements Db {
   readonly connectionRows = new Map<string, Connection>();
   readonly tokenRows = new Map<string, TokenRecord>();
   readonly usageRows: ToolCallLog[] = [];
+  readonly auditRows: UnlockAuditEntry[] = [];
 
   constructor(private readonly now: () => Date = () => new Date()) {}
 
@@ -75,6 +76,15 @@ export class MemoryDb implements Db {
 
   usage = {
     record: async (e: ToolCallLog) => void this.usageRows.push(e),
+  };
+
+  audit = {
+    record: async (e: UnlockAuditEntry) => void this.auditRows.push(structuredClone(e)),
+    list: async (f: { keyFingerprint?: string; subjectId?: string; limit?: number }) =>
+      this.auditRows
+        .filter((e) => (!f.keyFingerprint || e.key_fp === f.keyFingerprint) && (!f.subjectId || e.subject_id === f.subjectId))
+        .reverse()
+        .slice(0, f.limit ?? 100),
   };
 
   async close() {}

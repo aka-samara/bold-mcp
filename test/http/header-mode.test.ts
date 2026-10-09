@@ -54,7 +54,7 @@ describe("/mcp authentication", () => {
     }
   });
 
-  it("treats boldmcp_ bearer values as OAuth tokens (not recognised before M3)", async () => {
+  it("treats boldmcp_ bearer values as OAuth tokens and rejects unknown ones", async () => {
     const res = await post({ authorization: "Bearer boldmcp_notarealtoken" });
     expect(res.status).toBe(401);
     expect(mock.calls).toHaveLength(0);

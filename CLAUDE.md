@@ -15,7 +15,7 @@ packages/core/         shared core: every tool lives here, so all transports get
   src/server.ts        builds the McpServer and registers everything
 packages/http-server/  Streamable HTTP (/mcp), header-mode keys, OAuth paste-your-key sign-in, key vault, db
 packages/stdio/        npm @billofladingdata/mcp, reads BOLD_API_KEY
-test/                  unit/ contract/ oauth/ e2e/ fixtures/ msw/
+test/                  unit/ contract/ protocol/ http/ oauth/ integration/ browser/ fixtures/ msw/
 docs/                  BRIEF.md api-notes.md decisions.md tools.md clients/
 infra/                 Dockerfile, deploy config, dashboards, alerts
 scripts/               gate, fixture recording, key-leak check

@@ -1,0 +1,31 @@
+# Local stand-ins for staging services. `docker compose up -d postgres redis`, then:
+#   DATABASE_URL=postgres://bold:bold@localhost:5432/bold REDIS_URL=redis://localhost:6379 npm run start:http
+#   TEST_DATABASE_URL=postgres://bold:bold@localhost:5432/bold TEST_REDIS_URL=redis://localhost:6379 npm run test:integration
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: bold
+      POSTGRES_PASSWORD: bold
+      POSTGRES_DB: bold
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bold"]
+      interval: 2s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  server:
+    build: { context: ., dockerfile: infra/Dockerfile }
+    profiles: ["server"]
+    depends_on: [postgres, redis]
+    ports: ["8080:8080"]
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: "8080"
+      BOLD_PUBLIC_URL: http://localhost:8080
+      DATABASE_URL: postgres://bold:bold@postgres:5432/bold
+      REDIS_URL: redis://redis:6379
+      BOLD_API_BASE_URL: ${BOLD_API_BASE_URL:-https://tradedata.billofladingdata.com/partner-api}

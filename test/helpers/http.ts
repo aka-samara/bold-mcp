@@ -5,12 +5,14 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import { ElicitRequestSchema, type ElicitResult } from "@modelcontextprotocol/sdk/types.js";
 import { createApp } from "../../packages/http-server/src/app.ts";
 import { loadHttpConfig } from "../../packages/http-server/src/config.ts";
+import { buildServices, type ServiceOverrides } from "../../packages/http-server/src/services.ts";
 import { testDeps } from "./harness.ts";
 
-export async function startHttp(env: NodeJS.ProcessEnv = {}) {
+export async function startHttp(env: NodeJS.ProcessEnv = {}, overrides: ServiceOverrides = {}) {
   const { deps, logs } = testDeps(env);
   const config = loadHttpConfig({ BOLD_PUBLIC_URL: "https://mcp.test.example", ...env });
-  const { app, sessions } = createApp({ config, deps });
+  const services = await buildServices(config, deps.logger, { deps, ...overrides });
+  const { app, sessions } = createApp(services);
   const server: Server = await new Promise((resolve) => {
     const s = app.listen(0, "127.0.0.1", () => resolve(s));
   });
@@ -19,6 +21,7 @@ export async function startHttp(env: NodeJS.ProcessEnv = {}) {
     url,
     logs,
     sessions,
+    services,
     async connect(headers: Record<string, string>, elicit?: () => ElicitResult) {
       const client = new Client({ name: "http-test", version: "1.0.0" }, elicit ? { capabilities: { elicitation: { form: {} } } } : undefined);
       if (elicit) client.setRequestHandler(ElicitRequestSchema, async () => elicit());
@@ -29,6 +32,7 @@ export async function startHttp(env: NodeJS.ProcessEnv = {}) {
     async stop() {
       await sessions.closeAll();
       await new Promise<void>((r) => server.close(() => r()));
+      await services.close();
     },
   };
 }

@@ -37,6 +37,7 @@ export function testDeps(env: NodeJS.ProcessEnv = {}): { deps: CoreDeps; logs: s
   const deps = createCoreDeps(loadCoreConfig(env), logger, { env, rateLimits: new MemoryRateLimitStore(() => frozen) });
   // No waiting between retries in tests.
   (deps.client as unknown as { sleep: (ms: number) => Promise<void> }).sleep = async () => undefined;
+  if (deps.knowledge) (deps.knowledge as unknown as { sleep: (ms: number) => Promise<void> }).sleep = async () => undefined;
   return { deps, logs: lines };
 }
 

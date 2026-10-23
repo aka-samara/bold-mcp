@@ -27,3 +27,19 @@ export const UNLOCK_SAMPLE_ARGS: Record<string, Record<string, unknown>> = {
   reveal_contact_details: { contact_id: "ct_synthetic_001", lookup_type: ["professional_emails"] },
   get_kyb_report: { kyb_id: "kyb_synthetic_001", sections: ["details", "financials", "shareholders", "officers"], page_size: 2 },
 };
+
+/** One valid call per knowledge tool. */
+export const KNOWLEDGE_SAMPLE_ARGS: Record<string, Record<string, unknown>> = {
+  search_knowledge: { query: "how often is the data updated", limit: 3 },
+  resolve_countries: { places: ["GCC"] },
+  resolve_route: { origins: ["Vietnam"], destinations: ["US"] },
+  get_coverage: { countries: ["VN"], direction: "export" },
+  get_field_gaps: { countries: ["VN"], direction: "export" },
+  get_schema: { country: "Vietnam", direction: "export" },
+  get_volume: { countries: ["VN"], direction: "export", years: [2025] },
+  get_packages: { channels: ["api"] },
+  price_quote: { format: "api", global_records: 100 },
+  get_terms: { query: "refunds", agreement: "licence" },
+  get_api_reference: {},
+  get_samples: { countries: ["VN"] },
+};

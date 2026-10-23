@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CoreConfigSchema, ConfigError, describeIssues } from "@bold-mcp/core";
+import { CoreConfigSchema, ConfigError, describeIssues, knowledgeConfigIssues } from "@bold-mcp/core";
 
 const DEFAULT_ORIGINS = ["https://claude.ai", "https://claude.com", "https://chatgpt.com", "https://chat.openai.com"];
 
@@ -55,5 +55,7 @@ export type HttpConfig = z.output<typeof HttpConfigSchema>;
 export function loadHttpConfig(env: NodeJS.ProcessEnv = process.env): HttpConfig {
   const parsed = HttpConfigSchema.safeParse(env);
   if (!parsed.success) throw new ConfigError(describeIssues(parsed.error));
+  const issues = knowledgeConfigIssues(parsed.data);
+  if (issues.length) throw new ConfigError(issues);
   return parsed.data;
 }

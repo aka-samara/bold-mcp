@@ -24,6 +24,7 @@
     "fixtures:record": "npm run build && node --experimental-strip-types --no-warnings scripts/record-fixtures.ts",
     "test:protocol": "vitest run test/protocol test/http",
     "check:inspector": "node scripts/inspector-check.mjs",
+    "check:knowledge": "node --experimental-strip-types --no-warnings scripts/knowledge-contract.ts",
     "dev:mock-api": "node scripts/mock-partner-api.mjs",
     "start:http": "node packages/http-server/dist/index.js",
     "start:stdio": "node packages/stdio/dist/index.js",

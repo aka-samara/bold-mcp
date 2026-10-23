@@ -1,6 +1,7 @@
 import type { z } from "zod";
 import type { ToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
 import type { EndpointPath } from "../client/endpoints.js";
+import type { KnowledgeClient, KnowledgeResult } from "../client/knowledge-client.js";
 import type { PartnerApiClient } from "../client/partner-client.js";
 import type { CostTable } from "../billing/costs.js";
 import type { ConcurrencyLimiter, RateLimitStore } from "../limits/rate-limit.js";
@@ -53,6 +54,8 @@ export interface CoreDeps {
   balances: BalanceCache;
   confirmations: ConfirmationTokens;
   dailySpend: DailySpendStore;
+  /** The sales assistant's knowledge API; null when BOLD_KNOWLEDGE_URL/TOKEN are not set (no knowledge tools). */
+  knowledge: KnowledgeClient | null;
   /** Called after every tool call (e.g. to write the usage log). */
   onToolCall?: (entry: ToolCallLog) => void;
   /** Called after every unlock that returned data (brief: audit-log each unlock). */
@@ -74,6 +77,8 @@ export interface ToolRuntime {
   call(path: EndpointPath, body: Record<string, unknown>): Promise<unknown>;
   /** Pool balances from Credit Usage, cached 60 s per key. */
   balances(opts?: { fresh?: boolean }): Promise<Balances>;
+  /** Knowledge tools: one call to the knowledge API. */
+  knowledge(tool: string, input: Record<string, unknown>): Promise<KnowledgeResult>;
   signal: AbortSignal | undefined;
 }
 
@@ -107,6 +112,12 @@ export interface ToolDefinition<I extends z.ZodObject = z.ZodObject, O extends z
   paid?: boolean;
   /** Contact/KYB unlock: always needs confirmation and respects the allow switches. */
   unlock?: boolean;
+  /**
+   * Knowledge tool: reads the knowledge API, not the Partner API. Its result
+   * is also sent as JSON text, since the answer is the data itself and some
+   * clients only pass text content to the model.
+   */
+  knowledge?: boolean;
   handler(args: z.output<I>, rt: ToolRuntime): Promise<ToolResult<z.output<O>>>;
 }
 

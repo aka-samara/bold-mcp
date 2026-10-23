@@ -2,6 +2,7 @@ import { MemoryBalanceCache, type BalanceCache } from "./billing/balance-cache.j
 import { ConfirmationTokens, MemoryConfirmationStore, type ConfirmationStore } from "./billing/confirmation.js";
 import { loadCostTable } from "./billing/costs.js";
 import { MemoryDailySpendStore, type DailySpendStore } from "./billing/daily-spend.js";
+import { KnowledgeClient } from "./client/knowledge-client.js";
 import { PartnerApiClient } from "./client/partner-client.js";
 import type { CoreConfig } from "./config.js";
 import { ConcurrencyLimiter, CONNECTION_CONCURRENCY, MemoryRateLimitStore, type RateLimitStore } from "./limits/rate-limit.js";
@@ -29,5 +30,9 @@ export function createCoreDeps(config: CoreConfig, logger: Logger, overrides: De
     balances: overrides.balances ?? new MemoryBalanceCache(),
     confirmations: new ConfirmationTokens(overrides.confirmationSecret ?? ConfirmationTokens.randomSecret(), overrides.confirmationStore ?? new MemoryConfirmationStore()),
     dailySpend: overrides.dailySpend ?? new MemoryDailySpendStore(),
+    knowledge:
+      config.BOLD_KNOWLEDGE_URL && config.BOLD_KNOWLEDGE_TOKEN
+        ? new KnowledgeClient({ baseUrl: config.BOLD_KNOWLEDGE_URL, token: config.BOLD_KNOWLEDGE_TOKEN, timeoutMs: config.BOLD_API_TIMEOUT_MS, ...(overrides.fetch ? { fetch: overrides.fetch } : {}) })
+        : null,
   };
 }

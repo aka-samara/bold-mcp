@@ -1,0 +1,72 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "note": "Made-up answers in the shape of the sales assistant's knowledge API (POST /api/kb/v1/tools/{name}). Not real Bill of Lading Data facts or prices."
+  },
+  "responses": {
+    "search_knowledge": {
+      "data": [
+        { "kind": "faq", "title": "Example FAQ: how often is data updated?", "question": "How often is the data updated?", "text": "Example answer: most countries update monthly.", "internal": false, "source_id": "kb_entries:faq-0001@v2" },
+        { "kind": "pricing", "title": "Example internal pricing note", "text": "Example internal-only note.", "internal": true, "source_id": "kb_entries:pricing-0002@v1" },
+        { "kind": "document", "title": "Example API guide, page 3", "text": "Example guide text.", "internal": false, "source_id": "chunks:doc-0003@v1" }
+      ],
+      "source_ids": ["kb_entries:faq-0001@v2", "kb_entries:pricing-0002@v1", "chunks:doc-0003@v1"],
+      "notes": ["Hits marked internal are for staff only."]
+    },
+    "resolve_countries": {
+      "data": [{ "input": "GCC", "codes": ["AE", "BH", "KW", "OM", "QA", "SA"], "kind": "region" }],
+      "source_ids": [],
+      "notes": []
+    },
+    "resolve_route": {
+      "data": [{ "origin": "VN", "destination": "US", "visibility": "both_sides", "datasets": [{ "dataset_id": "example-us-imp", "internal": false }] }],
+      "source_ids": ["coverage:example-us-imp@v1"],
+      "notes": []
+    },
+    "get_coverage": {
+      "data": [{ "country": "VN", "direction": "export", "source_type": "direct", "history_from": "2019", "latest_month": "2026-08", "internal": false }],
+      "source_ids": ["coverage:example-vn-exp@v1"],
+      "notes": []
+    },
+    "get_field_gaps": {
+      "data": [{ "country": "VN", "direction": "export", "missing": ["declared_value"], "partial": ["weight"] }],
+      "source_ids": ["coverage:example-vn-exp@v1"],
+      "notes": []
+    },
+    "get_schema": {
+      "data": { "country": "VN", "direction": "export", "fields": [{ "name": "exporter_name", "meaning": "Example: the exporting company" }] },
+      "source_ids": ["schemas:example-vn-exp@v1"],
+      "notes": []
+    },
+    "get_volume": {
+      "data": [{ "country": "VN", "direction": "export", "year": 2025, "records": 1000, "estimate": true }],
+      "source_ids": ["volumes:example-vn-exp-2025@v1"],
+      "notes": ["Example: counts are estimates."]
+    },
+    "get_packages": {
+      "data": { "api": { "packages": [{ "name": "Example", "credits": 1000, "price_usd": 1 }] } },
+      "source_ids": ["pricing:example-api@v1"],
+      "notes": []
+    },
+    "price_quote": {
+      "data": { "format": "api", "total_credits": 100, "package": "Example", "price_usd": 1 },
+      "source_ids": ["pricing:example-api@v1"],
+      "notes": []
+    },
+    "get_terms": {
+      "data": [{ "agreement": "licence", "clause_no": "1.1", "summary": "Example clause summary." }],
+      "source_ids": ["terms:example-1.1@v1"],
+      "notes": []
+    },
+    "get_api_reference": {
+      "data": { "base_url": "https://example.invalid/partner-api", "endpoints": [{ "path": "example", "credits": 0 }] },
+      "source_ids": ["api:example@v1"],
+      "notes": []
+    },
+    "get_samples": {
+      "data": [{ "country": "VN", "sheet": "Example sheet", "rows": 10, "columns": ["exporter_name"] }],
+      "source_ids": ["samples:example@v1"],
+      "notes": []
+    }
+  }
+}

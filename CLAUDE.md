@@ -1,12 +1,12 @@
 # bold-mcp — conventions
 
-MCP server for the Bill of Lading Data **global** Partner API (16 tabs, 22 endpoint paths, 18 tools), reached with the customer's own API key. The spec is `docs/BRIEF.md`; choices it leaves open are in `docs/decisions.md`; differences between the brief and the live API are in `docs/api-notes.md`. Country-specific endpoints (`/partner-api/US/...`, `/partner-api/IN/...`) are out of scope.
+MCP server for the Bill of Lading Data **global** Partner API (16 tabs, 22 endpoint paths, 18 tools), reached with the customer's own API key, plus 12 optional knowledge tools that proxy the BOL sales assistant's knowledge API (`BOLD_KNOWLEDGE_URL`/`BOLD_KNOWLEDGE_TOKEN`, decisions D49–D52). The spec is `docs/BRIEF.md`; choices it leaves open are in `docs/decisions.md`; differences between the brief and the live API are in `docs/api-notes.md`. Country-specific endpoints (`/partner-api/US/...`, `/partner-api/IN/...`) are out of scope.
 
 ## Layout
 
 ```
 packages/core/         shared core: every tool lives here, so all transports get identical tools
-  src/client/          Partner API client: 22 global paths, api-key header, timeouts, retries, error mapping
+  src/client/          Partner API client: 22 global paths, api-key header, timeouts, retries, error mapping; knowledge API client
   src/schemas/         Zod input/output schemas, one file per tool
   src/tools/           one file per tool: definition, description, handler
   src/billing/         costs.ts (cost table, loaded from config), pools, estimator, balance cache, confirmation tokens, limits

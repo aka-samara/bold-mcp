@@ -9,14 +9,15 @@ import { costKeyFor, estimateCost, nextPageCost, type Estimate } from "./billing
 import { decide } from "./billing/guard.js";
 import type { CreditPool, EndpointPath } from "./client/endpoints.js";
 import { PartnerApiError, toolErrorMessage } from "./client/errors.js";
-import { SERVER_INSTRUCTIONS } from "./instructions.js";
+import { KnowledgeApiError, knowledgeErrorMessage } from "./client/knowledge-client.js";
+import { serverInstructions } from "./instructions.js";
 import { CONNECTION_WINDOWS, formatWait, LocalRateLimitError, UPSTREAM_WINDOWS } from "./limits/rate-limit.js";
 import type { ToolCallLog } from "./logging.js";
 import { registerPrompts } from "./prompts/index.js";
 import { registerResources } from "./resources/index.js";
 import { parseCreditUsage, type Balances } from "./shaping/credits.js";
 import { SOURCE } from "./schemas/common.js";
-import { ALL_TOOLS } from "./tools/index.js";
+import { toolsFor } from "./tools/index.js";
 import type { CallerContext, CoreDeps, ToolDefinition, ToolRuntime, UnlockAuditEntry } from "./tools/types.js";
 
 export { LATEST_PROTOCOL_VERSION as LATEST_SUPPORTED_PROTOCOL } from "@modelcontextprotocol/sdk/types.js";
@@ -62,10 +63,10 @@ export function createBoldServer(opts: BoldServerOptions): McpServer {
   const { deps } = opts;
   const server = new McpServer(
     { name: SERVER_NAME, title: "Bill of Lading Data", version: SERVER_VERSION, websiteUrl: "https://billofladingdata.com" },
-    { instructions: SERVER_INSTRUCTIONS, capabilities: { logging: {} } },
+    { instructions: serverInstructions({ knowledge: Boolean(deps.knowledge) }), capabilities: { logging: {} } },
   );
 
-  for (const tool of opts.tools ?? ALL_TOOLS) {
+  for (const tool of opts.tools ?? toolsFor(deps)) {
     server.registerTool(
       tool.name,
       { title: tool.title, description: tool.description, inputSchema: tool.inputSchema, outputSchema: tool.outputSchema, annotations: tool.annotations },
@@ -138,12 +139,19 @@ export function createBoldServer(opts: BoldServerOptions): McpServer {
       return fresh;
     };
 
+    const knowledge = async (name: string, input: Record<string, unknown>) => {
+      if (!deps.knowledge) throw new KnowledgeApiError("not_found", null, null, name);
+      upstreamCalls++;
+      return deps.knowledge.call(name, input, extra.signal);
+    };
+
     const runtime: ToolRuntime = {
       deps,
       caller: { fingerprint: caller.fingerprint, connectionId: caller.connectionId, authMode: caller.authMode, keyStatus: caller.keyStatus, settings: caller.settings },
       signal: extra.signal,
       call,
       balances,
+      knowledge,
     };
 
     try {
@@ -175,11 +183,18 @@ export function createBoldServer(opts: BoldServerOptions): McpServer {
         deps.onUnlock?.(entry);
       }
       log("ok");
-      return { content: [{ type: "text", text: summary }], structuredContent: structured };
+      const content: ToolCallResult["content"] = [{ type: "text", text: summary }];
+      // Knowledge answers are the data itself: also send them as JSON text (MCP spec: structured content SHOULD be mirrored in a text block).
+      if (tool.knowledge) content.push({ type: "text", text: JSON.stringify(structured) });
+      return { content, structuredContent: structured };
     } catch (err) {
       if (err instanceof LocalRateLimitError) {
         log("rate_limited", err.scope);
         return errorResult(err.scope in UPSTREAM_WINDOWS ? upstreamLimitMessage(err.scope as keyof typeof UPSTREAM_WINDOWS, err.window, err.retryAfterMs) : err.message);
+      }
+      if (err instanceof KnowledgeApiError) {
+        log("tool_error", err.kind);
+        return errorResult(knowledgeErrorMessage(err));
       }
       if (err instanceof PartnerApiError) {
         if (err.kind === "unauthorized" && caller.onKeyRejected) await caller.onKeyRejected();

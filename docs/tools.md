@@ -1,6 +1,6 @@
 # Tools
 
-18 tools over the 22 global endpoint paths. This file is updated whenever a tool changes. Status: **planned** until the tool ships in its milestone.
+18 tools over the 22 global endpoint paths, plus 12 optional knowledge tools (below). This file is updated whenever a tool changes. Status: **planned** until the tool ships in its milestone.
 
 | Tool | Endpoint(s) | Cost | Pool | Milestone | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -53,3 +53,27 @@
 - Contact results never include `profile_pic`; officer rows never include date-of-birth fields. Financials become one table per statement (`group`, `years`, and rows of `item` plus a value per year).
 - Revealed details appear only in `structuredContent`, never in the text summary or logs. Each unlock that returned data is written to the audit log (`unlock_audit`: connection, key fingerprint, contact or KYB id, what was unlocked, credits, time); `bold-mcp-admin audit` lists it.
 - Annotated read-only, non-destructive, idempotent and open-world (brief), so ChatGPT treats them as reads; safety comes from the server's confirmation.
+
+## Knowledge tools (M6, optional)
+
+Free, read-only answers from the BOL sales assistant's knowledge base, so the AI can answer questions about Bill of Lading Data itself: coverage, prices, plans, terms, the API, policies and how to answer customers. They proxy the sales assistant's own knowledge tools (`POST {BOLD_KNOWLEDGE_URL}/api/kb/v1/tools/{name}`), so admin edits and team-saved corrections show up at once. Registered only when `BOLD_KNOWLEDGE_URL` and `BOLD_KNOWLEDGE_TOKEN` are both set; without them the server has its 18 tools.
+
+| Tool | Answers | Cost |
+| --- | --- | --- |
+| `search_knowledge` | FAQs, objections, proof points, competitors, policies, products, coverage, pricing rules, data quality, qualification, escalation, never-promise rules, use cases, uploaded guides | Free |
+| `resolve_countries` | Country names, aliases and regions to ISO codes | Free |
+| `resolve_route` | Where a trade route's records come from (both sides, importer side, exporter side, not covered), freshness, open conflicts | Free |
+| `get_coverage` | Direct and mirror coverage per country: history, latest month, update frequency, lag, channels, missing fields | Free |
+| `get_field_gaps` | Key fields missing or partial per country | Free |
+| `get_schema` | Data dictionary for one country and direction | Free |
+| `get_volume` | Yearly record counts per country and direction (estimates) | Free |
+| `get_packages` | API credit costs and packages, contact packs, dashboard plans, bulk HS4 and country dataset prices, enrichment rules | Free |
+| `price_quote` | A calculated quote for API, dashboard, bulk or enrichment | Free |
+| `get_terms` | Licence and reseller agreement clauses with plain summaries | Free |
+| `get_api_reference` | Partner API endpoints, parameters, costs, limits | Free |
+| `get_samples` | Which sample sheets exist (never the rows) | Free |
+
+- Inputs mirror the sales assistant's schemas exactly (`npm run check:knowledge` compares them with the live API). Results are `{ source: "Bill of Lading Data knowledge base", data, source_ids, notes }`; `data` is the sales assistant's answer as is. The text content holds a one-line summary plus the result as JSON, for clients that pass only text to the model.
+- What a server can see depends on its token, decided by the sales assistant: the staff token sees everything the drafting step sees, including rows marked `internal: true`; the public token sees customer-safe knowledge only. Neither ever returns sample rows, customer emails or histories, leads, or Gmail, Bigin or Calendly data.
+- No credits, no credit guard, no Partner API call: the user's API key is never sent to the knowledge API, and the knowledge token never reaches the AI client, logs or errors. Calls count towards the connection's 60-a-minute limit; the knowledge API allows 120 a minute per token. Up to two retries on 429, 5xx and timeouts.
+

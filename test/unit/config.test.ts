@@ -37,6 +37,41 @@ describe("loadCoreConfig", () => {
   });
 });
 
+describe("knowledge config", () => {
+  const TOKEN = "kbtok-0000000000-test-only-knowledge-token";
+
+  it("is off by default", () => {
+    const c = loadCoreConfig({});
+    expect(c.BOLD_KNOWLEDGE_URL).toBeUndefined();
+    expect(c.BOLD_KNOWLEDGE_TOKEN).toBeUndefined();
+  });
+
+  it("accepts an https URL (trailing slash stripped) or a local http one", () => {
+    expect(loadCoreConfig({ BOLD_KNOWLEDGE_URL: "https://sales.example/", BOLD_KNOWLEDGE_TOKEN: TOKEN }).BOLD_KNOWLEDGE_URL).toBe("https://sales.example");
+    expect(loadCoreConfig({ BOLD_KNOWLEDGE_URL: "http://localhost:3000", BOLD_KNOWLEDGE_TOKEN: TOKEN }).BOLD_KNOWLEDGE_URL).toBe("http://localhost:3000");
+  });
+
+  it("refuses plain http to another host, since the token is sent there", () => {
+    expect(() => loadCoreConfig({ BOLD_KNOWLEDGE_URL: "http://sales.example", BOLD_KNOWLEDGE_TOKEN: TOKEN })).toThrow(/BOLD_KNOWLEDGE_URL: must be https/);
+  });
+
+  it("needs both variables", () => {
+    expect(() => loadCoreConfig({ BOLD_KNOWLEDGE_URL: "https://sales.example" })).toThrow(/BOLD_KNOWLEDGE_TOKEN: is required/);
+    expect(() => loadCoreConfig({ BOLD_KNOWLEDGE_TOKEN: TOKEN })).toThrow(/BOLD_KNOWLEDGE_URL: is required/);
+  });
+
+  it("rejects a malformed token without echoing it", () => {
+    try {
+      loadCoreConfig({ BOLD_KNOWLEDGE_URL: "https://sales.example", BOLD_KNOWLEDGE_TOKEN: "short secret" });
+      expect.unreachable();
+    } catch (err) {
+      expect(err).toBeInstanceOf(ConfigError);
+      expect((err as Error).message).toContain("BOLD_KNOWLEDGE_TOKEN");
+      expect((err as Error).message).not.toContain("short secret");
+    }
+  });
+});
+
 describe("readApiKey", () => {
   it("returns the first non-empty variable", () => {
     expect(readApiKey(["A", "B"], { A: "", B: FAKE_KEY })).toBe(FAKE_KEY);

@@ -13,7 +13,10 @@ import { searchKyb } from "./search_kyb.js";
 import { searchShipments } from "./search_shipments.js";
 import { getKybReport } from "./get_kyb_report.js";
 import { revealContactDetails } from "./reveal_contact_details.js";
-import type { ToolDefinition } from "./types.js";
+import { KNOWLEDGE_TOOLS } from "./knowledge.js";
+import type { CoreDeps, ToolDefinition } from "./types.js";
+
+export { KNOWLEDGE_TOOLS };
 
 /** Free tools (M1). */
 export const FREE_TOOLS: readonly ToolDefinition[] = [
@@ -42,4 +45,10 @@ export const PAID_TOOLS: readonly ToolDefinition[] = [
 /** Unlock tools (M4): always need the user's confirmation. */
 export const UNLOCK_TOOL_DEFS: readonly ToolDefinition[] = [revealContactDetails, getKybReport] as unknown as readonly ToolDefinition[];
 
+/** The 18 Partner API tools. */
 export const ALL_TOOLS: readonly ToolDefinition[] = [...FREE_TOOLS, ...PAID_TOOLS, ...UNLOCK_TOOL_DEFS];
+
+/** What a server registers: the 18 API tools, plus the 12 knowledge tools when the knowledge API is configured. */
+export function toolsFor(deps: Pick<CoreDeps, "knowledge">): readonly ToolDefinition[] {
+  return deps.knowledge ? [...ALL_TOOLS, ...KNOWLEDGE_TOOLS] : ALL_TOOLS;
+}

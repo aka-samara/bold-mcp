@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const DEFAULT_API_BASE_URL = "https://tradedata.billofladingdata.com/partner-api";
 
+const LOCAL_HTTP = /^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/|$)/;
+
 const optionalString = z
   .string()
   .optional()
@@ -22,6 +24,28 @@ export const CoreConfigSchema = z.object({
     )
     .transform((v) => (v ?? DEFAULT_API_BASE_URL).replace(/\/+$/, "")),
   BOLD_API_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120_000).default(25_000),
+  /**
+   * Sales assistant origin for the knowledge tools, e.g. https://bold-sales-web.onrender.com.
+   * The token is sent there, so plain http is allowed only for a local address.
+   */
+  BOLD_KNOWLEDGE_URL: optionalString
+    .pipe(
+      z
+        .url({ protocol: /^https?$/ })
+        .refine((u) => !/[?#]/.test(u), "must not contain a query string or fragment")
+        .refine((u) => u.startsWith("https://") || LOCAL_HTTP.test(u), "must be https (http only for localhost)")
+        .optional(),
+    )
+    .transform((v) => v?.replace(/\/+$/, "")),
+  /** Bearer token for the knowledge API. Its scope (staff or customer-safe) is decided by the sales assistant. */
+  BOLD_KNOWLEDGE_TOKEN: optionalString.pipe(
+    z
+      .string()
+      .min(32, "looks too short to be a knowledge token")
+      .max(256, "looks too long to be a knowledge token")
+      .regex(/^[\x21-\x7e]+$/, "must be printable ASCII without spaces")
+      .optional(),
+  ),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 });
@@ -48,9 +72,18 @@ export function describeIssues(error: z.ZodError): string[] {
   return error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 }
 
+/** The knowledge tools need both variables; one without the other is a mistake worth stopping for. */
+export function knowledgeConfigIssues(c: Pick<CoreConfig, "BOLD_KNOWLEDGE_URL" | "BOLD_KNOWLEDGE_TOKEN">): string[] {
+  if (c.BOLD_KNOWLEDGE_URL && !c.BOLD_KNOWLEDGE_TOKEN) return ["BOLD_KNOWLEDGE_TOKEN: is required when BOLD_KNOWLEDGE_URL is set"];
+  if (c.BOLD_KNOWLEDGE_TOKEN && !c.BOLD_KNOWLEDGE_URL) return ["BOLD_KNOWLEDGE_URL: is required when BOLD_KNOWLEDGE_TOKEN is set"];
+  return [];
+}
+
 export function loadCoreConfig(env: NodeJS.ProcessEnv = process.env): CoreConfig {
   const parsed = CoreConfigSchema.safeParse(env);
   if (!parsed.success) throw new ConfigError(describeIssues(parsed.error));
+  const issues = knowledgeConfigIssues(parsed.data);
+  if (issues.length) throw new ConfigError(issues);
   return parsed.data;
 }
 

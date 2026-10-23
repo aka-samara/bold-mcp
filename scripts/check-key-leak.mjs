@@ -3,7 +3,7 @@
 // in the repository: every tracked or untracked (non-ignored) file, and with
 // --history every commit on every ref. The prefix itself is never printed.
 //
-// Keys are read from BOLD_TEST_API_KEY and BOLD_API_KEY (and any extra names
+// Keys are read from BOLD_TEST_API_KEY, BOLD_API_KEY and BOLD_KNOWLEDGE_TOKEN (and any extra names
 // in KEY_LEAK_VARS, comma-separated). With no key set the check is skipped,
 // unless KEY_LEAK_REQUIRE=1, in which case a missing key is a failure.
 //
@@ -29,7 +29,7 @@ function parseArgs(argv) {
 }
 
 function keyPrefixes() {
-  const names = ["BOLD_TEST_API_KEY", "BOLD_API_KEY", ...(process.env.KEY_LEAK_VARS ?? "").split(",")]
+  const names = ["BOLD_TEST_API_KEY", "BOLD_API_KEY", "BOLD_KNOWLEDGE_TOKEN", ...(process.env.KEY_LEAK_VARS ?? "").split(",")]
     .map((n) => n.trim())
     .filter(Boolean);
   const found = [];

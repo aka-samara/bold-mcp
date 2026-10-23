@@ -6,12 +6,16 @@
 // Any api-key is accepted except one starting with "bad". Paid calls are
 // charged like the real API (per record/page/request, only when data is
 // returned) and appear in credit-usage and credit-usage-logs. Needs `npm run build`.
+// It also stands in for the sales assistant's knowledge API on the same port
+// (BOLD_KNOWLEDGE_URL=http://127.0.0.1:4010, any Bearer token not starting with
+// "bad"), serving test/fixtures/knowledge/tools.json.
 
 import { createServer } from "node:http";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
-import { CONTACT_LOOKUP_PRICES, ENDPOINTS } from "@bold-mcp/core";
+import { z } from "zod";
+import { CONTACT_LOOKUP_PRICES, ENDPOINTS, KNOWLEDGE_TOOLS } from "@bold-mcp/core";
 
 const SPEC = new Map(ENDPOINTS.map((e) => [e.path, e]));
 
@@ -54,6 +58,28 @@ export function loadFixtureMap() {
   return map;
 }
 
+const knowledgeFixtures = JSON.parse(readFileSync(join(root, "knowledge", "tools.json"), "utf8")).responses;
+
+/** The knowledge API's routes; returns false for any other path. */
+function knowledgeRoute(req, send) {
+  const list = req.url === "/api/kb/v1/tools" && req.method === "GET";
+  const m = /^\/api\/kb\/v1\/tools\/([a-z_]+)$/.exec(req.url ?? "");
+  if (!list && !(m && req.method === "POST")) return false;
+  const auth = String(req.headers.authorization ?? "");
+  if (!auth.startsWith("Bearer ") || auth.slice(7).startsWith("bad")) {
+    send(401, { error: "Unauthorized" });
+    return true;
+  }
+  if (list) {
+    send(200, { tools: KNOWLEDGE_TOOLS.map((t) => ({ name: t.name, description: t.description, input_schema: z.toJSONSchema(t.inputSchema, { io: "input" }) })) });
+    return true;
+  }
+  const answer = knowledgeFixtures[m[1]];
+  req.resume();
+  req.on("end", () => (answer ? send(200, answer) : send(404, { error: `Unknown tool: ${m[1]}` })));
+  return true;
+}
+
 export function startMock(port = 0) {
   const fixtures = loadFixtureMap();
   const charges = [];
@@ -63,6 +89,7 @@ export function startMock(port = 0) {
       res.writeHead(status, { "content-type": "application/json" });
       res.end(JSON.stringify(body));
     };
+    if (knowledgeRoute(req, send)) return;
     const m = /^\/partner-api\/([a-z-]+)$/.exec(req.url ?? "");
     if (req.method !== "POST" || !m) return send(404, { code: 404, message: "Not found", data: null });
     const key = req.headers["api-key"];
